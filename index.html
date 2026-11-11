@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Regne de Fractària · Fraccions Èpiques per a 6è de Primària (DUA)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- CAPÇALERA D'HEROI I ACCESSIBILITAT DUA -->
+  <header class="top-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-emblem" aria-hidden="true">🛡️</div>
+        <div class="brand-title">
+          <h1>El Regne de Fractària · 6è</h1>
+          <span class="brand-badge">⚔️ Fraccions Manipulatives · Fantasia Èpica · DUA</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Punts de Vida (Cors) -->
+        <div class="hud-pill lives-pill" id="livesPill" title="Tens 10 cors de vida. Cada 3 encerts seguits a la primera recuperes 1 cor!">
+          <span class="lives-hearts" id="livesHeartsDisplay" aria-hidden="true">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</span>
+          <span class="lives-text"><strong id="livesCountBadge">10</strong>/10 vides</span>
+        </div>
+
+        <!-- Cristalls d'Estrella, Rang i Ratxa -->
+        <div class="hud-pill stars-pill" id="starsPill" title="Cristalls estel·lars, rang d'heroi i ratxa d'encanteris">
+          <span>🌟 <strong id="earnedStarsBadge">0</strong> cristalls</span>
+          <span class="rank-chip" id="playerRankBadge">🌱 Escuder Novell</span>
+          <span class="streak-chip" id="streakBadge" title="Ratxa d'encerts a la primera">🔥 <span id="streakCountBadge">0</span></span>
+        </div>
+
+        <!-- Botó de Relíquies del Regne -->
+        <button type="button" class="hud-btn relics-btn" id="btnOpenRelicsModal" title="Mira les relíquies i insígnies aconseguides">
+          🏆 Relíquies (<span id="relicsCountBadge">0/6</span>)
+        </button>
+
+        <!-- Botó per Imprimir Fitxa / Pergamí -->
+        <button type="button" class="hud-btn print-btn" id="btnOpenPrintModal" title="Imprimir pergamí d'exercicis en paper o PDF">
+          🖨️ Imprimir pergamí
+        </button>
+
+        <!-- Botó DUA -->
+        <button type="button" class="hud-btn dua-btn" id="btnToggleDuaPanel" aria-expanded="false">
+          ♿ Opcions DUA
+        </button>
+      </div>
+    </div>
+
+    <!-- PANELL D'ACCESSIBILITAT DUA DESPLEGABLE -->
+    <section class="dua-toolbar-panel" id="duaToolbarPanel" aria-label="Opcions del Disseny Universal per a l'Aprenentatge">
+      <button type="button" class="dua-toggle-btn" id="btnToggleEasyRead">
+        📖 Lletra Gran i Lectura Fàcil (Dislèxia)
+      </button>
+      <button type="button" class="dua-toggle-btn" id="btnToggleDarkTheme">
+        🌙 Mode Nit Arcà (Descans visual)
+      </button>
+      <button type="button" class="dua-toggle-btn" id="btnToggleColorblind">
+        🎨 Mode Daltònics (Trames i etiquetes)
+      </button>
+      <button type="button" class="dua-toggle-btn active" id="btnToggleSound">
+        🔔 Sons Màgics: Activats
+      </button>
+      <button type="button" class="dua-toggle-btn danger-toggle" id="btnResetProgress">
+        🔄 Reinicia l'aventura
+      </button>
+    </section>
+  </header>
+
+  <!-- NAVEGACIÓ PRINCIPAL DELS 7 TERRITORIS DEL REGNE -->
+  <nav class="main-nav" aria-label="Territoris i missions de fraccions">
+    <ul class="nav-tabs" id="moduleTabs">
+      <li>
+        <button type="button" class="nav-tab" data-module="grimori">
+          📖 Grimori del Saber
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab active" data-module="identificacio">
+          🛡️ 1. Identificació i Representació <span class="tab-progress" id="prog-identificacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="comparacio">
+          ⚖️ 2. Comparació <span class="tab-progress" id="prog-comparacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="equivalencia">
+          ✨ 3. Equivalències <span class="tab-progress" id="prog-equivalencia">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="transformacio">
+          🔮 4. Transformació <span class="tab-progress" id="prog-transformacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="problemes">
+          📜 5. Problemes Èpics <span class="tab-progress" id="prog-problemes">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="forja">
+          🧪 Forja Lliure
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- CONTENIDOR PRINCIPAL -->
+  <main class="app-container">
+
+    <!-- =========================================================================
+         VISTA 1: GRIMORI DEL SABER (CONCEPTE BÀSIC, EQUIVALÈNCIES I TRANSFORMACIÓ)
+         ========================================================================= -->
+    <section id="grimoriSection" class="grimori-view" style="display: none;" aria-label="Grimori del Saber: Teoria interactiva de les fraccions">
+      <div class="grimori-hero-banner">
+        <div>
+          <span class="epic-tag">📚 Còdex dels Arximags · 6è de Primària</span>
+          <h2>El Grimori de les Fraccions i les Equivalències</h2>
+          <p>Descobreix els secrets de les fraccions tocant les runes interactives abans d'entrar en combat!</p>
+        </div>
+        <button type="button" class="tts-btn" id="btnSpeakGrimoriIntro">
+          🔊 Escolta la introducció
+        </button>
+      </div>
+
+      <!-- Pestanyes dels 4 capítols del Grimori -->
+      <div class="grimori-chapter-tabs" role="tablist">
+        <button type="button" class="grimori-tab active" data-chapter="concepte">1️⃣ Què és una Fracció?</button>
+        <button type="button" class="grimori-tab" data-chapter="tipus">2️⃣ Pròpies, Impròpies i Mixtos</button>
+        <button type="button" class="grimori-tab" data-chapter="equivalents">3️⃣ Fraccions Equivalents</button>
+        <button type="button" class="grimori-tab" data-chapter="transformar">4️⃣ Amplificar i Simplificar</button>
+      </div>
+
+      <!-- Contingut dinàmic del capítol del Grimori + Simulador en viu -->
+      <div class="grimori-content-grid">
+        <article class="grimori-lesson-card" id="grimoriLessonCard" aria-live="polite">
+          <!-- Renderitzat dinàmic des d'app.js -->
+        </article>
+
+        <aside class="grimori-simulator-card" aria-label="Simulador interactiu del Grimori">
+          <div class="sim-header">
+            <h3>🔮 Cristall de Prova en Viu</h3>
+            <span class="sim-subtitle">Mou els controls i observa com es transforma la fracció!</span>
+          </div>
+
+          <div class="grimori-sim-controls">
+            <div class="sim-control-box">
+              <label for="grimoriNumRange">🔺 Numerador (parts activades): <strong id="grimoriNumVal">2</strong></label>
+              <input type="range" id="grimoriNumRange" min="1" max="12" value="2" />
+            </div>
+            <div class="sim-control-box">
+              <label for="grimoriDenRange">🔻 Denominador (parts per unitat): <strong id="grimoriDenVal">3</strong></label>
+              <input type="range" id="grimoriDenRange" min="1" max="12" value="3" />
+            </div>
+            <div class="sim-control-box">
+              <label for="grimoriMultRange">✨ Factor d'Equivalència (× k): <strong id="grimoriMultVal">× 2</strong></label>
+              <input type="range" id="grimoriMultRange" min="1" max="4" value="2" />
+            </div>
+          </div>
+
+          <div class="grimori-sim-Comparison" id="grimoriSimCanvas">
+            <!-- Es renderitza automàticament la fracció base i la seva equivalent multiplicada -->
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VISTA 2: MISSIONS INTERACTIVES (MÒDULS 1, 2, 3, 4, 5)
+         ========================================================================= -->
+    <div id="missionWorkspaceView">
+
+      <!-- BARRA SUPERIOR DE NIVELL D'ESTRELLES I PUNTETS DE PROGRESSIÓ -->
+      <section class="context-bar" id="levelBarSection" aria-label="Tria el nivell de la missió">
+        <div class="level-selector">
+          <span class="level-selector-label">⚔️ Rang de la missió:</span>
+          <button type="button" class="level-btn active" data-level="1">⭐ Escuder (Nivell 1)</button>
+          <button type="button" class="level-btn" data-level="2">⭐⭐ Cavaller (Nivell 2)</button>
+          <button type="button" class="level-btn" data-level="3">⭐⭐⭐ Arximag (Nivell 3)</button>
+        </div>
+
+        <div class="quest-Attempt-dots" id="questProgressDots" aria-label="Llista d'exercicis d'aquest nivell">
+          <!-- Puntets 1..5 clicables per anar directament a cada repte -->
+        </div>
+      </section>
+
+      <!-- TARGETA DE LA MISSIÓ / ENUNCIAT -->
+      <section class="challenge-card" id="challengeCard" aria-live="polite">
+        <div class="challenge-header">
+          <div class="challenge-title-wrap">
+            <span class="challenge-badge" id="challengeBadge">⭐ Escuder · Missió 1/5</span>
+            <span class="attempts-badge" id="attemptsBadge" title="Tens 2 oportunitats abans de perdre un cor de vida">🛡️ Escut: 2/2</span>
+            <h2 class="challenge-title" id="challengeTitle">Títol de la missió</h2>
+          </div>
+
+          <div class="challenge-nav-group">
+            <button type="button" class="tool-btn" id="btnPrevChallenge">⬅️ Anterior</button>
+            <button type="button" class="tool-btn" id="btnNextChallenge">Següent ➡️</button>
+          </div>
+        </div>
+
+        <div class="challenge-body">
+          <p class="challenge-lore" id="challengeLore"></p>
+          <div class="challenge-instruction" id="challengeInstruction"></div>
+
+          <!-- Botons d'ajuda DUA: Lector de veu + 3 Pistes Graduades + Consulta ràpida al Grimori -->
+          <div class="challenge-help-row">
+            <button type="button" class="tts-btn" id="btnSpeakInstruction">
+              🔊 Escolta l'enunciat
+            </button>
+
+            <div class="hint-buttons-group" aria-label="Pistes graduades DUA">
+              <button type="button" class="hint-btn" data-hint-step="0" id="btnHint1">
+                💡 Pista 1: Comprensió
+              </button>
+              <button type="button" class="hint-btn" data-hint-step="1" id="btnHint2">
+                🧭 Pista 2: Manipulació
+              </button>
+              <button type="button" class="hint-btn" data-hint-step="2" id="btnHint3">
+                📜 Pista 3: Pas resolutiu
+              </button>
+            </div>
+
+            <button type="button" class="tool-btn grimori-shortcut-btn" id="btnQuickGrimori">
+              📖 Obre el Grimori
+            </button>
+          </div>
+        </div>
+
+        <!-- Caixa on es mostra la pista seleccionada -->
+        <div class="hint-box" id="hintDisplayBox" style="display: none;">
+          <div class="hint-box-content">
+            <strong id="hintStepLabel">💡 Pista:</strong>
+            <span id="hintTextContent"></span>
+          </div>
+          <button type="button" class="tts-btn" id="btnSpeakHint">🔊 Escolta la pista</button>
+        </div>
+      </section>
+
+      <!-- TAULER MANIPULATIU DE FRACCIONS -->
+      <section class="manipulative-board-card" aria-label="Tauler manipulatiu de fraccions">
+        <!-- Barra d'eines del tauler: Selector de representació visual (DUA CPA) + Botons d'acció -->
+        <div class="board-toolbar">
+          <div class="shape-selector-group" role="group" aria-label="Tria la forma visual de les fraccions">
+            <span class="toolbar-label">🎨 Forma màgica:</span>
+            <button type="button" class="shape-btn active" data-shape="circle" title="Escut Runic Circular">
+              🟢 Escut Circular
+            </button>
+            <button type="button" class="shape-btn" data-shape="bar" title="Barra de Poció de Mana">
+              🟦 Barra de Poció
+            </button>
+            <button type="button" class="shape-btn" data-shape="grid" title=" tauleta de Cristalls">
+              🟨 Cristalls
+            </button>
+            <button type="button" class="shape-btn" data-shape="line" title="Recta Numèrica dels Camins">
+              📏 Recta Numèrica
+            </button>
+          </div>
+
+          <div class="board-actions-right">
+            <button type="button" class="tool-btn" id="btnResetBoard" title="Torna el tauler a l'estat inicial de la missió">
+              🔄 Reinicia peces
+            </button>
+            <button type="button" class="tool-btn primary-cta" id="btnVerifyChallenge">
+              ⚡ Llança l'Encanteri (Comprova!)
+            </button>
+          </div>
+        </div>
+
+        <!-- BÀNER DE RETROALIMENTACIÓ FORMATIVA -->
+        <div class="feedback-banner" id="feedbackBanner" role="status" aria-live="polite" style="display: none;">
+          <div class="feedback-text" id="feedbackMessage"></div>
+          <button type="button" class="tts-btn" id="btnSpeakFeedback">🔊 Escolta</button>
+        </div>
+
+        <!-- CONTENIDOR CENTRAL ON ES RENDERITZEN ELS PANELLS MANIPULATIUS SEGONS EL MÒDUL -->
+        <div class="interactive-stage" id="interactiveStage">
+          <!-- Renderitzat dinàmic des d'app.js segons el mòdul actiu:
+               - Identificació: Figura manipulativa amb controls de Denominador (+/- parts), clic directe a les peces (Numerador), afegir unitats senceres (per a impròpies) i entrada simbòlica.
+               - Comparació: Dues figures costat a costat + selector de símbol (<, =, >) + barra de comparació superposada.
+               - Equivalència: Figura esquerra (model o editable) + Figura dreta manipulativa amb tallador de parts i comprovador d'igualtat d'àrea.
+               - Transformació: Forja amb Raig Multiplicador (×2..×6) i Espasa Divisora (÷2..÷6) + transformador de Nombres Mixtos.
+               - Problemes: Model manipulatiu de barres/cercles amb generador d'ajuda visual + repartidor de quantitats (ex: 3/5 de 20 monedes) + resposta del problema.
+          -->
+        </div>
+      </section>
+    </div>
+
+    <!-- =========================================================================
+         VISTA 3: FORJA LLIURE (LABORATORI MANIPULATIU I MUR DE FRACCIONS)
+         ========================================================================= -->
+    <section id="forjaSection" class="forja-view" style="display: none;" aria-label="Forja Lliure: Laboratori manipulatiu i Mur de Fraccions">
+      <div class="grimori-hero-banner">
+        <div>
+          <span class="epic-tag">🧪 Laboratori d'Alquímia · Exploració Lliure</span>
+          <h2>La Forja Lliure de Fractària i el Mur de Fraccions</h2>
+          <p>Experimenta lliurement! Compara dues fraccions qualssevol, parteix unitats amb el Raig Multiplicador o explora el <strong>Mur d'Equivalències</strong>.</p>
+        </div>
+      </div>
+
+      <div class="forja-grid">
+        <!-- Comparador Lliure de 2 Fraccions -->
+        <div class="forja-card">
+          <h3>⚖️ Banc de Prova de Dues Fraccions</h3>
+          <p class="forja-help">Modifica les parts i fes clic als segments per comparar qualsevol parella de fraccions en temps real.</p>
+          <div id="freeLabComparator"></div>
+        </div>
+
+        <!-- Mur Interactiu de Fraccions (Tires de Fraccions 1 fins a 1/12) -->
+        <div class="forja-card">
+          <div class="wall-header-row">
+            <div>
+              <h3>🧱 Mur Màgic de Tires de Fraccions</h3>
+              <p class="forja-help">Fes clic als maons de cada fila per il·luminar-los i descobrir quines fraccions tenen <strong>exactament la mateixa amplada</strong>!</p>
+            </div>
+            <button type="button" class="tool-btn" id="btnClearFractionWall">🗑️ Neteja el mur</button>
+          </div>
+          <div class="wall-summary-bar" id="wallSummaryBar">
+            ✨ Maons seleccionats al mur: <em>Fes clic a qualsevol maó per començar</em>
+          </div>
+          <div class="fraction-wall-container" id="fractionWallContainer"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE RELÍQUIES I INSÍGNIES D'HEROI -->
+  <div class="modal-backdrop" id="relicsModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-labelledby="relicsModalTitle">
+      <div class="modal-header">
+        <h2 id="relicsModalTitle">🏆 Cambra de les Relíquies de Fractària</h2>
+        <button type="button" class="modal-close" id="btnCloseRelicsModal" aria-label="Tanca">✖</button>
+      </div>
+      <p class="modal-desc">
+        Completa missions als diferents territoris per desbloquejar les 6 Relíquies Ancestrals i assolir el rang de <strong>Gran Arximag de Fractària</strong>!
+      </p>
+      <div class="relics-grid" id="relicsGridContainer"></div>
+    </div>
+  </div>
+
+  <!-- MODAL PER IMPRIMIR FITXA / PERGAMÍ EN PAPER O PDF -->
+  <div class="modal-backdrop" id="printModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-labelledby="printModalTitle">
+      <div class="modal-header">
+        <h2 id="printModalTitle">🖨️ Imprimir Pergamí d'Exercicis (Paper o PDF)</h2>
+        <button type="button" class="modal-close" id="btnClosePrintModal" aria-label="Tanca">✖</button>
+      </div>
+      <p class="modal-desc">
+        Genera una fitxa imprimible amb figures de fraccions per acolorir, rectes numèriques i espai per resoldre els problemes en paper.
+      </p>
+
+      <div class="print-form-group">
+        <label for="printModuleSelect">📚 Territori de missions:</label>
+        <select id="printModuleSelect" class="print-select">
+          <option value="current">Territori actual obert</option>
+          <option value="identificacio">🛡️ 1. Identificació i Representació</option>
+          <option value="comparacio">⚖️ 2. Comparació de Fraccions</option>
+          <option value="equivalencia">✨ 3. Equivalències Visuals</option>
+          <option value="transformacio">🔮 4. Transformació (Amplificar i Simplificar)</option>
+          <option value="problemes">📜 5. Problemes Èpics</option>
+          <option value="all">🌟 Tots els 5 territoris complets</option>
+        </select>
+      </div>
+
+      <div class="print-form-group">
+        <label for="printLevelSelect">⚔️ Rang de dificultat:</label>
+        <select id="printLevelSelect" class="print-select">
+          <option value="current">Rang actual seleccionat</option>
+          <option value="1">⭐ Escuder (Nivell 1)</option>
+          <option value="2">⭐⭐ Cavaller (Nivell 2)</option>
+          <option value="3">⭐⭐⭐ Arximag (Nivell 3)</option>
+          <option value="all">Tots els 3 rangs (⭐ + ⭐⭐ + ⭐⭐⭐)</option>
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="tool-btn" id="btnCancelPrintModal">Cancel·la</button>
+        <button type="button" class="tool-btn primary-cta" id="btnGenerateAndPrint">
+          🖨️ Generar i Imprimir Pergamí
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE LA FONT DE CURACIÓ QUAN S'ESGOTEN LES 10 VIDES -->
+  <div class="modal-backdrop" id="gameOverModal" aria-hidden="true">
+    <div class="modal-card gameover-card" role="dialog" aria-labelledby="gameOverTitle">
+      <div class="gameover-icon">⛲</div>
+      <h2 id="gameOverTitle">La Font de Curació d'Equivalia</h2>
+      <p class="modal-desc">
+        El teu escut s'ha esgotat després d'una dura batalla, però els veritables herois aprenen de cada intent! No perds cap cristall ni cap relíquia.
+      </p>
+      <div class="gameover-stats-box">
+        <div>🌟 Cristalls conservats: <strong id="gameOverStarsCount">0</strong></div>
+        <div>🏅 Rang d'Heroi: <strong id="gameOverRankName">🌱 Escuder Novell</strong></div>
+      </div>
+      <div class="modal-actions" style="justify-content: center;">
+        <button type="button" class="tool-btn primary-cta" id="btnRestoreLives">
+          ❤️ Beu de la Font i recupera les 10 vides!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDOR D'IMPRESSIÓ (NOMÉS VISIBLE EN IMPRIMIR) -->
+  <section id="printWorksheetContainer" class="print-worksheet-container" aria-hidden="true"></section>
+
+  <footer class="footer-bar">
+    🏰 <strong>El Regne de Fractària</strong> · Recurs educatiu gamificat per a <strong>6è de Primària</strong> · Fraccions Manipulatives i DUA
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

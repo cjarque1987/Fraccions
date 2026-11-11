@@ -1,0 +1,1436 @@
+/* ==========================================================================
+   EL REGNE DE FRACTÀRIA · ESTILS FANTASIA ÈPICA + ACCESSIBILITAT DUA (6è)
+   ========================================================================== */
+
+:root {
+  /* Paleta Fantasia Èpica Lluminosa (Pergamí Reial + Índigo Arcà + Or Rúnic) */
+  --bg-page: #F4EFE6;
+  --bg-card: #FFFDF9;
+  --bg-parchment: #FBF6EC;
+  --bg-stage: #F8FAFC;
+  --text-main: #1E1B4B;
+  --text-muted: #475569;
+  --primary: #4338CA;
+  --primary-hover: #3730A3;
+  --primary-light: #EEF2FF;
+  --gold: #D97706;
+  --gold-bright: #F59E0B;
+  --gold-light: #FEF3C7;
+  --emerald: #059669;
+  --emerald-light: #D1FAE5;
+  --ruby: #DC2626;
+  --ruby-light: #FEE2E2;
+  --purple-magic: #7C3AED;
+  --purple-light: #F3E8FF;
+  --border-color: #CBD5E1;
+  --border-gold: #FCD34D;
+  --shadow-card: 0 6px 20px -4px rgba(30, 27, 75, 0.10), 0 2px 6px -1px rgba(30, 27, 75, 0.06);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  /* Colors per a les fraccions manipulatives */
+  --piece-active-1: #4F46E5;
+  --piece-active-2: #0D9488;
+  --piece-empty: #E2E8F0;
+  --piece-stroke: #1E293B;
+}
+
+/* Mode Nit Arcà (DUA Descans Visual) */
+body.dark-theme {
+  --bg-page: #0F172A;
+  --bg-card: #1E293B;
+  --bg-parchment: #172033;
+  --bg-stage: #0F172A;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --primary: #6366F1;
+  --primary-hover: #818CF8;
+  --primary-light: #1E1B4B;
+  --gold: #F59E0B;
+  --gold-bright: #FBBF24;
+  --gold-light: #3B2F13;
+  --emerald: #10B981;
+  --emerald-light: #064E3B;
+  --ruby: #EF4444;
+  --ruby-light: #450A0A;
+  --purple-magic: #A855F7;
+  --purple-light: #2E1065;
+  --border-color: #334155;
+  --border-gold: #B45309;
+  --piece-empty: #334155;
+  --piece-stroke: #E2E8F0;
+}
+
+/* Mode Lectura Fàcil i Dislèxia (DUA) */
+body.easy-read {
+  font-size: 112%;
+  letter-spacing: 0.03em;
+  word-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-page);
+  background-image: radial-gradient(circle at 15% 15%, rgba(67, 56, 202, 0.06) 0%, transparent 40%),
+                    radial-gradient(circle at 85% 80%, rgba(217, 119, 6, 0.07) 0%, transparent 40%);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   CAPÇALERA D'HEROI I BARRA DUA
+   ========================================================================== */
+.top-header {
+  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 60%, #1E1B4B 100%);
+  color: #FFFFFF;
+  border-bottom: 3px solid var(--gold-bright);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-emblem {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #F59E0B, #B45309);
+  border: 2px solid #FEF3C7;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.brand-title h1 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #FFFBEB;
+}
+
+.brand-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: #FDE68A;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.hud-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #FFFFFF;
+}
+
+.lives-hearts {
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+}
+
+.rank-chip {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: #1E1B4B;
+  font-weight: 800;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.streak-chip {
+  background: rgba(239, 68, 68, 0.25);
+  border: 1px solid #FCA5A5;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.hud-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border: 1px solid rgba(253, 230, 138, 0.45);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.hud-btn:hover {
+  background: rgba(245, 158, 11, 0.3);
+  border-color: #FDE68A;
+  transform: translateY(-1px);
+}
+
+.relics-btn {
+  background: rgba(245, 158, 11, 0.22);
+  border-color: #FBBF24;
+  color: #FEF3C7;
+}
+
+/* Panell DUA Desplegable */
+.dua-toolbar-panel {
+  display: none;
+  background: #0F172A;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.65rem 1.25rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.dua-toolbar-panel.open {
+  display: flex;
+}
+
+.dua-toggle-btn {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #475569;
+  padding: 0.45rem 0.95rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dua-toggle-btn:hover {
+  border-color: #FBBF24;
+}
+
+.dua-toggle-btn.active {
+  background: #4338CA;
+  border-color: #A5B4FC;
+  color: #FFFFFF;
+}
+
+.dua-toggle-btn.danger-toggle:hover {
+  background: #7F1D1D;
+  border-color: #FCA5A5;
+}
+
+/* ==========================================================================
+   PESTANYES DE NAVEGACIÓ DELS TERRITORIS
+   ========================================================================== */
+.main-nav {
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.nav-tabs {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.nav-tab {
+  background: var(--bg-parchment);
+  color: var(--text-main);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.18s ease;
+}
+
+.nav-tab:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.nav-tab.active {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+  box-shadow: 0 3px 10px rgba(67, 56, 202, 0.3);
+}
+
+.tab-progress {
+  background: rgba(0, 0, 0, 0.12);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+}
+
+.nav-tab.active .tab-progress {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   CONTENIDOR PRINCIPAL I BARRA DE NIVELLS
+   ========================================================================== */
+.app-container {
+  max-width: 1380px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.1rem 1.25rem 2.5rem;
+  flex: 1;
+}
+
+.context-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  background: var(--bg-card);
+  padding: 0.75rem 1.15rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+.level-selector {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.level-selector-label {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-right: 0.25rem;
+}
+
+.level-btn {
+  background: var(--bg-parchment);
+  color: var(--text-main);
+  border: 2px solid var(--border-color);
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.level-btn:hover {
+  border-color: var(--gold);
+}
+
+.level-btn.active {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: #1E1B4B;
+  border-color: #B45309;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
+}
+
+.quest-Attempt-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.quest-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: var(--bg-parchment);
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.16s ease;
+}
+
+.quest-dot.current {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+.quest-dot.completed {
+  background: var(--emerald-light);
+  border-color: var(--emerald);
+  color: var(--emerald);
+}
+
+.quest-dot.completed.current {
+  background: var(--emerald);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   TARGETA DE LA MISSIÓ (ENUNCIAT + PISTES DUA)
+   ========================================================================== */
+.challenge-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.35rem;
+  margin-bottom: 1.15rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.challenge-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.challenge-title-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.challenge-badge {
+  background: var(--gold-light);
+  color: var(--gold);
+  border: 1px solid var(--border-gold);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.attempts-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.challenge-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.challenge-nav-group {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.challenge-lore {
+  font-style: italic;
+  color: var(--purple-magic);
+  font-weight: 600;
+  font-size: 0.94rem;
+  margin-bottom: 0.4rem;
+}
+
+.challenge-instruction {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.9rem;
+  line-height: 1.6;
+}
+
+.challenge-instruction strong {
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 0.05rem 0.35rem;
+  border-radius: 5px;
+}
+
+.challenge-help-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hint-buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.tts-btn, .hint-btn, .tool-btn {
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  border: 2px solid var(--border-color);
+  background: var(--bg-parchment);
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tts-btn {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: #C7D2FE;
+}
+
+.tts-btn:hover {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+.hint-btn {
+  background: var(--gold-light);
+  color: #92400E;
+  border-color: var(--border-gold);
+}
+
+body.dark-theme .hint-btn {
+  color: #FDE68A;
+}
+
+.hint-btn:hover, .hint-btn.active {
+  background: var(--gold-bright);
+  color: #1E1B4B;
+}
+
+.tool-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.primary-cta {
+  background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+  color: #FFFFFF !important;
+  border-color: #312E81 !important;
+  font-size: 0.98rem;
+  padding: 0.55rem 1.25rem;
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.35);
+}
+
+.primary-cta:hover {
+  background: linear-gradient(135deg, #4338CA 0%, #1E1B4B 100%);
+  transform: translateY(-1px);
+}
+
+.hint-box {
+  margin-top: 0.85rem;
+  background: var(--gold-light);
+  border-left: 5px solid var(--gold);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   TAULER MANIPULATIU DE FRACCIONS
+   ========================================================================== */
+.manipulative-board-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.35rem;
+  box-shadow: var(--shadow-card);
+}
+
+.board-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.shape-selector-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.toolbar-label {
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-right: 0.25rem;
+}
+
+.shape-btn {
+  background: var(--bg-parchment);
+  color: var(--text-main);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.shape-btn:hover {
+  border-color: var(--primary);
+}
+
+.shape-btn.active {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.board-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Bàner de Retroalimentació Formativa */
+.feedback-banner {
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  font-weight: 700;
+  font-size: 1rem;
+  animation: fadeIn 0.22s ease;
+}
+
+.feedback-banner.success {
+  background: var(--emerald-light);
+  border: 2px solid var(--emerald);
+  color: #065F46;
+}
+
+body.dark-theme .feedback-banner.success {
+  color: #A7F3D0;
+}
+
+.feedback-banner.error {
+  background: var(--ruby-light);
+  border: 2px solid var(--ruby);
+  color: #991B1B;
+}
+
+body.dark-theme .feedback-banner.error {
+  color: #FECACA;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   COMPONENTS VISUALS I MANIPULATIUS DE FRACCIONS
+   ========================================================================== */
+.interactive-stage {
+  min-height: 340px;
+}
+
+/* Graella d'1 o 2 panells manipulatius */
+.stage-panels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.fraction-workbench-panel {
+  background: var(--bg-stage);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+}
+
+.panel-header-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.55rem;
+}
+
+.panel-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+/* Notació Simbòlica Vertical de Fracció (N / D) */
+.frac-symbolic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 0.35rem 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.mixed-whole-number {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+.frac-vertical {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  font-weight: 900;
+  font-size: 1.15rem;
+  vertical-align: middle;
+  margin: 0 0.15rem;
+}
+
+.frac-vertical .f-num {
+  padding: 0 0.3rem 0.1rem;
+  color: var(--primary);
+}
+
+.frac-vertical .f-bar {
+  width: 100%;
+  min-width: 24px;
+  height: 3px;
+  background: var(--text-main);
+  border-radius: 2px;
+}
+
+.frac-vertical .f-den {
+  padding: 0.1rem 0.3rem 0;
+  color: var(--text-main);
+}
+
+/* Controls manipulatius del panell (Partir Denominador, Activar Numerador, Unitats) */
+.manipulative-controls-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--bg-card);
+  padding: 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.control-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg-parchment);
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.control-pill-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin-right: 0.2rem;
+}
+
+.step-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 2px solid var(--primary);
+  background: var(--bg-card);
+  color: var(--primary);
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.14s ease;
+}
+
+.step-btn:hover:not(:disabled) {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+.step-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.control-val-display {
+  min-width: 26px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+/* Contenidor de les unitats visuals (1, 2 o 3 unitats per a fraccions impròpies) */
+.units-visual-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 190px;
+  padding: 0.5rem;
+}
+
+.single-unit-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.unit-caption {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Estils dels Sectors SVG i Peces Clicables */
+.interactive-svg-piece {
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.interactive-svg-piece:hover {
+  opacity: 0.86;
+}
+
+.locked-svg-piece {
+  cursor: default;
+}
+
+/* Barra d'ompliment proporcional (CPA) */
+.area-meter-wrap {
+  width: 100%;
+  background: var(--bg-card);
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.area-meter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.area-meter-track {
+  width: 100%;
+  height: 16px;
+  background: var(--piece-empty);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+.area-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4F46E5, #7C3AED);
+  transition: width 0.25s ease;
+}
+
+/* ==========================================================================
+   CAIXA D'ENTRADA SIMBÒLICA DE L'ALUMNE (FRACCIÓ, NOMBRES MIXTOS, COMPARACIÓ)
+   ========================================================================== */
+.symbolic-answer-zone {
+  margin-top: 1.15rem;
+  background: var(--bg-parchment);
+  border: 2px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+
+.answer-zone-prompt {
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: var(--text-main);
+}
+
+.fraction-input-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  border: 2px solid var(--primary);
+}
+
+.frac-input-stack {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.frac-num-input, .frac-den-input, .whole-num-input {
+  width: 68px;
+  height: 42px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-stage);
+  color: var(--text-main);
+}
+
+.whole-num-input {
+  width: 58px;
+  height: 52px;
+  font-size: 1.35rem;
+  border-color: var(--gold);
+}
+
+.frac-num-input:focus, .frac-den-input:focus, .whole-num-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.25);
+}
+
+.frac-input-divider {
+  width: 100%;
+  height: 4px;
+  background: var(--text-main);
+  border-radius: 2px;
+}
+
+/* Botons de Comparació (<, =, >) */
+.comparison-center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.75rem;
+  background: var(--bg-parchment);
+  border: 2px dashed var(--border-gold);
+  border-radius: var(--radius-md);
+}
+
+.comp-symbol-btn {
+  width: 64px;
+  height: 54px;
+  font-size: 1.65rem;
+  font-weight: 900;
+  border-radius: 12px;
+  border: 3px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.comp-symbol-btn:hover {
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.comp-symbol-btn.selected {
+  background: var(--gold-bright);
+  color: #1E1B4B;
+  border-color: #B45309;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  transform: scale(1.08);
+}
+
+/* Botons d'Alquímia: Raig Multiplicador (×k) i Espasa Divisora (÷k) */
+.alchemy-spell-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.spell-chip-btn {
+  background: var(--purple-light);
+  color: var(--purple-magic);
+  border: 2px solid var(--purple-magic);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-weight: 800;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.spell-chip-btn:hover, .spell-chip-btn.active {
+  background: var(--purple-magic);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   GRIMORI DEL SABER (TEORIA INTERACTIVA)
+   ========================================================================== */
+.grimori-hero-banner {
+  background: linear-gradient(135deg, #312E81 0%, #4338CA 100%);
+  color: #FFFFFF;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--gold-bright);
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.epic-tag {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid #FDE68A;
+  color: #FEF3C7;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+}
+
+.grimori-chapter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.grimori-tab {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.grimori-tab.active {
+  background: var(--gold-bright);
+  color: #1E1B4B;
+  border-color: #B45309;
+}
+
+.grimori-content-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 960px) {
+  .grimori-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grimori-lesson-card, .grimori-simulator-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-card);
+}
+
+.grimori-lesson-card h3 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.grimori-concept-box {
+  background: var(--bg-parchment);
+  border-left: 4px solid var(--gold);
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  margin: 0.8rem 0;
+}
+
+.grimori-sim-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0.85rem 0 1.1rem;
+  background: var(--bg-parchment);
+  padding: 0.85rem;
+  border-radius: 10px;
+}
+
+.sim-control-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.sim-control-box input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+}
+
+/* ==========================================================================
+   FORJA LLIURE I MUR DE FRACCIONS (FRACTION WALL)
+   ========================================================================== */
+.forja-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.35rem;
+}
+
+.forja-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.forja-help {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 0.85rem;
+}
+
+.wall-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.wall-summary-bar {
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  color: var(--text-main);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+
+.fraction-wall-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  user-select: none;
+}
+
+.wall-row {
+  display: flex;
+  width: 100%;
+  gap: 3px;
+  height: 40px;
+}
+
+.wall-brick {
+  flex: 1;
+  background: var(--bg-parchment);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  color: var(--text-main);
+}
+
+.wall-brick:hover {
+  border-color: var(--primary);
+  transform: scaleY(1.04);
+}
+
+.wall-brick.active {
+  color: #FFFFFF;
+  border-color: #1E1B4B;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+body.colorblind-mode .wall-brick.active {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.22) 6px,
+    transparent 6px,
+    transparent 12px
+  ) !important;
+}
+
+/* ==========================================================================
+   MODALS (RELÍQUIES, IMPRESSIÓ, FONT DE CURACIÓ)
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 200;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 3px solid var(--gold-bright);
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.35rem;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.modal-desc {
+  color: var(--text-muted);
+  margin-bottom: 1.15rem;
+}
+
+.relics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 0.85rem;
+}
+
+.relic-item {
+  background: var(--bg-parchment);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.9rem;
+  text-align: center;
+  opacity: 0.55;
+  filter: grayscale(0.85);
+  transition: all 0.2s ease;
+}
+
+.relic-item.unlocked {
+  opacity: 1;
+  filter: none;
+  border-color: var(--gold-bright);
+  background: var(--gold-light);
+}
+
+.relic-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.35rem;
+}
+
+.relic-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.relic-req {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.print-form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 700;
+}
+
+.print-select {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-parchment);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.gameover-card {
+  text-align: center;
+}
+
+.gameover-icon {
+  font-size: 3.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.gameover-stats-box {
+  background: var(--bg-parchment);
+  border: 2px solid var(--border-gold);
+  border-radius: 10px;
+  padding: 0.85rem;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-bar {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+/* ==========================================================================
+   IMPRESSIÓ DE FITXA / PERGAMÍ EN PAPER O PDF
+   ========================================================================== */
+.print-worksheet-container {
+  display: none;
+}
+
+@media print {
+  .top-header, .main-nav, .app-container, .modal-backdrop, .footer-bar {
+    display: none !important;
+  }
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .print-worksheet-container {
+    display: block !important;
+    padding: 0.5cm;
+  }
+  .print-sheet-header {
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.4cm;
+    margin-bottom: 0.6cm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .print-exercise-item {
+    border: 1px solid #94A3B8;
+    border-radius: 8px;
+    padding: 0.4cm;
+    margin-bottom: 0.45cm;
+    page-break-inside: avoid;
+  }
+}
