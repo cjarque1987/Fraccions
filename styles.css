@@ -1730,6 +1730,95 @@ body.colorblind-mode .wall-brick.active {
   outline: 3px solid rgba(126, 34, 206, 0.3);
 }
 
+.tot-part-circle-input.is-qmark-input {
+  color: #DC2626;
+  border-color: #DC2626;
+  background: #FEF2F2;
+  font-size: 1.55rem;
+}
+
+.circle-qmark-btn {
+  margin-top: 0.22rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 900;
+  border-radius: 999px;
+  border: 1.5px solid #DC2626;
+  background: #FFF1F2;
+  color: #DC2626;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.circle-qmark-btn:hover,
+.circle-qmark-btn.active {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+.tot-part-label-select {
+  appearance: auto;
+  max-width: 195px;
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  border: 2px solid #9333EA;
+  border-radius: 8px;
+  background: #FAF5FF;
+  color: #6B21A8;
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tot-part-label-select:focus {
+  outline: 3px solid rgba(147, 51, 234, 0.25);
+}
+
+.tot-part-label-select.selected-ok {
+  background: #F3E8FF;
+  border-color: #7E22CE;
+  color: #581C87;
+}
+
+.organizer-cards-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  background: #FAF5FF;
+  border: 1.5px dashed #A855F7;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.org-concept-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #FFFFFF;
+  border: 1.5px solid #C084FC;
+  color: #6B21A8;
+  font-size: 0.8rem;
+  font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.org-concept-card.num-card {
+  border-color: #16A34A;
+  color: #15803D;
+  background: #F0FDF4;
+}
+
+.org-concept-card.qmark-card {
+  border-color: #DC2626;
+  color: #DC2626;
+  background: #FEF2F2;
+}
+
 .tot-part-ellipsis {
   font-size: 1.8rem;
   font-weight: 900;

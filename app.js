@@ -678,7 +678,18 @@
     state.solverDivGroups = 1;
     state.showBarModelGuide = true;
     state.selectedOrganizerType = ch.organizerType || "suma";
-    state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "" };
+    state.orgInputs = {
+      tot: "",
+      part1: "",
+      part2: "",
+      part: "",
+      brace: "",
+      totLabel: "",
+      part1Label: "",
+      part2Label: "",
+      partLabel: "",
+      braceLabel: ""
+    };
     state.step1 = { a: "", op: ch.expectedOp || "+", b: "" };
     state.step2 = { a: "", op: "+", b: "" };
     if (ch.defaultShape) {
@@ -902,115 +913,181 @@
     `;
   }
 
+  function buildLabelSelectHTML(selectId, currentVal, optionsList, placeholderText) {
+    const optsHTML = optionsList.map(opt => `
+      <option value="${opt}" ${currentVal === opt ? "selected" : ""}>${opt}</option>
+    `).join("");
+    return `
+      <select id="${selectId}" class="tot-part-label-select ${currentVal ? "selected-ok" : ""}" aria-label="${placeholderText}">
+        <option value="">${placeholderText}</option>
+        ${optsHTML}
+      </select>
+    `;
+  }
+
   function renderGeneralProblemStageHTML(ch, prevProbInput) {
     const activeModel = state.selectedOrganizerType || ch.organizerType || "suma";
     const org = ch.organizerData || {};
     const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
     const matchesProblemModel = activeModel === ch.organizerType;
+    const inp = state.orgInputs || {};
+
+    // Llista d'opcions de conceptes (què representa cada part/tot) ordenada alfabèticament perquè no surti sempre en el mateix ordre
+    const rawConceptLabels = (ch.organizerType === "suma" || ch.organizerType === "resta")
+      ? [org.totLabel, org.part1Label, org.part2Label].filter(Boolean)
+      : [org.totLabel, org.partLabel, org.braceLabel].filter(Boolean);
+    const labelOptions = [...rawConceptLabels].sort((a, b) => a.localeCompare(b, "ca"));
+
+    // Targetes de dades i conceptes del problema (per ajudar l'alumne a identificar què ha de col·locar)
+    const problemNumbers = [ch.num1, ch.num2, "?"];
+    const cardsTrayHTML = `
+      <div class="organizer-cards-tray">
+        <span style="font-size:0.8rem; font-weight:900; color:#581C87;">🃏 Dades per col·locar:</span>
+        ${problemNumbers.map(v => `
+          <span class="org-concept-card ${v === "?" ? "qmark-card" : "num-card"}">
+            ${v === "?" ? "❓ Incògnita: ?" : `🔢 Quantitat: ${v}`}
+          </span>
+        `).join("")}
+        <span style="font-size:0.8rem; font-weight:900; color:#581C87; margin-left:0.35rem;">🏷️ Què representa:</span>
+        ${labelOptions.map(lbl => `
+          <span class="org-concept-card">🟣 ${lbl}</span>
+        `).join("")}
+      </div>
+    `;
 
     // Càlcul de l'operació escrita a la caixa d'operació
     const res1 = computeStepResult(state.step1);
 
-    // Construeix l'organitzador interactiu amb les dades del problema a la dreta
-    const totIsUnknown = org.totVal === "?";
-    const totNodeContent = totIsUnknown
-      ? `<span class="tot-part-qmark">?</span>`
-      : `<input type="number" id="orgTotInput" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.tot ?? ""}" aria-label="Valor del TOT" />`;
+    // Cercle superior TOT (l'alumne hi escriu el número o '?' i tria què representa al desplegable)
+    const totValStr = String(inp.tot ?? "").trim();
+    const totIsQ = totValStr === "?";
+    const totCircleStateClass = totIsQ ? "unknown-circle" : (totValStr !== "" ? "known-circle" : "");
+
+    const totSectionHTML = `
+      <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
+        ${buildLabelSelectHTML("orgTotLabelSelect", inp.totLabel || "", labelOptions, "📋 Què representa el TOT?")}
+        <div class="tot-part-purple-title">TOT</div>
+        <div class="tot-part-circle ${totCircleStateClass}">
+          <input type="text" inputmode="numeric" id="orgTotInput"
+                 class="tot-part-circle-input ${totIsQ ? "is-qmark-input" : ""}"
+                 placeholder="Núm / ?" value="${totValStr}" aria-label="Quantitat del TOT o interrogant" />
+        </div>
+        <button type="button" class="circle-qmark-btn ${totIsQ ? "active" : ""}" data-set-qmark="tot" title="Marca el TOT com la incògnita (?)">
+          ${totIsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
+        </button>
+      </div>
+    `;
 
     let interactiveBottomHTML = "";
     if (!isMulti) {
-      const p1IsUnknown = org.part1Val === "?";
-      const p2IsUnknown = org.part2Val === "?";
-
-      const p1Content = p1IsUnknown
-        ? `<span class="tot-part-qmark">?</span>`
-        : `<input type="number" id="orgPart1Input" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.part1 ?? ""}" aria-label="Valor de la Part 1" />`;
-
-      const p2Content = p2IsUnknown
-        ? `<span class="tot-part-qmark">?</span>`
-        : `<input type="number" id="orgPart2Input" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.part2 ?? ""}" aria-label="Valor de la Part 2" />`;
+      const p1ValStr = String(inp.part1 ?? "").trim();
+      const p2ValStr = String(inp.part2 ?? "").trim();
+      const p1IsQ = p1ValStr === "?";
+      const p2IsQ = p2ValStr === "?";
+      const p1CircleClass = p1IsQ ? "unknown-circle" : (p1ValStr !== "" ? "known-circle" : "");
+      const p2CircleClass = p2IsQ ? "unknown-circle" : (p2ValStr !== "" ? "known-circle" : "");
 
       interactiveBottomHTML = `
-        <svg viewBox="0 0 280 44" style="width:100%; max-width:280px; height:44px; display:block; margin:0 auto;">
-          <line x1="140" y1="2" x2="65" y2="42" stroke="#1E293B" stroke-width="3" />
-          <line x1="140" y1="2" x2="215" y2="42" stroke="#1E293B" stroke-width="3" />
+        <svg viewBox="0 0 280 42" style="width:100%; max-width:280px; height:42px; display:block; margin:0 auto;">
+          <line x1="140" y1="2" x2="65" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="140" y1="2" x2="215" y2="40" stroke="#1E293B" stroke-width="3" />
         </svg>
-        <div style="display:flex; justify-content:center; gap:2.6rem; align-items:flex-start;">
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
-            <div class="tot-part-circle ${p1IsUnknown ? "unknown-circle" : "known-circle"}">
-              ${p1Content}
+        <div style="display:flex; justify-content:center; gap:2rem; align-items:flex-start; flex-wrap:wrap;">
+          <!-- PART 1 -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
+            <div class="tot-part-circle ${p1CircleClass}">
+              <input type="text" inputmode="numeric" id="orgPart1Input"
+                     class="tot-part-circle-input ${p1IsQ ? "is-qmark-input" : ""}"
+                     placeholder="Núm / ?" value="${p1ValStr}" aria-label="Quantitat de la Part 1 o interrogant" />
             </div>
+            <button type="button" class="circle-qmark-btn ${p1IsQ ? "active" : ""}" data-set-qmark="part1">
+              ${p1IsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
+            </button>
             <div class="tot-part-purple-title">PART</div>
-            <div class="tot-part-purple-sub">${org.part1Label || ""}</div>
+            ${buildLabelSelectHTML("orgPart1LabelSelect", inp.part1Label || "", labelOptions, "📋 Què representa?")}
           </div>
 
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
-            <div class="tot-part-circle ${p2IsUnknown ? "unknown-circle" : "known-circle"}">
-              ${p2Content}
+          <!-- PART 2 -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
+            <div class="tot-part-circle ${p2CircleClass}">
+              <input type="text" inputmode="numeric" id="orgPart2Input"
+                     class="tot-part-circle-input ${p2IsQ ? "is-qmark-input" : ""}"
+                     placeholder="Núm / ?" value="${p2ValStr}" aria-label="Quantitat de la Part 2 o interrogant" />
             </div>
+            <button type="button" class="circle-qmark-btn ${p2IsQ ? "active" : ""}" data-set-qmark="part2">
+              ${p2IsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
+            </button>
             <div class="tot-part-purple-title">PART</div>
-            <div class="tot-part-purple-sub">${org.part2Label || ""}</div>
+            ${buildLabelSelectHTML("orgPart2LabelSelect", inp.part2Label || "", labelOptions, "📋 Què representa?")}
           </div>
         </div>
       `;
     } else {
-      const partIsUnknown = org.partVal === "?";
-      const braceIsUnknown = org.braceVal === "?";
+      const partValStr = String(inp.part ?? "").trim();
+      const braceValStr = String(inp.brace ?? "").trim();
+      const partIsQ = partValStr === "?";
+      const braceIsQ = braceValStr === "?";
+      const partCircleClass = partIsQ ? "unknown-circle" : (partValStr !== "" ? "known-circle" : "");
 
-      const partContent = partIsUnknown
+      const partMirrorDisplay = partIsQ
         ? `<span class="tot-part-qmark">?</span>`
-        : `<input type="number" id="orgPartInput" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.part ?? ""}" aria-label="Valor de cada PART" />`;
-
-      const partMirrorDisplay = partIsUnknown
-        ? `<span class="tot-part-qmark">?</span>`
-        : `<span style="font-size:1.35rem; font-weight:900; color:#0F172A;">${state.orgInputs?.part || "?"}</span>`;
-
-      const braceContent = braceIsUnknown
-        ? `<span class="tot-part-qmark" style="font-size:1.9rem;">?</span>`
-        : `<input type="number" id="orgBraceInput" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.brace ?? ""}" aria-label="Número de parts" />`;
+        : `<span class="tot-part-MirrorVal" style="font-size:1.3rem; font-weight:900; color:#0F172A;">${partValStr || "·"}</span>`;
 
       interactiveBottomHTML = `
-        <svg viewBox="0 0 320 44" style="width:100%; max-width:320px; height:44px; display:block; margin:0 auto;">
-          <line x1="160" y1="2" x2="50" y2="42" stroke="#1E293B" stroke-width="3" />
-          <line x1="160" y1="2" x2="135" y2="42" stroke="#1E293B" stroke-width="3" />
-          <line x1="160" y1="2" x2="270" y2="42" stroke="#1E293B" stroke-width="3" />
+        <svg viewBox="0 0 320 42" style="width:100%; max-width:320px; height:42px; display:block; margin:0 auto;">
+          <line x1="160" y1="2" x2="50" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="135" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="270" y2="40" stroke="#1E293B" stroke-width="3" />
         </svg>
 
         <div style="display:flex; justify-content:center; gap:0.55rem; align-items:flex-start;">
           <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
-            <div class="tot-part-circle ${partIsUnknown ? "unknown-circle" : "known-circle"}">
-              ${partContent}
+            <div class="tot-part-circle ${partCircleClass}">
+              <input type="text" inputmode="numeric" id="orgPartInput"
+                     class="tot-part-circle-input ${partIsQ ? "is-qmark-input" : ""}"
+                     placeholder="Núm / ?" value="${partValStr}" aria-label="Valor de cada PART o interrogant" />
             </div>
+            <button type="button" class="circle-qmark-btn ${partIsQ ? "active" : ""}" data-set-qmark="part">
+              ${partIsQ ? "❓ Incògnita (?)" : "❓ Posa ?"}
+            </button>
             <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
-            <div class="tot-part-purple-sub">${org.partLabel || ""}</div>
           </div>
 
           <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
-            <div class="tot-part-circle ${partIsUnknown ? "unknown-circle" : "known-circle"}">
+            <div class="tot-part-circle ${partCircleClass}">
               ${partMirrorDisplay}
             </div>
             <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
           </div>
 
-          <span class="tot-part-ellipsis" style="margin-top:1.4rem;">...</span>
+          <span class="tot-part-ellipsis" style="margin-top:1.35rem;">...</span>
 
           <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
-            <div class="tot-part-circle ${partIsUnknown ? "unknown-circle" : "known-circle"}">
+            <div class="tot-part-circle ${partCircleClass}">
               ${partMirrorDisplay}
             </div>
             <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
           </div>
         </div>
 
+        <div style="margin-top:0.25rem; display:flex; justify-content:center;">
+          ${buildLabelSelectHTML("orgPartLabelSelect", inp.partLabel || "", labelOptions, "📋 Què representa cada PART?")}
+        </div>
+
         <!-- Clau horitzontal inferior ⏟ per al número de parts -->
-        <div style="display:flex; flex-direction:column; align-items:center; margin-top:0.2rem;">
+        <div style="display:flex; flex-direction:column; align-items:center; margin-top:0.25rem;">
           <svg viewBox="0 0 300 28" style="width:100%; max-width:290px; height:26px; display:block;">
             <path d="M 15 4 Q 15 15 30 15 L 135 15 Q 150 15 150 26 Q 150 15 165 15 L 270 15 Q 285 15 285 4"
                   fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round" />
           </svg>
-          <div style="display:flex; align-items:center; gap:0.45rem; margin-top:0.15rem;">
-            ${braceContent}
-            <span class="tot-part-purple-title" style="font-size:0.95rem;">${org.braceLabel || ""}</span>
+          <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0.4rem; margin-top:0.15rem;">
+            <input type="text" inputmode="numeric" id="orgBraceInput"
+                   class="tot-part-circle-input ${braceIsQ ? "is-qmark-input" : ""}"
+                   placeholder="Núm / ?" value="${braceValStr}" aria-label="Número de parts o interrogant" />
+            <button type="button" class="circle-qmark-btn ${braceIsQ ? "active" : ""}" data-set-qmark="brace" style="margin-top:0;">
+              ${braceIsQ ? "❓ Incògnita (?)" : "❓ Posa ?"}
+            </button>
+            ${buildLabelSelectHTML("orgBraceLabelSelect", inp.braceLabel || "", labelOptions, "📋 Què indica la clau (⏟)?")}
           </div>
         </div>
       `;
@@ -1054,23 +1131,20 @@
           ${renderTotPartReferenceDiagramHTML(activeModel)}
         </div>
 
-        <!-- COLUMNA DRETA: 2. ORGANITZADOR INTERACTIU AMB LES DADES DEL PROBLEMA + OPERACIÓ -->
+        <!-- COLUMNA DRETA: 2. ORGANITZADOR INTERACTIU AMB DESPLEGABLES I QUANTITATS + OPERACIÓ -->
         <div class="solver-panel-card">
           <div class="panel-header-bar">
-            <span class="panel-title">✍️ Pas 2: Col·loca les Dades a l'Organitzador i Resol</span>
-            <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
-              🪄 Col·loca les dades als cercles
+            <span class="panel-title">✍️ Pas 2: Omple els Cercles (Quantitat o ?) i Tria Què Representen</span>
+            <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.78rem; padding:0.28rem 0.6rem;" title="Ajuda DUA: omple l'organitzador per veure'n l'exemple">
+              🪄 Ajuda: omple l'organitzador
             </button>
           </div>
 
+          ${cardsTrayHTML}
+
           <div class="tot-part-sheet">
             <div style="display:flex; flex-direction:column; align-items:center;">
-              <div class="tot-part-purple-sub">${org.totLabel || ""}</div>
-              <div class="tot-part-purple-title" style="margin-bottom:0.2rem;">TOT</div>
-              <div class="tot-part-circle ${totIsUnknown ? "unknown-circle" : "known-circle"}">
-                ${totNodeContent}
-              </div>
-
+              ${totSectionHTML}
               ${interactiveBottomHTML}
             </div>
           </div>
@@ -1078,7 +1152,7 @@
           <!-- CAIXA D'OPERACIÓ (COM A LA PART INFERIOR DEL PDF) -->
           <div class="tot-part-operation-card">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem;">
-              <strong style="font-size:0.95rem; color:#0F172A;">🧮 Operació del problema:</strong>
+              <strong style="font-size:0.95rem; color:#0F172A;">🧮 Pas 3: Escriu l'Operació i el Resultat:</strong>
               <span class="tot-part-result-pill">
                 🧡 El resultat descobreix el valor de <strong>?</strong>
               </span>
@@ -1266,6 +1340,111 @@
   /* ==========================================================================
      6. VERIFICACIÓ DE REPTES I RETROALIMENTACIÓ FORMATIVA DUA
      ========================================================================== */
+  function validateOrganizerInputs(ch) {
+    const org = ch.organizerData || {};
+    const inp = state.orgInputs || {};
+    const activeModel = state.selectedOrganizerType || ch.organizerType || "suma";
+    const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
+
+    const normVal = (v) => String(v ?? "").trim();
+    const totV = normVal(inp.tot);
+    const totL = normVal(inp.totLabel);
+
+    if (!totV || !totL) {
+      return {
+        complete: false,
+        valid: false,
+        msg: "📋 Abans de comprovar, omple el cercle superior TOT (escriu la quantitat o prem '❓ Posa ?') i tria què representa al desplegable lila!"
+      };
+    }
+
+    if (!isMulti) {
+      const p1V = normVal(inp.part1);
+      const p1L = normVal(inp.part1Label);
+      const p2V = normVal(inp.part2);
+      const p2L = normVal(inp.part2Label);
+
+      if (!p1V || !p1L || !p2V || !p2L) {
+        return {
+          complete: false,
+          valid: false,
+          msg: "📋 Completa els dos cercles de les PARTS amb les seves quantitats (o '?') i selecciona què representa cada PART als desplegables liles!"
+        };
+      }
+
+      const totOk = totV === String(org.totVal) && totL === org.totLabel;
+      if (!totOk) {
+        return {
+          complete: true,
+          valid: false,
+          msg: `🔍 Revisa el cercle superior TOT: has posat "${totV}" (${totL}), però fixa't en quina és la dada total del problema i si ja la sabem o és la incògnita (?).`
+        };
+      }
+
+      // En SUMA i RESTA acceptem les dues parts en qualsevol ordre (esquerra-dreta o dreta-esquerra) sempre que cada quantitat vagi amb la seva etiqueta correcta!
+      const directMatch = (
+        p1V === String(org.part1Val) && p1L === org.part1Label &&
+        p2V === String(org.part2Val) && p2L === org.part2Label
+      );
+      const swappedMatch = (
+        p1V === String(org.part2Val) && p1L === org.part2Label &&
+        p2V === String(org.part1Val) && p2L === org.part1Label
+      );
+
+      if (!directMatch && !swappedMatch) {
+        return {
+          complete: true,
+          valid: false,
+          msg: "🔍 Revisa els cercles de les PARTS: comprova que cada número (o '?') estigui aparellat amb el desplegable correcte del que representa!"
+        };
+      }
+
+      return { complete: true, valid: true, msg: "" };
+    } else {
+      const partV = normVal(inp.part);
+      const partL = normVal(inp.partLabel);
+      const braceV = normVal(inp.brace);
+      const braceL = normVal(inp.braceLabel);
+
+      if (!partV || !partL || !braceV || !braceL) {
+        return {
+          complete: false,
+          valid: false,
+          msg: "📋 Completa el cercle PART i la clau inferior (⏟) amb les seves quantitats (o '?') i tria què representen als desplegables liles!"
+        };
+      }
+
+      const totOk = totV === String(org.totVal) && totL === org.totLabel;
+      if (!totOk) {
+        return {
+          complete: true,
+          valid: false,
+          msg: `🔍 Revisa el cercle superior TOT: comprova si el TOT és conegut o és la incògnita (?) i quina etiqueta li correspon.`
+        };
+      }
+
+      const partOk = partV === String(org.partVal) && partL === org.partLabel;
+      if (!partOk) {
+        return {
+          complete: true,
+          valid: false,
+          msg: `🔍 Revisa els cercles PART: fixa't en quin és el valor de CADA part igual (o si és '?') i què representa.`
+        };
+      }
+
+      const braceOk = braceV === String(org.braceVal) && braceL === org.braceLabel;
+      if (!braceOk) {
+        return {
+          complete: true,
+          valid: false,
+          msg: `🔍 Revisa la clau inferior (⏟): indica el número de parts iguals en què es repeteix o reparteix!`
+        };
+      }
+
+      return { complete: true, valid: true, msg: "" };
+    }
+  }
+
   function verifyCurrentChallenge() {
     const ch = getCurrentChallenge();
     if (!ch) return;
@@ -1405,6 +1584,18 @@
         feedbackMsg = `🔍 ${userVal} no és la quantitat exacta. Prem el botó '🪄 Reparteix els ${ch.totalQuantity} dins de les parts' per veure quant val cada part!`;
       }
     } else if (ch.type === "general_problem") {
+      // 1. Primer validem que l'Organitzador Gràfic TOT - PART (quantitats/? i desplegables de què representa) estigui complet i correcte
+      const orgCheck = validateOrganizerInputs(ch);
+      if (!orgCheck.complete) {
+        showFeedbackBanner(false, orgCheck.msg);
+        return;
+      }
+      if (!orgCheck.valid) {
+        handleMistake(orgCheck.msg);
+        return;
+      }
+
+      // 2. A continuació validem l'operació i el resultat final
       let userVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
       const calcVal = computeStepResult(state.step1);
       if (isNaN(userVal) && calcVal !== null) {
@@ -1413,17 +1604,17 @@
         if (ansEl) ansEl.value = userVal;
       }
       if (isNaN(userVal)) {
-        showFeedbackBanner(false, "✍️ Completa l'operació o escriu el resultat a la casella abans de comprovar!");
+        showFeedbackBanner(false, "✍️ Molt bé l'organitzador! Ara completa l'operació o escriu el resultat a la casella final abans de comprovar!");
         return;
       }
       if (Math.abs(userVal - ch.targetNumber) < 0.01) {
         isCorrect = true;
         const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
         const opSymDisplay = ch.expectedOp === "*" ? "×" : ch.expectedOp === "/" ? ":" : ch.expectedOp;
-        feedbackMsg = `🌟 Problema resolt amb l'esquema de ${modelInfo.title}! ${ch.num1} ${opSymDisplay} ${ch.num2} = ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+        feedbackMsg = `🌟 Excel·lent! Has completat l'organitzador de ${modelInfo.title} (quantitats i etiquetes) i l'operació: ${ch.num1} ${opSymDisplay} ${ch.num2} = ${ch.targetNumber} ${ch.unitLabel || ""}.`;
       } else {
         const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
-        feedbackMsg = `🔍 ${userVal} no és el resultat exacte. Fixa't que és un problema de ${modelInfo.title}: prem "🪄 Col·loca les dades als cercles" o consulta les pistes graduades!`;
+        feedbackMsg = `🔍 L'organitzador de ${modelInfo.title} està molt bé, però el resultat de l'operació (${userVal}) no és exacte. Revisa el càlcul!`;
       }
     }
 
@@ -2074,6 +2265,18 @@
         return;
       }
 
+      const qmarkBtn = e.target.closest("[data-set-qmark]");
+      if (qmarkBtn) {
+        playMagicSound("click");
+        const fieldKey = qmarkBtn.dataset.setQmark;
+        if (!state.orgInputs) {
+          state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "", totLabel: "", part1Label: "", part2Label: "", partLabel: "", braceLabel: "" };
+        }
+        state.orgInputs[fieldKey] = state.orgInputs[fieldKey] === "?" ? "" : "?";
+        refreshCurrentActiveView();
+        return;
+      }
+
       if (e.target.closest("#btnAutoFillOrganizer")) {
         playMagicSound("spell");
         const ch = getCurrentChallenge();
@@ -2081,11 +2284,16 @@
           state.selectedOrganizerType = ch.organizerType || "suma";
           const od = ch.organizerData;
           state.orgInputs = {
-            tot: od.totVal !== "?" && od.totVal !== undefined ? String(od.totVal) : "",
-            part1: od.part1Val !== "?" && od.part1Val !== undefined ? String(od.part1Val) : "",
-            part2: od.part2Val !== "?" && od.part2Val !== undefined ? String(od.part2Val) : "",
-            part: od.partVal !== "?" && od.partVal !== undefined ? String(od.partVal) : "",
-            brace: od.braceVal !== "?" && od.braceVal !== undefined ? String(od.braceVal) : ""
+            tot: od.totVal !== undefined ? String(od.totVal) : "",
+            part1: od.part1Val !== undefined ? String(od.part1Val) : "",
+            part2: od.part2Val !== undefined ? String(od.part2Val) : "",
+            part: od.partVal !== undefined ? String(od.partVal) : "",
+            brace: od.braceVal !== undefined ? String(od.braceVal) : "",
+            totLabel: od.totLabel || "",
+            part1Label: od.part1Label || "",
+            part2Label: od.part2Label || "",
+            partLabel: od.partLabel || "",
+            braceLabel: od.braceLabel || ""
           };
           state.step1 = {
             a: String(ch.num1 ?? ""),
@@ -2101,16 +2309,43 @@
       }
     });
 
-    // Actualització en temps real dels cercles de l'Organitzador TOT-PART i de la Caixa d'Operació
+    // Actualització en temps real dels cercles, desplegables d'etiquetes i Caixa d'Operació de l'Organitzador TOT-PART
     function handleStepCalcChange(e) {
       const id = e.target.id;
+      if (!state.orgInputs) {
+        state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "", totLabel: "", part1Label: "", part2Label: "", partLabel: "", braceLabel: "" };
+      }
+
       if (["orgTotInput", "orgPart1Input", "orgPart2Input", "orgPartInput", "orgBraceInput"].includes(id)) {
-        if (!state.orgInputs) state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "" };
-        if (id === "orgTotInput") state.orgInputs.tot = e.target.value;
-        if (id === "orgPart1Input") state.orgInputs.part1 = e.target.value;
-        if (id === "orgPart2Input") state.orgInputs.part2 = e.target.value;
-        if (id === "orgPartInput") state.orgInputs.part = e.target.value;
-        if (id === "orgBraceInput") state.orgInputs.brace = e.target.value;
+        const val = e.target.value.trim();
+        if (id === "orgTotInput") state.orgInputs.tot = val;
+        if (id === "orgPart1Input") state.orgInputs.part1 = val;
+        if (id === "orgPart2Input") state.orgInputs.part2 = val;
+        if (id === "orgPartInput") {
+          state.orgInputs.part = val;
+          document.querySelectorAll(".tot-part-MirrorVal").forEach(el => {
+            el.textContent = val || "·";
+          });
+        }
+        if (id === "orgBraceInput") state.orgInputs.brace = val;
+
+        const parentCircle = e.target.closest(".tot-part-circle");
+        if (parentCircle) {
+          parentCircle.classList.toggle("unknown-circle", val === "?");
+          parentCircle.classList.toggle("known-circle", val !== "" && val !== "?");
+        }
+        e.target.classList.toggle("is-qmark-input", val === "?");
+        return;
+      }
+
+      if (["orgTotLabelSelect", "orgPart1LabelSelect", "orgPart2LabelSelect", "orgPartLabelSelect", "orgBraceLabelSelect"].includes(id)) {
+        const val = e.target.value;
+        if (id === "orgTotLabelSelect") state.orgInputs.totLabel = val;
+        if (id === "orgPart1LabelSelect") state.orgInputs.part1Label = val;
+        if (id === "orgPart2LabelSelect") state.orgInputs.part2Label = val;
+        if (id === "orgPartLabelSelect") state.orgInputs.partLabel = val;
+        if (id === "orgBraceLabelSelect") state.orgInputs.braceLabel = val;
+        e.target.classList.toggle("selected-ok", Boolean(val));
         return;
       }
 
