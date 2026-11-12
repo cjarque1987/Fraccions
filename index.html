@@ -70,9 +70,31 @@
     </section>
   </header>
 
-  <!-- NAVEGACIÓ PRINCIPAL DELS 7 APARTATS -->
-  <nav class="main-nav" aria-label="Apartats de fraccions">
-    <ul class="nav-tabs" id="moduleTabs">
+  <!-- SELECTOR SUPERIOR DELS DOS GRANS BLOCS: FRACCIONS vs RESOLUCIÓ DE PROBLEMES -->
+  <div class="main-area-bar" role="navigation" aria-label="Blocs principals de la web">
+    <div class="main-area-inner" id="mainAreaSwitcher">
+      <button type="button" class="main-area-btn active" data-area="fraccions">
+        <span class="area-icon">🍕</span>
+        <div class="area-text">
+          <strong>APARTAT 1: FRACCIONS</strong>
+          <span>Identificació, Comparació, Equivalències, Transformació i Problemes</span>
+        </div>
+      </button>
+
+      <button type="button" class="main-area-btn area-operacions-btn" data-area="operacions">
+        <span class="area-icon">🧠</span>
+        <div class="area-text">
+          <strong>APARTAT 2: RESOLUCIÓ DE PROBLEMES (OPERACIONS)</strong>
+          <span>Organitzador TOT-PART: Suma, Resta, Multiplicació, Divisió i 2 Operacions</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓ SECUNDÀRIA DELS SUB-APARTATS -->
+  <nav class="main-nav" aria-label="Subapartats del bloc actiu">
+    <!-- SUB-APARTATS DE FRACCIONS -->
+    <ul class="nav-tabs" id="moduleTabsFraccions">
       <li>
         <button type="button" class="nav-tab" data-module="grimori">
           📖 Guia i Conceptes
@@ -100,17 +122,51 @@
       </li>
       <li>
         <button type="button" class="nav-tab" data-module="problemes">
-          🛒 5. Problemes Fraccions <span class="tab-progress" id="prog-problemes">0/15</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab special-problem-tab" data-module="resolucio_problemes">
-          🧠 6. Resolució de Problemes (Operacions) <span class="tab-progress" id="prog-resolucio_problemes">0/15</span>
+          🛒 5. Problemes de Fraccions <span class="tab-progress" id="prog-problemes">0/15</span>
         </button>
       </li>
       <li>
         <button type="button" class="nav-tab" data-module="forja">
           🧪 Laboratori Lliure
+        </button>
+      </li>
+    </ul>
+
+    <!-- SUB-APARTATS DE RESOLUCIÓ DE PROBLEMES (OPERACIONS) -->
+    <ul class="nav-tabs" id="moduleTabsOperacions" style="display: none;">
+      <li>
+        <button type="button" class="nav-tab" data-module="guia_operacions">
+          📖 1. Guia i Conceptes
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="prob_suma">
+          ➕ 2. Problemes Suma <span class="tab-progress" id="prog-prob_suma">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="prob_resta">
+          ➖ 3. Problemes Resta <span class="tab-progress" id="prog-prob_resta">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="prob_multiplicacio">
+          ✖️ 4. Problemes Multiplicació <span class="tab-progress" id="prog-prob_multiplicacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="prob_div_partitiva">
+          ➗ 5. Problemes Divisió Partitiva <span class="tab-progress" id="prog-prob_div_partitiva">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="prob_div_quotativa">
+          📦 6. Problemes Divisió Quotativa <span class="tab-progress" id="prog-prob_div_quotativa">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab special-problem-tab" data-module="prob_barrejats">
+          🔀 7. Problemes (Barrejats i 2 Operacions) <span class="tab-progress" id="prog-prob_barrejats">0/15</span>
         </button>
       </li>
     </ul>
@@ -120,12 +176,12 @@
   <main class="app-container">
 
     <!-- =========================================================================
-         VISTA 1: GUIA I CONCEPTES BÀSICS (TEORIA INTERACTIVA I SIMULADOR)
+         VISTA 1A: GUIA I CONCEPTES DE FRACCIONS
          ========================================================================= -->
     <section id="grimoriSection" class="grimori-view" style="display: none;" aria-label="Guia de les fraccions i les equivalències">
       <div class="grimori-hero-banner">
         <div>
-          <span class="epic-tag">📚 Guia Visual i Manipulativa · 6è de Primària</span>
+          <span class="epic-tag">📚 Guia Visual i Manipulativa · Fraccions (6è de Primària)</span>
           <h2>Com funcionen les Fraccions i les Equivalències al Dia a Dia?</h2>
           <p>Descobreix com utilitzem les fraccions quan anem a comprar al supermercat, repartim una pizza o seguim una recepta de cuina!</p>
         </div>
@@ -134,13 +190,12 @@
         </button>
       </div>
 
-      <!-- Pestanyes dels 5 apartats teòrics -->
+      <!-- Pestanyes dels 4 apartats teòrics de fraccions -->
       <div class="grimori-chapter-tabs" role="tablist">
         <button type="button" class="grimori-tab active" data-chapter="concepte">1️⃣ Què és una Fracció?</button>
         <button type="button" class="grimori-tab" data-chapter="tipus">2️⃣ Pròpies, Impròpies i Mixtos</button>
         <button type="button" class="grimori-tab" data-chapter="equivalents">3️⃣ Fraccions Equivalents</button>
         <button type="button" class="grimori-tab" data-chapter="transformar">4️⃣ Amplificar i Simplificar</button>
-        <button type="button" class="grimori-tab" data-chapter="organitzador_problemes">5️⃣ Organitzador de Problemes (TOT-PART)</button>
       </div>
 
       <!-- Contingut dinàmic + Simulador en viu -->
@@ -173,6 +228,42 @@
           <div class="grimori-sim-Comparison" id="grimoriSimCanvas">
             <!-- Es renderitza automàticament la fracció base i la seva equivalent multiplicada -->
           </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VISTA 1B: GUIA I CONCEPTES DE RESOLUCIÓ DE PROBLEMES (ORGANITZADOR TOT-PART)
+         ========================================================================= -->
+    <section id="operacionsGuideSection" class="grimori-view" style="display: none;" aria-label="Guia de l'Organitzador de Problemes TOT - PART">
+      <div class="grimori-hero-banner" style="background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 55%, #C026D3 100%);">
+        <div>
+          <span class="epic-tag">🧠 Guia Visual · Organitzador Gràfic TOT - PART (6è de Primària)</span>
+          <h2>Com resolem els Problemes amb l'Organitzador TOT - PART?</h2>
+          <p>Abans de fer cap operació, identifiquem quines dades són les <strong>PARTS</strong> i quina és el <strong>TOT</strong>, posem <strong>✓</strong> al que sabem i <strong>?</strong> al que volem esbrinar!</p>
+        </div>
+        <button type="button" class="tts-btn" id="btnSpeakOperacionsGuideIntro">
+          🔊 Escolta l'explicació
+        </button>
+      </div>
+
+      <!-- Pestanyes dels 6 models d'organitzador de problemes -->
+      <div class="grimori-chapter-tabs" id="opGuideTabs" role="tablist">
+        <button type="button" class="grimori-tab op-guide-tab active" data-op-chapter="suma">➕ 1. SUMA</button>
+        <button type="button" class="grimori-tab op-guide-tab" data-op-chapter="resta">➖ 2. RESTA</button>
+        <button type="button" class="grimori-tab op-guide-tab" data-op-chapter="multiplicacio">✖️ 3. MULTIPLICACIÓ</button>
+        <button type="button" class="grimori-tab op-guide-tab" data-op-chapter="divisio_partitiva">➗ 4. DIVISIÓ PARTITIVA</button>
+        <button type="button" class="grimori-tab op-guide-tab" data-op-chapter="divisio_quotativa">📦 5. DIVISIÓ QUOTATIVA</button>
+        <button type="button" class="grimori-tab op-guide-tab" data-op-chapter="dues_operacions">🔀 6. Problemes de 2 Operacions</button>
+      </div>
+
+      <div class="grimori-content-grid">
+        <article class="grimori-lesson-card" id="opGuideLessonCard" aria-live="polite">
+          <!-- Renderitzat dinàmic des d'app.js -->
+        </article>
+
+        <aside class="grimori-simulator-card" id="opGuideDiagramCard" aria-label="Esquema visual de l'organitzador TOT - PART">
+          <!-- Renderitza l'esquema TOT-PART i l'exemple pas a pas -->
         </aside>
       </div>
     </section>
@@ -358,13 +449,22 @@
         <label for="printModuleSelect">📚 Apartat d'exercicis:</label>
         <select id="printModuleSelect" class="print-select">
           <option value="current">Apartat actual obert</option>
-          <option value="identificacio">🍕 1. Identificació i Representació</option>
-          <option value="comparacio">⚖️ 2. Comparació de Fraccions</option>
-          <option value="equivalencia">🍫 3. Equivalències Visuals</option>
-          <option value="transformacio">🔄 4. Transformació (Amplificar i Simplificar)</option>
-          <option value="problemes">🛒 5. Problemes de Fraccions</option>
-          <option value="resolucio_problemes">🧠 6. Resolució de Problemes (Operacions fora de fraccions)</option>
-          <option value="all">🌟 Tots els 6 apartats complets</option>
+          <optgroup label="🍕 Apartat 1: Fraccions">
+            <option value="identificacio">🍕 1. Identificació i Representació</option>
+            <option value="comparacio">⚖️ 2. Comparació de Fraccions</option>
+            <option value="equivalencia">🍫 3. Equivalències</option>
+            <option value="transformacio">🔄 4. Transformació</option>
+            <option value="problemes">🛒 5. Problemes de Fraccions</option>
+          </optgroup>
+          <optgroup label="🧠 Apartat 2: Resolució de Problemes (Operacions)">
+            <option value="prob_suma">➕ 2. Problemes Suma</option>
+            <option value="prob_resta">➖ 3. Problemes Resta</option>
+            <option value="prob_multiplicacio">✖️ 4. Problemes Multiplicació</option>
+            <option value="prob_div_partitiva">➗ 5. Problemes Divisió Partitiva</option>
+            <option value="prob_div_quotativa">📦 6. Problemes Divisió Quotativa</option>
+            <option value="prob_barrejats">🔀 7. Problemes (Barrejats i 2 Operacions)</option>
+          </optgroup>
+          <option value="all">🌟 Tots els apartats complets</option>
         </select>
       </div>
 

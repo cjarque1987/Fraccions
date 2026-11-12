@@ -9,11 +9,13 @@
 
   // Estat global de l'aplicació
   const state = {
-    currentModule: "identificacio", // grimori | identificacio | comparacio | equivalencia | transformacio | problemes | forja
+    currentMainArea: "fraccions",   // "fraccions" | "operacions"
+    currentModule: "identificacio", // grimori | identificacio | comparacio | equivalencia | transformacio | problemes | forja | guia_operacions | prob_suma | prob_resta | prob_multiplicacio | prob_div_partitiva | prob_div_quotativa | prob_barrejats
     currentLevel: 1,                // 1, 2, 3
     currentIndex: 0,                // 0..4
     currentShape: "circle",         // circle | bar | grid | line
     grimoriChapter: "concepte",
+    opGuideChapter: "suma",
 
     // Gamificació
     stars: 0,
@@ -742,19 +744,31 @@
     updateNavProgressBadges();
 
     const grimoriSec = document.getElementById("grimoriSection");
+    const opGuideSec = document.getElementById("operacionsGuideSection");
     const missionView = document.getElementById("missionWorkspaceView");
     const forjaSec = document.getElementById("forjaSection");
 
     if (state.currentModule === "grimori") {
       grimoriSec.style.display = "block";
+      if (opGuideSec) opGuideSec.style.display = "none";
       missionView.style.display = "none";
       forjaSec.style.display = "none";
       renderGrimoriView();
       return;
     }
 
+    if (state.currentModule === "guia_operacions") {
+      grimoriSec.style.display = "none";
+      if (opGuideSec) opGuideSec.style.display = "block";
+      missionView.style.display = "none";
+      forjaSec.style.display = "none";
+      renderOperacionsGuideView();
+      return;
+    }
+
     if (state.currentModule === "forja") {
       grimoriSec.style.display = "none";
+      if (opGuideSec) opGuideSec.style.display = "none";
       missionView.style.display = "none";
       forjaSec.style.display = "block";
       renderForjaView();
@@ -762,6 +776,7 @@
     }
 
     grimoriSec.style.display = "none";
+    if (opGuideSec) opGuideSec.style.display = "none";
     missionView.style.display = "block";
     forjaSec.style.display = "none";
 
@@ -1149,14 +1164,39 @@
             </div>
           </div>
 
-          <!-- CAIXA D'OPERACIÓ (COM A LA PART INFERIOR DEL PDF) -->
+          <!-- CAIXA D'OPERACIÓ (1 OPERACIÓ O 2 OPERACIONS SEGONS EL PROBLEMA) -->
           <div class="tot-part-operation-card">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem;">
-              <strong style="font-size:0.95rem; color:#0F172A;">🧮 Pas 3: Escriu l'Operació i el Resultat:</strong>
+              <strong style="font-size:0.95rem; color:#0F172A;">
+                🧮 ${ch.isTwoStep ? "Pas 3: Resol les 2 Operacions del Problema:" : "Pas 3: Escriu l'Operació i el Resultat:"}
+              </strong>
               <span class="tot-part-result-pill">
                 🧡 El resultat descobreix el valor de <strong>?</strong>
               </span>
             </div>
+
+            ${ch.isTwoStep ? `
+              <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; padding:0.55rem 0.75rem;">
+                <div style="font-size:0.8rem; font-weight:900; color:#1E40AF; margin-bottom:0.35rem;">
+                  1️⃣ Primera operació (calcula la dada intermèdia):
+                </div>
+                <div class="tot-part-op-equation" style="justify-content:flex-start;">
+                  <input type="number" id="step2A" class="step-calc-input" placeholder="Núm 1" value="${state.step2.a}" aria-label="Primer número del pas 1" />
+                  <select id="step2Op" class="step-calc-select" aria-label="Operació del pas 1">
+                    <option value="+" ${state.step2.op === "+" ? "selected" : ""}>+</option>
+                    <option value="-" ${state.step2.op === "-" ? "selected" : ""}>−</option>
+                    <option value="*" ${state.step2.op === "*" ? "selected" : ""}>×</option>
+                    <option value="/" ${state.step2.op === "/" ? "selected" : ""}>:</option>
+                  </select>
+                  <input type="number" id="step2B" class="step-calc-input" placeholder="Núm 2" value="${state.step2.b}" aria-label="Segon número del pas 1" />
+                  <span style="font-weight:900;">=</span>
+                  <span class="step-calc-result" id="step2ResBadge">${computeStepResult(state.step2) !== null ? computeStepResult(state.step2) : "?"}</span>
+                </div>
+              </div>
+              <div style="font-size:0.8rem; font-weight:900; color:#7E22CE; margin-top:0.15rem;">
+                2️⃣ Segona operació (resol la incògnita ? de l'organitzador):
+              </div>
+            ` : ""}
 
             <div class="tot-part-op-equation">
               <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" aria-label="Primer número de l'operació" />
@@ -1764,6 +1804,87 @@
   }
 
   /* ==========================================================================
+     7B. GUIA I CONCEPTES D'OPERACIONS I ORGANITZADOR TOT - PART
+     ========================================================================== */
+  function renderOperacionsGuideView() {
+    const chKey = state.opGuideChapter || "suma";
+    document.querySelectorAll(".op-guide-tab").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.opChapter === chKey);
+    });
+
+    const lessonCard = document.getElementById("opGuideLessonCard");
+    const diagramCard = document.getElementById("opGuideDiagramCard");
+    if (!lessonCard || !diagramCard) return;
+
+    if (chKey === "dues_operacions") {
+      lessonCard.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+          <span class="challenge-badge">🔀 Problemes de 2 Operacions</span>
+          <button type="button" class="tts-btn" id="btnSpeakOpGuideChapter">🔊 Escolta l'explicació</button>
+        </div>
+        <h3>🔀 Com resolem Problemes amb 2 Operacions?</h3>
+        <p>En moltes situacions quotidianes (com pagar més d'un producte al supermercat i calcular el canvi, o collir fruita al matí i a la tarda i repartir-la en caixes), abans de trobar la resposta final necessitem <strong>calcular una dada intermèdia</strong>:</p>
+        <div class="formula-highlight-box" style="border-left: 5px solid #7C3AED;">
+          <strong>1️⃣ Pas 1 (Primera operació):</strong> Calculem la dada que ens falta per poder omplir l'organitzador.<br/>
+          <em>Exemple:</em> Si comprem pinso de 18 € i detergent de 14 €, primer sumem la despesa: <strong>18 + 14 = 32 € gastats</strong>.
+        </div>
+        <div class="formula-highlight-box" style="border-left: 5px solid #EA580C;">
+          <strong>2️⃣ Pas 2 (Organitzador TOT-PART i Segona operació):</strong> Col·loquem el resultat del Pas 1 dins de l'organitzador i resolem la incògnita <strong>(?)</strong>.<br/>
+          <em>Exemple:</em> El TOT és el bitllet de <strong>50 €</strong>, una PART és els <strong>32 € gastats</strong> i l'altra PART és el canvi <strong>(?)</strong>: <strong>50 − 32 = 18 € de canvi!</strong>
+        </div>
+      `;
+      diagramCard.innerHTML = `
+        <div class="sim-header">
+          <h3>🧭 Esquema de 2 Passos</h3>
+          <span class="sim-subtitle">Exemple del canvi al supermercat (Suma + Resta)</span>
+        </div>
+        ${renderTotPartReferenceDiagramHTML("resta")}
+        <div class="tot-part-operation-card" style="margin-top:0.85rem;">
+          <div><strong>1️⃣ Primera operació:</strong> 18 + 14 = <strong>32 € gastats</strong></div>
+          <div><strong>2️⃣ Segona operació:</strong> 50 − 32 = <strong style="color:#EA580C;">18 € de canvi</strong></div>
+        </div>
+      `;
+      document.getElementById("btnSpeakOpGuideChapter")?.addEventListener("click", () => {
+        speakCatalan("Problemes de dues operacions. En el primer pas calculem la dada intermèdia que ens falta, i en el segon pas la col·loquem a l'organitzador TOT PART per descobrir la incògnita final.");
+      });
+      return;
+    }
+
+    const info = ORGANIZER_MODELS_INFO[chKey] || ORGANIZER_MODELS_INFO.suma;
+    lessonCard.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+        <span class="challenge-badge">🧠 Model d'Organitzador: ${info.title}</span>
+        <button type="button" class="tts-btn" id="btnSpeakOpGuideChapter">🔊 Escolta l'explicació</button>
+      </div>
+      <h3>${info.title}: ${info.subtitle}</h3>
+      <div class="yellow-rule-sticky" style="margin:0.8rem 0;">
+        <strong>📌 Regla d'or d'aquest model:</strong>
+        <ul>
+          ${info.bullets.map(b => `<li>${b}</li>`).join("")}
+        </ul>
+      </div>
+      <div class="formula-highlight-box">
+        <strong>🛒 Exemple pas a pas:</strong><br/>
+        <p style="margin:0.35rem 0;"><em>"${info.exampleProblem}"</em></p>
+        <p style="margin:0.35rem 0; color:#6B21A8; font-weight:800;">🟣 Com omplim l'organitzador:<br/>${info.exampleDetails}</p>
+        <p style="margin:0.35rem 0 0 0; font-size:1.1rem;">🧮 <strong>Operació: ${info.exampleOperation}</strong></p>
+      </div>
+    `;
+
+    diagramCard.innerHTML = `
+      <div class="sim-header">
+        <h3>📊 Esquema Gràfic: ${info.title}</h3>
+        <span class="sim-subtitle">Fixa't en on van els ticks verds (✓ = dada coneguda) i l'interrogant vermell (? = dada que busquem)</span>
+      </div>
+      ${renderTotPartReferenceDiagramHTML(chKey)}
+    `;
+
+    document.getElementById("btnSpeakOpGuideChapter")?.addEventListener("click", () => {
+      speakCatalan(`${info.title}. ${info.subtitle}. ${info.bullets.join(" ")}. Exemple: ${info.exampleProblem}. Operació: ${info.exampleOperation}`);
+    });
+  }
+
+  /* ==========================================================================
      8. LABORATORI LLIURE (COMPARADOR LLIURE + MUR DE TIRES DE FRACCIONS)
      ========================================================================== */
   function renderForjaView() {
@@ -1881,7 +2002,10 @@
   }
 
   function updateNavProgressBadges() {
-    ["identificacio", "comparacio", "equivalencia", "transformacio", "problemes", "resolucio_problemes"].forEach(modKey => {
+    [
+      "identificacio", "comparacio", "equivalencia", "transformacio", "problemes",
+      "prob_suma", "prob_resta", "prob_multiplicacio", "prob_div_partitiva", "prob_div_quotativa", "prob_barrejats"
+    ].forEach(modKey => {
       const badge = document.getElementById(`prog-${modKey}`);
       if (badge) {
         badge.textContent = `${getCompletedCountForModule(modKey)}/15`;
@@ -1915,7 +2039,10 @@
     const lvlSel = document.getElementById("printLevelSelect").value;
 
     const modulesToPrint = modSel === "all"
-      ? ["identificacio", "comparacio", "equivalencia", "transformacio", "problemes", "resolucio_problemes"]
+      ? [
+          "identificacio", "comparacio", "equivalencia", "transformacio", "problemes",
+          "prob_suma", "prob_resta", "prob_multiplicacio", "prob_div_partitiva", "prob_div_quotativa", "prob_barrejats"
+        ]
       : [modSel === "current" ? (CHALLENGES_DATA[state.currentModule] ? state.currentModule : "identificacio") : modSel];
 
     const levelsToPrint = lvlSel === "all"
@@ -1923,12 +2050,17 @@
       : [lvlSel === "current" ? state.currentLevel : Number(lvlSel)];
 
     const moduleTitles = {
-      identificacio: "1. Identificació i Representació de Fraccions",
-      comparacio: "2. Comparació de Fraccions",
-      equivalencia: "3. Fraccions Equivalents",
-      transformacio: "4. Transformació: Amplificació, Simplificació i Nombres Mixtos",
-      problemes: "5. Problemes de Fraccions al Supermercat",
-      resolucio_problemes: "6. Resolució de Problemes (Operacions fora de fraccions)"
+      identificacio: "Fraccions · 1. Identificació i Representació",
+      comparacio: "Fraccions · 2. Comparació",
+      equivalencia: "Fraccions · 3. Equivalències",
+      transformacio: "Fraccions · 4. Transformació",
+      problemes: "Fraccions · 5. Problemes de Fraccions",
+      prob_suma: "Operacions · 2. Problemes Suma",
+      prob_resta: "Operacions · 3. Problemes Resta",
+      prob_multiplicacio: "Operacions · 4. Problemes Multiplicació",
+      prob_div_partitiva: "Operacions · 5. Problemes Divisió Partitiva",
+      prob_div_quotativa: "Operacions · 6. Problemes Divisió Quotativa",
+      prob_barrejats: "Operacions · 7. Problemes (Barrejats i 2 Operacions)"
     };
 
     let itemsHTML = "";
@@ -1939,12 +2071,12 @@
           itemsHTML += `
             <div class="print-exercise-item">
               <div style="font-weight:800; font-size:10.5pt; margin-bottom:4px;">
-                [${moduleTitles[mKey]} · Nivell ${lvl} · Exercici ${idx + 1}] ${ch.title}
+                [${moduleTitles[mKey] || mKey} · Nivell ${lvl} · Exercici ${idx + 1}] ${ch.title}
               </div>
               <div style="font-size:10pt; margin-bottom:8px;">${ch.instruction}</div>
               <div style="display:flex; align-items:center; justify-content:space-between; border-top:1px dashed #CBD5E1; padding-top:8px; font-size:9.5pt;">
-                <span>Espai per dibuixar / calcular les parts:</span>
-                <strong>Resposta: _______ / _______</strong>
+                <span>Espai per dibuixar / organitzador TOT-PART / calcular:</span>
+                <strong>Resposta: _________________</strong>
               </div>
             </div>
           `;
@@ -1956,8 +2088,8 @@
     container.innerHTML = `
       <div class="print-sheet-header">
         <div>
-          <h1 style="font-size:16pt;">🛒 Fraccions al Dia a Dia · Fitxa d'Exercicis (6è de Primària)</h1>
-          <p style="font-size:10pt;">Identificació, Comparació, Equivalències, Transformació i Problemes Quotidians</p>
+          <h1 style="font-size:16pt;">🛒 Fraccions i Resolució de Problemes · Fitxa d'Exercicis (6è de Primària)</h1>
+          <p style="font-size:10pt;">Fraccions Quotidianes i Organitzador Gràfic TOT - PART (Suma, Resta, Multiplicació i Divisió)</p>
         </div>
         <div style="text-align:right; font-size:10pt;">
           <div>Nom i cognoms: _______________________________</div>
@@ -1987,18 +2119,63 @@
       renderForjaView();
     } else if (state.currentModule === "grimori") {
       renderGrimoriView();
+    } else if (state.currentModule === "guia_operacions") {
+      renderOperacionsGuideView();
     } else {
       renderInteractiveStageOnly();
     }
   }
 
   function setupEventListeners() {
-    // Pestanyes dels mòduls
-    document.getElementById("moduleTabs").addEventListener("click", (e) => {
+    // Selector superior dels 2 Grans Apartats: Fraccions vs Resolució de Problemes (Operacions)
+    document.getElementById("mainAreaSwitcher")?.addEventListener("click", (e) => {
+      const areaBtn = e.target.closest(".main-area-btn");
+      if (!areaBtn) return;
+      playMagicSound("click");
+      const targetArea = areaBtn.dataset.area;
+      state.currentMainArea = targetArea;
+
+      document.querySelectorAll(".main-area-btn").forEach(b => {
+        const active = b === areaBtn;
+        b.classList.toggle("active", active);
+        b.setAttribute("aria-selected", String(active));
+      });
+
+      const navFraccions = document.getElementById("moduleTabsFraccions");
+      const navOperacions = document.getElementById("moduleTabsOperacions");
+      if (targetArea === "operacions") {
+        if (navFraccions) navFraccions.style.display = "none";
+        if (navOperacions) navOperacions.style.display = "flex";
+        state.currentModule = "prob_suma";
+      } else {
+        if (navFraccions) navFraccions.style.display = "flex";
+        if (navOperacions) navOperacions.style.display = "none";
+        state.currentModule = "identificacio";
+      }
+
+      document.querySelectorAll(".nav-tab").forEach(b => {
+        b.classList.toggle("active", b.dataset.module === state.currentModule);
+      });
+      state.currentIndex = 0;
+
+      if (CHALLENGES_DATA[state.currentModule]) {
+        loadChallengeIntoBoard();
+      } else {
+        renderMissionHeaderAndStage();
+      }
+    });
+
+    // Pestanyes dels sub-apartats (dins de Fraccions o dins d'Operacions)
+    document.querySelector(".main-nav").addEventListener("click", (e) => {
       const btn = e.target.closest(".nav-tab");
       if (!btn) return;
       playMagicSound("click");
-      document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
+      const parentBar = btn.closest(".nav-tabs-inner");
+      if (parentBar) {
+        parentBar.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
+      } else {
+        document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
+      }
       btn.classList.add("active");
       state.currentModule = btn.dataset.module;
       state.currentIndex = 0;
@@ -2080,13 +2257,26 @@
       document.getElementById("hintDisplayBox").style.display = "flex";
     });
 
-    // Botó d'accés ràpid al Grimori des de qualsevol missió
+    // Botó d'accés ràpid a la Guia i Conceptes des de qualsevol missió
     document.getElementById("btnQuickGrimori").addEventListener("click", () => {
       playMagicSound("click");
-      document.querySelectorAll(".nav-tab").forEach(b => {
-        b.classList.toggle("active", b.dataset.module === "grimori");
-      });
-      state.currentModule = "grimori";
+      if (state.currentMainArea === "operacions") {
+        const ch = getCurrentChallenge();
+        if (ch && ch.isTwoStep) {
+          state.opGuideChapter = "dues_operacions";
+        } else if (ch && ch.organizerType) {
+          state.opGuideChapter = ch.organizerType;
+        }
+        document.querySelectorAll("#moduleTabsOperacions .nav-tab").forEach(b => {
+          b.classList.toggle("active", b.dataset.module === "guia_operacions");
+        });
+        state.currentModule = "guia_operacions";
+      } else {
+        document.querySelectorAll("#moduleTabsFraccions .nav-tab").forEach(b => {
+          b.classList.toggle("active", b.dataset.module === "grimori");
+        });
+        state.currentModule = "grimori";
+      }
       renderMissionHeaderAndStage();
     });
 
@@ -2108,6 +2298,18 @@
 
     document.getElementById("btnSpeakGrimoriIntro").addEventListener("click", () => {
       speakCatalan("Benvingut a la Guia de les Fraccions i les Equivalències en el dia a dia. Tria un dels quatre apartats i experimenta amb el Simulador en Viu!");
+    });
+
+    document.getElementById("btnSpeakOperacionsGuideIntro")?.addEventListener("click", () => {
+      speakCatalan("Guia i Conceptes de Resolució de Problemes. En tots els problemes busquem si ja coneixem el TOT o si ens falta el TOT, i si les parts són iguals o diferents.");
+    });
+
+    document.getElementById("opGuideTabs")?.addEventListener("click", (e) => {
+      const tab = e.target.closest(".op-guide-tab");
+      if (!tab) return;
+      playMagicSound("click");
+      state.opGuideChapter = tab.dataset.opChapter;
+      renderOperacionsGuideView();
     });
 
     // Delegació d'esdeveniments d'interacció manipulativa a l'escenari i a la Forja Lliure
@@ -2252,7 +2454,7 @@
         return;
       }
 
-      // 8. Controls de l'Organitzador Gràfic TOT - PART (Mòdul 6: Resolució de Problemes)
+      // 8. Controls de l'Organitzador Gràfic TOT - PART (Apartat 2: Resolució de Problemes)
       const orgModelBtn = e.target.closest("[data-org-model]");
       if (orgModelBtn) {
         playMagicSound("click");
@@ -2300,10 +2502,22 @@
             op: ch.expectedOp || "+",
             b: String(ch.num2 ?? "")
           };
+          if (ch.isTwoStep && ch.step2Data) {
+            state.step2 = {
+              a: String(ch.step2Data.num1 ?? ""),
+              op: ch.step2Data.op || "+",
+              b: String(ch.step2Data.num2 ?? "")
+            };
+          }
           refreshCurrentActiveView();
           const ansEl = document.getElementById("ansProblemNumInput");
-          const r1 = computeStepResult(state.step1);
-          if (ansEl && r1 !== null) ansEl.value = r1;
+          if (ch.isTwoStep) {
+            const r2 = computeStepResult(state.step2);
+            if (ansEl && r2 !== null) ansEl.value = r2;
+          } else {
+            const r1 = computeStepResult(state.step1);
+            if (ansEl && r1 !== null) ansEl.value = r1;
+          }
         }
         return;
       }
@@ -2354,10 +2568,26 @@
         state.step1.op = document.getElementById("step1Op")?.value ?? state.step1.op;
         state.step1.b = document.getElementById("step1B")?.value ?? state.step1.b;
 
+        if (!state.step2) state.step2 = { a: "", op: "+", b: "" };
+        if (document.getElementById("step2A")) state.step2.a = document.getElementById("step2A").value;
+        if (document.getElementById("step2Op")) state.step2.op = document.getElementById("step2Op").value;
+        if (document.getElementById("step2B")) state.step2.b = document.getElementById("step2B").value;
+
         const r1 = computeStepResult(state.step1);
+        const r2 = computeStepResult(state.step2);
+        const s1Badge = document.getElementById("step1ResBadge");
+        if (s1Badge) s1Badge.textContent = r1 !== null ? r1 : "?";
+        const s2Badge = document.getElementById("step2ResBadge");
+        if (s2Badge) s2Badge.textContent = r2 !== null ? r2 : "?";
+
+        const ch = getCurrentChallenge();
         const ansEl = document.getElementById("ansProblemNumInput");
-        if (ansEl && r1 !== null) {
-          ansEl.value = r1;
+        if (ansEl) {
+          if (ch && ch.isTwoStep) {
+            if (r2 !== null) ansEl.value = r2;
+          } else if (r1 !== null) {
+            ansEl.value = r1;
+          }
         }
       }
     }

@@ -1596,15 +1596,15 @@ const CHALLENGES_DATA = {
   },
 
   /* ------------------------------------------------------------------------
-     MÒDUL 6 (FORA DE LES FRACCIONS): RESOLUCIÓ DE PROBLEMES AMB L'ORGANITZADOR TOT - PART
-     (Suma, Resta, Multiplicació, Divisió Partitiva i Divisió Quotativa)
+     APARTAT 2: RESOLUCIÓ DE PROBLEMES AMB L'ORGANITZADOR TOT - PART
+     2. PROBLEMES DE SUMA (15 problemes en 3 nivells)
      ------------------------------------------------------------------------ */
-  resolucio_problemes: {
+  prob_suma: {
     1: [
       {
-        id: "rp_1_1",
-        title: "Les Bosses de Caramels (Model SUMA)",
-        lore: "ajuntem dues parts per trobar el TOT.",
+        id: "ps_1_1",
+        title: "Les Bosses de Caramels",
+        lore: "Exemple del model SUMA: sabem les dues parts i volem saber el TOT.",
         instruction: "Tinc una bossa amb <strong>5 caramels de maduixa</strong> i una altra bossa amb <strong>3 caramels de menta</strong>. <strong>Quants caramels tinc en total?</strong>",
         type: "general_problem",
         organizerType: "suma",
@@ -1622,120 +1622,120 @@ const CHALLENGES_DATA = {
           part2Val: 3
         },
         hints: [
-          "1r pas (Esquema): Sabem les dues PARTS (5 caramels de maduixa i 3 de menta) i volem saber el TOT (?). És un problema de SUMA!",
-          "2n pas (Organitzador): Posa 5 al primer cercle PART i 3 al segon cercle PART. El cercle superior TOT porta l'interrogant (?).",
+          "1r pas (Esquema): Sabem les dues PARTS (5 de maduixa i 3 de menta) i volem saber el TOT (?).",
+          "2n pas (Organitzador): Posa '?' a TOT (caramels en total), i 5 i 3 als cercles PART amb les seves etiquetes.",
           "3r pas (Operació): 5 + 3 = 8 caramels!"
         ]
       },
       {
-        id: "rp_1_2",
-        title: "Els Ocells a l'Arbre (Model RESTA)",
-        lore: "sabem el TOT i una PART, i busquem l'altra PART.",
-        instruction: "En un arbre hi ha <strong>10 ocells</strong>. Si <strong>4 ocells marxen volant</strong>, <strong>quants ocells queden a l'arbre?</strong>",
+        id: "ps_1_2",
+        title: "Cromos a l'Àlbum de l'Escola",
+        lore: "Ajuntem els cromos que ja teníem amb els del sobre nou.",
+        instruction: "A l'àlbum ja hi tens enganxats <strong>12 cromos d'animals</strong> i avui n'enganxes <strong>7 cromos de plantes</strong>. <strong>Quants cromos tens enganxats ara en total?</strong>",
         type: "general_problem",
-        organizerType: "resta",
-        expectedOp: "-",
-        num1: 10,
-        num2: 4,
-        targetNumber: 6,
-        unitLabel: "ocells",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 12,
+        num2: 7,
+        targetNumber: 19,
+        unitLabel: "cromos",
         organizerData: {
-          totLabel: "ocells a l'arbre",
-          totVal: 10,
-          part1Label: "ocells marxen",
-          part1Val: 4,
-          part2Label: "ocells queden",
-          part2Val: "?"
+          totLabel: "cromos en total",
+          totVal: "?",
+          part1Label: "cromos d'animals",
+          part1Val: 12,
+          part2Label: "cromos de plantes",
+          part2Val: 7
         },
         hints: [
-          "1r pas (Esquema): Sabem el TOT (10 ocells) i una PART (4 ocells que marxen). Volem saber l'altra PART (?). És un problema de RESTA!",
-          "2n pas (Organitzador): Posa 10 al cercle TOT i 4 al primer cercle PART. El segon cercle PART és la incògnita (?).",
-          "3r pas (Operació): 10 - 4 = 6 ocells!"
+          "1r pas: Coneixem les dues parts (12 d'animals i 7 de plantes) i busquem el TOT (?).",
+          "2n pas: Posa '?' al cercle TOT i escriu 12 i 7 als cercles PART.",
+          "3r pas: 12 + 7 = 19 cromos!"
         ]
       },
       {
-        id: "rp_1_3",
-        title: "Comprant Samarretes (Model MULTIPLICACIÓ)",
-        lore: "les parts són iguals i es repeteixen diverses vegades.",
-        instruction: "Una samarreta val <strong>15 euros</strong>. Si me'n compro <strong>2</strong>, <strong>quants diners em gastaré?</strong>",
+        id: "ps_1_3",
+        title: "Les Fruites de la Macedònia",
+        lore: "Preparem postres saludables a la cuina.",
+        instruction: "Per fer una macedònia hi posem <strong>14 maduixes</strong> i <strong>11 rodanxes de plàtan</strong>. <strong>Quants trossos de fruita hi ha en total al bol?</strong>",
         type: "general_problem",
-        organizerType: "multiplicacio",
-        expectedOp: "*",
-        num1: 15,
-        num2: 2,
-        targetNumber: 30,
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 14,
+        num2: 11,
+        targetNumber: 25,
+        unitLabel: "trossos",
+        organizerData: {
+          totLabel: "trossos en total",
+          totVal: "?",
+          part1Label: "maduixes",
+          part1Val: 14,
+          part2Label: "rodanxes de plàtan",
+          part2Val: 11
+        },
+        hints: [
+          "1r pas: Les parts són 14 maduixes i 11 rodanxes de plàtan. Busquem el TOT (?).",
+          "2n pas: Completa els cercles PART amb 14 i 11 i el cercle TOT amb '?'.",
+          "3r pas: 14 + 11 = 25 trossos!"
+        ]
+      },
+      {
+        id: "ps_1_4",
+        title: "Alumnes al Gimnàs",
+        lore: "Activitat conjunta d'Educació Física.",
+        instruction: "Al gimnàs de l'escola hi ha <strong>16 alumnes de 6è A</strong> i <strong>15 alumnes de 6è B</strong>. <strong>Quants alumnes hi ha en total al gimnàs?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 16,
+        num2: 15,
+        targetNumber: 31,
+        unitLabel: "alumnes",
+        organizerData: {
+          totLabel: "alumnes en total",
+          totVal: "?",
+          part1Label: "alumnes de 6è A",
+          part1Val: 16,
+          part2Label: "alumnes de 6è B",
+          part2Val: 15
+        },
+        hints: [
+          "1r pas: Sabem les dues parts (16 de 6è A i 15 de 6è B). Volem trobar el TOT (?).",
+          "2n pas: Escriu '?' a TOT i 16 i 15 a cada PART.",
+          "3r pas: 16 + 15 = 31 alumnes!"
+        ]
+      },
+      {
+        id: "ps_1_5",
+        title: "El Tiquet de la Fleca",
+        lore: "Comprem el pa i la coca per berenar.",
+        instruction: "Al forn de pa em gasto <strong>4 euros en barres de pa</strong> i <strong>9 euros en una coca de xocolata</strong>. <strong>Quants euros pago en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 4,
+        num2: 9,
+        targetNumber: 13,
         unitLabel: "euros",
         organizerData: {
-          totLabel: "diners que gastaré",
+          totLabel: "euros en total",
           totVal: "?",
-          partLabel: "euros cada samarreta",
-          partVal: 15,
-          braceLabel: "samarretes",
-          braceVal: 2
+          part1Label: "euros en barres de pa",
+          part1Val: 4,
+          part2Label: "euros en coca de xocolata",
+          part2Val: 9
         },
         hints: [
-          "1r pas (Esquema): Sabem el valor de cada PART (15 euros) i el número de parts iguals (2 samarretes). Volem saber el TOT (?). És una MULTIPLICACIÓ!",
-          "2n pas (Organitzador): Cada cercle PART val 15 i la clau inferior indica 2 samarretes. El cercle TOT és (?).",
-          "3r pas (Operació): 15 × 2 = 30 euros!"
-        ]
-      },
-      {
-        id: "rp_1_4",
-        title: "Els Llibres dels Prestatges (DIVISIÓ PARTITIVA)",
-        lore: "sabem el TOT i el número de parts iguals; busquem el valor de cada PART.",
-        instruction: "Una escola ha comprat <strong>150 llibres</strong> i els vol repartir en <strong>6 prestatges</strong> a parts iguals. <strong>Quants llibres posarà a cada prestatge?</strong>",
-        type: "general_problem",
-        organizerType: "divisio_partitiva",
-        expectedOp: "/",
-        num1: 150,
-        num2: 6,
-        targetNumber: 25,
-        unitLabel: "llibres",
-        organizerData: {
-          totLabel: "llibres en total",
-          totVal: 150,
-          partLabel: "llibres a cada prestatge",
-          partVal: "?",
-          braceLabel: "prestatges",
-          braceVal: 6
-        },
-        hints: [
-          "1r pas (Esquema): Sabem el TOT (150 llibres) i el número de parts iguals (6 prestatges). Volem saber el valor de cada PART (?). És una DIVISIÓ PARTITIVA!",
-          "2n pas (Organitzador): El cercle TOT val 150 i la clau inferior val 6 prestatges. Els cercles PART tenen l'interrogant (?).",
-          "3r pas (Operació): 150 : 6 = 25 llibres!"
-        ]
-      },
-      {
-        id: "rp_1_5",
-        title: "Les Capses deBombons (DIVISIÓ QUOTATIVA)",
-        lore: "sabem el TOT i el valor de cada part; busquem el número de parts.",
-        instruction: "Tinc <strong>20 bombons</strong> i els vull repartir en capses de manera que a cada capsa hi hagi <strong>5 bombons</strong>. <strong>Quantes capses necessitaré?</strong>",
-        type: "general_problem",
-        organizerType: "divisio_quotativa",
-        expectedOp: "/",
-        num1: 20,
-        num2: 5,
-        targetNumber: 4,
-        unitLabel: "capses",
-        organizerData: {
-          totLabel: "bombons en total",
-          totVal: 20,
-          partLabel: "bombons a cada capsa",
-          partVal: 5,
-          braceLabel: "capses necessitaré",
-          braceVal: "?"
-        },
-        hints: [
-          "1r pas (Esquema): Sabem el TOT (20 bombons) i el valor de cada PART (5 bombons per capsa). Volem saber el número de parts (?) a la clau inferior. És una DIVISIÓ QUOTATIVA!",
-          "2n pas (Organitzador): El cercle TOT és 20, cada cercle PART és 5, i la clau de sota porta l'interrogant (?).",
-          "3r pas (Operació): 20 : 5 = 4 capses!"
+          "1r pas: Sabem les dues parts de la despesa (4 € i 9 €). Volem saber el TOT (?).",
+          "2n pas: Posa '?' al cercle TOT i 4 i 9 als cercles PART.",
+          "3r pas: 4 + 9 = 13 euros!"
         ]
       }
     ],
     2: [
       {
-        id: "rp_2_1",
-        title: "La Compra a la Fruiteria (Model SUMA)",
+        id: "ps_2_1",
+        title: "La Compra a la Fruiteria",
         lore: "Situació quotidiana al mercat municipal.",
         instruction: "Al supermercat hem comprat una bossa amb <strong>24 pomes vermelles</strong> i una altra bossa amb <strong>18 pomes verdes</strong>. <strong>Quantes pomes hem comprat en total?</strong>",
         type: "general_problem",
@@ -1754,14 +1754,390 @@ const CHALLENGES_DATA = {
           part2Val: 18
         },
         hints: [
-          "1r pas (Esquema): Coneixem les dues PARTS (24 pomes vermelles i 18 de verdes) i busquem el TOT (?). Triem SUMA!",
-          "2n pas (Organitzador): Escriu 24 i 18 als cercles de les PARTS.",
-          "3r pas (Operació): 24 + 18 = 42 pomes!"
+          "1r pas: Coneixem les dues PARTS (24 pomes vermelles i 18 de verdes) i busquem el TOT (?).",
+          "2n pas: Escriu 24 i 18 als cercles PART i '?' a TOT.",
+          "3r pas: 24 + 18 = 42 pomes!"
         ]
       },
       {
-        id: "rp_2_2",
-        title: "Els Seients de l'Autocar (Model RESTA)",
+        id: "ps_2_2",
+        title: "Pàgines Llegides de la Novel·la",
+        lore: "Club de lectura de 6è de Primària.",
+        instruction: "Aquest cap de setmana has llegit <strong>36 pàgines dissabte</strong> i <strong>29 pàgines diumenge</strong>. <strong>Quantes pàgines has llegit en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 36,
+        num2: 29,
+        targetNumber: 65,
+        unitLabel: "pàgines",
+        organizerData: {
+          totLabel: "pàgines en total",
+          totVal: "?",
+          part1Label: "pàgines dissabte",
+          part1Val: 36,
+          part2Label: "pàgines diumenge",
+          part2Val: 29
+        },
+        hints: [
+          "1r pas: Les parts són 36 pàgines dissabte i 29 diumenge. Busquem el TOT (?).",
+          "2n pas: Omple els cercles PART amb 36 i 29 i el TOT amb '?'.",
+          "3r pas: 36 + 29 = 65 pàgines!"
+        ]
+      },
+      {
+        id: "ps_2_3",
+        title: "Croissants i Ensaïmades al Forn",
+        lore: "Recompte de brioixeria del matí.",
+        instruction: "El forner ha venut aquest matí <strong>48 croissants</strong> i <strong>35 ensaïmades</strong>. <strong>Quantes peces de brioixeria ha venut en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 48,
+        num2: 35,
+        targetNumber: 83,
+        unitLabel: "peces",
+        organizerData: {
+          totLabel: "peces en total",
+          totVal: "?",
+          part1Label: "croissants",
+          part1Val: 48,
+          part2Label: "ensaïmades",
+          part2Val: 35
+        },
+        hints: [
+          "1r pas: Sabem les dues parts (48 croissants i 35 ensaïmades) i volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT i 48 i 35 a cada PART.",
+          "3r pas: 48 + 35 = 83 peces!"
+        ]
+      },
+      {
+        id: "ps_2_4",
+        title: "Estalvis a les Dues Guardioles",
+        lore: "Comptem els diners estalviats a casa.",
+        instruction: "En Marc té <strong>54 euros en bitllets</strong> i <strong>28 euros en monedes</strong>. <strong>Quants euros té estalviats en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 54,
+        num2: 28,
+        targetNumber: 82,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: "?",
+          part1Label: "euros en bitllets",
+          part1Val: 54,
+          part2Label: "euros en monedes",
+          part2Val: 28
+        },
+        hints: [
+          "1r pas: Les parts són 54 € en bitllets i 28 € en monedes. Volem saber el TOT (?).",
+          "2n pas: Col·loca 54 i 28 a les PARTS i '?' al TOT.",
+          "3r pas: 54 + 28 = 82 euros!"
+        ]
+      },
+      {
+        id: "ps_2_5",
+        title: "Collita de Tomàquets a l'Hort",
+        lore: "Recollim verdures al matí i a la tarda.",
+        instruction: "Un pagès ha collit <strong>65 quilos de tomàquets al matí</strong> i <strong>47 quilos a la tarda</strong>. <strong>Quants quilos de tomàquets ha collit en tot el dia?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 65,
+        num2: 47,
+        targetNumber: 112,
+        unitLabel: "quilos",
+        organizerData: {
+          totLabel: "quilos en tot el dia",
+          totVal: "?",
+          part1Label: "quilos al matí",
+          part1Val: 65,
+          part2Label: "quilos a la tarda",
+          part2Val: 47
+        },
+        hints: [
+          "1r pas: Coneixem les dues parts (65 kg al matí i 47 kg a la tarda). Busquem el TOT (?).",
+          "2n pas: Escriu '?' a TOT i 65 i 47 a les PARTS.",
+          "3r pas: 65 + 47 = 112 quilos!"
+        ]
+      }
+    ],
+    3: [
+      {
+        id: "ps_3_1",
+        title: "Visitants a la Fira del Llibre",
+        lore: "Recompte total de participants del cap de setmana.",
+        instruction: "A la Fira del Llibre del barri hi van anar <strong>345 persones dissabte</strong> i <strong>428 persones diumenge</strong>. <strong>Quantes persones van visitar la fira en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 345,
+        num2: 428,
+        targetNumber: 773,
+        unitLabel: "persones",
+        organizerData: {
+          totLabel: "persones en total",
+          totVal: "?",
+          part1Label: "persones dissabte",
+          part1Val: 345,
+          part2Label: "persones diumenge",
+          part2Val: 428
+        },
+        hints: [
+          "1r pas: Coneixem les dues PARTS (345 dissabte i 428 diumenge) i volem saber el TOT (?).",
+          "2n pas: Posa 345 i 428 als dos cercles PART i '?' a TOT.",
+          "3r pas: 345 + 428 = 773 persones!"
+        ]
+      },
+      {
+        id: "ps_3_2",
+        title: "Llibres de la Biblioteca Escolar",
+        lore: "Inventari de contes i llibres de ciència.",
+        instruction: "A la biblioteca de l'escola hi ha <strong>275 contes d'aventures</strong> i <strong>185 llibres de ciència</strong>. <strong>Quants llibres hi ha en total entre les dues seccions?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 275,
+        num2: 185,
+        targetNumber: 460,
+        unitLabel: "llibres",
+        organizerData: {
+          totLabel: "llibres en total",
+          totVal: "?",
+          part1Label: "contes d'aventures",
+          part1Val: 275,
+          part2Label: "llibres de ciència",
+          part2Val: 185
+        },
+        hints: [
+          "1r pas: Sabem les dues parts (275 contes i 185 llibres de ciència). Busquem el TOT (?).",
+          "2n pas: Col·loca 275 i 185 als cercles PART i '?' a TOT.",
+          "3r pas: 275 + 185 = 460 llibres!"
+        ]
+      },
+      {
+        id: "ps_3_3",
+        title: "Equipament Informàtic per a l'Aula",
+        lore: "Comprem un portàtil i una pissarra digital.",
+        instruction: "L'escola compra un <strong>ordinador portàtil per 540 euros</strong> i un <strong>projector digital per 385 euros</strong>. <strong>Quants euros costa tota la compra?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 540,
+        num2: 385,
+        targetNumber: 925,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros tota la compra",
+          totVal: "?",
+          part1Label: "euros ordinador portàtil",
+          part1Val: 540,
+          part2Label: "euros projector digital",
+          part2Val: 385
+        },
+        hints: [
+          "1r pas: Coneixem el preu de cada part (540 € i 385 €) i volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT i 540 i 385 a les PARTS.",
+          "3r pas: 540 + 385 = 925 euros!"
+        ]
+      },
+      {
+        id: "ps_3_4",
+        title: "El Viatge en Tren de les Vacances",
+        lore: "Sumem els quilòmetres dels dos trams del trajecte.",
+        instruction: "Un tren recorre <strong>268 quilòmetres al primer tram</strong> i <strong>354 quilòmetres al segon tram</strong>. <strong>Quants quilòmetres ha recorregut en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 268,
+        num2: 354,
+        targetNumber: 622,
+        unitLabel: "quilòmetres",
+        organizerData: {
+          totLabel: "quilòmetres en total",
+          totVal: "?",
+          part1Label: "quilòmetres primer tram",
+          part1Val: 268,
+          part2Label: "quilòmetres segon tram",
+          part2Val: 354
+        },
+        hints: [
+          "1r pas: Les parts són 268 km i 354 km. Volem saber el TOT (?).",
+          "2n pas: Escriu 268 i 354 als cercles PART i '?' a TOT.",
+          "3r pas: 268 + 354 = 622 quilòmetres!"
+        ]
+      },
+      {
+        id: "ps_3_5",
+        title: "Recaptació de la Cursa Solidària",
+        lore: "Ajuntem les aportacions de Primària i Secundària.",
+        instruction: "A la cursa solidària s'han recaptat <strong>480 euros a Primària</strong> i <strong>365 euros a Secundària</strong>. <strong>Quants euros s'han recaptat en total?</strong>",
+        type: "general_problem",
+        organizerType: "suma",
+        expectedOp: "+",
+        num1: 480,
+        num2: 365,
+        targetNumber: 845,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros recaptats en total",
+          totVal: "?",
+          part1Label: "euros a Primària",
+          part1Val: 480,
+          part2Label: "euros a Secundària",
+          part2Val: 365
+        },
+        hints: [
+          "1r pas: Sabem les dues parts (480 € i 365 €) i volem trobar el TOT (?).",
+          "2n pas: Posa '?' a TOT i 480 i 365 a cada PART.",
+          "3r pas: 480 + 365 = 845 euros!"
+        ]
+      }
+    ]
+  },
+
+  /* ------------------------------------------------------------------------
+     3. PROBLEMES DE RESTA (15 problemes en 3 nivells)
+     ------------------------------------------------------------------------ */
+  prob_resta: {
+    1: [
+      {
+        id: "pr_1_1",
+        title: "Els Ocells a l'Arbre",
+        lore: "Exemple del model RESTA: sabem el TOT i una PART, i busquem l'altra PART.",
+        instruction: "En un arbre hi ha <strong>10 ocells</strong>. Si <strong>4 ocells marxen volant</strong>, <strong>quants ocells queden a l'arbre?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 10,
+        num2: 4,
+        targetNumber: 6,
+        unitLabel: "ocells",
+        organizerData: {
+          totLabel: "ocells a l'arbre",
+          totVal: 10,
+          part1Label: "ocells marxen",
+          part1Val: 4,
+          part2Label: "ocells queden",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Esquema): Sabem el TOT (10 ocells) i una PART (4 ocells que marxen). Volem saber l'altra PART (?).",
+          "2n pas (Organitzador): Posa 10 al cercle TOT, 4 a una PART i '?' a l'altra PART.",
+          "3r pas (Operació): 10 - 4 = 6 ocells!"
+        ]
+      },
+      {
+        id: "pr_1_2",
+        title: "Galetes a la Capsa d'Esmorzar",
+        lore: "Sabem quantes galetes hi havia en total i quantes ens hem menjat.",
+        instruction: "En una capsa hi havia <strong>15 galetes en total</strong>. Si per esmorzar ens n'hem menjat <strong>6 galetes</strong>, <strong>quantes galetes queden a la capsa?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 15,
+        num2: 6,
+        targetNumber: 9,
+        unitLabel: "galetes",
+        organizerData: {
+          totLabel: "galetes en total",
+          totVal: 15,
+          part1Label: "galetes menjades",
+          part1Val: 6,
+          part2Label: "galetes queden",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (15 galetes) i una PART (6 menjades). Busquem l'altra PART (?).",
+          "2n pas: Posa 15 a TOT, 6 a una PART i '?' a l'altra PART.",
+          "3r pas: 15 - 6 = 9 galetes!"
+        ]
+      },
+      {
+        id: "pr_1_3",
+        title: "El Canvi amb un Bitllet de 20 €",
+        lore: "Paguem l'esmorzar a la cafeteria del barri.",
+        instruction: "Portes un bitllet de <strong>20 euros en total</strong> i compres un entrepà i un suc que valen <strong>7 euros</strong>. <strong>Quants euros et tornen de canvi?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 20,
+        num2: 7,
+        targetNumber: 13,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 20,
+          part1Label: "euros gastats",
+          part1Val: 7,
+          part2Label: "euros de canvi",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: El TOT és 20 € i la PART gastada és 7 €. Busquem la PART del canvi (?).",
+          "2n pas: Col·loca 20 a TOT, 7 a una PART i '?' a l'altra PART.",
+          "3r pas: 20 - 7 = 13 euros!"
+        ]
+      },
+      {
+        id: "pr_1_4",
+        title: "Els Retoladors de l'Estoig",
+        lore: "Revisem el material de plàstica.",
+        instruction: "En un estoig hi ha <strong>18 retoladors en total</strong>. Si <strong>5 retoladors ja no pinten</strong>, <strong>quants retoladors pinten bé?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 18,
+        num2: 5,
+        targetNumber: 13,
+        unitLabel: "retoladors",
+        organizerData: {
+          totLabel: "retoladors en total",
+          totVal: 18,
+          part1Label: "retoladors no pinten",
+          part1Val: 5,
+          part2Label: "retoladors pinten bé",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (18 retoladors) i una PART (5 que no pinten). Busquem l'altra PART (?).",
+          "2n pas: Escriu 18 a TOT, 5 a una PART i '?' a l'altra.",
+          "3r pas: 18 - 5 = 13 retoladors!"
+        ]
+      },
+      {
+        id: "pr_1_5",
+        title: "Ous a la Nevera de Casa",
+        lore: "Fem una truita de patates per sopar.",
+        instruction: "A la nevera hi havia <strong>12 ous en total</strong>. Si n'hem fet servir <strong>4 ous per a la truita</strong>, <strong>quants ous queden a la nevera?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 12,
+        num2: 4,
+        targetNumber: 8,
+        unitLabel: "ous",
+        organizerData: {
+          totLabel: "ous en total",
+          totVal: 12,
+          part1Label: "ous per a la truita",
+          part1Val: 4,
+          part2Label: "ous queden",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (12 ous) i una PART (4 utilitzats). Volem saber l'altra PART (?).",
+          "2n pas: Posa 12 a TOT, 4 a una PART i '?' a l'altra PART.",
+          "3r pas: 12 - 4 = 8 ous!"
+        ]
+      }
+    ],
+    2: [
+      {
+        id: "pr_2_1",
+        title: "Els Seients de l'Autocar",
         lore: "Anem d'excursió amb l'escola.",
         instruction: "L'autocar de l'excursió té <strong>55 places en total</strong>. Si ja s'han assegut <strong>38 alumnes</strong>, <strong>quantes places queden lliures?</strong>",
         type: "general_problem",
@@ -1780,96 +2156,122 @@ const CHALLENGES_DATA = {
           part2Val: "?"
         },
         hints: [
-          "1r pas (Esquema): Sabem el TOT (55 places) i una PART (38 ocupades). Busquem l'altra PART (?). Triem RESTA!",
-          "2n pas (Organitzador): Col·loca 55 al cercle TOT i 38 al cercle PART conegut.",
-          "3r pas (Operació): 55 - 38 = 17 places!"
+          "1r pas: Sabem el TOT (55 places) i una PART (38 ocupades). Busquem l'altra PART (?).",
+          "2n pas: Col·loca 55 a TOT, 38 a una PART i '?' a l'altra.",
+          "3r pas: 55 - 38 = 17 places!"
         ]
       },
       {
-        id: "rp_2_3",
-        title: "Packs de Iogurts al Supermercat (MULTIPLICACIÓ)",
-        lore: "Comparem grups iguals al carretó de la compra.",
-        instruction: "Cada pack de iogurts del supermercat porta <strong>8 iogurts</strong>. Si comprem <strong>6 packs iguals</strong> per a tota la família, <strong>quants iogurts tindrem en total?</strong>",
+        id: "pr_2_2",
+        title: "El Llibre d'Aventures",
+        lore: "Quantes pàgines ens falten per acabar el llibre?",
+        instruction: "Un llibre té <strong>92 pàgines en total</strong>. Si ja n'he llegit <strong>47 pàgines</strong>, <strong>quantes pàgines em falten per acabar-lo?</strong>",
         type: "general_problem",
-        organizerType: "multiplicacio",
-        expectedOp: "*",
-        num1: 8,
-        num2: 6,
-        targetNumber: 48,
-        unitLabel: "iogurts",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 92,
+        num2: 47,
+        targetNumber: 45,
+        unitLabel: "pàgines",
         organizerData: {
-          totLabel: "iogurts en total",
-          totVal: "?",
-          partLabel: "iogurts a cada pack",
-          partVal: 8,
-          braceLabel: "packs de iogurts",
-          braceVal: 6
+          totLabel: "pàgines en total",
+          totVal: 92,
+          part1Label: "pàgines llegides",
+          part1Val: 47,
+          part2Label: "pàgines que falten",
+          part2Val: "?"
         },
         hints: [
-          "1r pas (Esquema): Sabem el valor de cada PART (8 iogurts) i el número de parts iguals (6 packs). Volem saber el TOT (?). Triem MULTIPLICACIÓ!",
-          "2n pas (Organitzador): Posa 8 als cercles PART i 6 a la clau inferior.",
-          "3r pas (Operació): 8 × 6 = 48 iogurts!"
+          "1r pas: El TOT és 92 pàgines i la PART llegida és 47. Volem saber l'altra PART (?).",
+          "2n pas: Posa 92 a TOT, 47 a una PART i '?' a l'altra PART.",
+          "3r pas: 92 - 47 = 45 pàgines!"
         ]
       },
       {
-        id: "rp_2_4",
-        title: "El Preu de les Entrades de Cinema (DIVISIÓ PARTITIVA)",
-        lore: "Repartim el cost total entre els amics.",
-        instruction: "Una colla de <strong>8 amics</strong> ha pagat <strong>72 euros en total</strong> per les seves entrades de cinema, que costen totes el mateix. <strong>Quants euros val cada entrada?</strong>",
+        id: "pr_2_3",
+        title: "Les Barres de Pa del Forn",
+        lore: "Venda matinal a la fleca del barri.",
+        instruction: "El forner ha fet <strong>80 barres de pa en total</strong>. Si al matí n'ha venut <strong>56 barres</strong>, <strong>quantes barres li queden per a la tarda?</strong>",
         type: "general_problem",
-        organizerType: "divisio_partitiva",
-        expectedOp: "/",
-        num1: 72,
-        num2: 8,
-        targetNumber: 9,
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 80,
+        num2: 56,
+        targetNumber: 24,
+        unitLabel: "barres",
+        organizerData: {
+          totLabel: "barres en total",
+          totVal: 80,
+          part1Label: "barres venudes",
+          part1Val: 56,
+          part2Label: "barres que queden",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (80 barres) i una PART (56 venudes). Busquem l'altra PART (?).",
+          "2n pas: Escriu 80 a TOT, 56 a una PART i '?' a l'altra.",
+          "3r pas: 80 - 56 = 24 barres!"
+        ]
+      },
+      {
+        id: "pr_2_4",
+        title: "Comprant una Jaqueta amb Descompte",
+        lore: "Rebaixes a la botiga de roba.",
+        instruction: "Una jaqueta d'hivern valia <strong>65 euros en total</strong>, però avui té un descompte de <strong>18 euros</strong>. <strong>Quants euros pagarem finalment per la jaqueta?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 65,
+        num2: 18,
+        targetNumber: 47,
         unitLabel: "euros",
         organizerData: {
-          totLabel: "euros en total",
-          totVal: 72,
-          partLabel: "euros cada entrada",
-          partVal: "?",
-          braceLabel: "entrades d'amics",
-          braceVal: 8
+          totLabel: "preu inicial total",
+          totVal: 65,
+          part1Label: "euros de descompte",
+          part1Val: 18,
+          part2Label: "euros a pagar",
+          part2Val: "?"
         },
         hints: [
-          "1r pas (Esquema): Sabem el TOT (72 euros) i el número de parts iguals (8 entrades). Volem saber el valor de cada PART (?). És una DIVISIÓ PARTITIVA!",
-          "2n pas (Organitzador): Posa 72 al cercle TOT i 8 a la clau inferior.",
-          "3r pas (Operació): 72 : 8 = 9 euros!"
+          "1r pas: Sabem el TOT (65 €) i una PART que ens descompten (18 €). Busquem l'altra PART (?).",
+          "2n pas: Posa 65 a TOT, 18 a una PART i '?' a l'altra PART.",
+          "3r pas: 65 - 18 = 47 euros!"
         ]
       },
       {
-        id: "rp_2_5",
-        title: "Envasant Galetes al Forn (DIVISIÓ QUOTATIVA)",
-        lore: "Agrupem galetes en caixes iguals.",
-        instruction: "Al forn de pa han cuit <strong>96 galetes</strong> i les volen guardar en caixes posant <strong>8 galetes a cada caixa</strong>. <strong>Quantes caixes podran omplir?</strong>",
+        id: "pr_2_5",
+        title: "LesPeces del Trencaclosques",
+        lore: "Muntem un puzle a la taula del menjador.",
+        instruction: "Un trencaclosques té <strong>100 peces en total</strong>. Si ja n'hem col·locat <strong>64 peces</strong>, <strong>quantes peces ens falten per posar?</strong>",
         type: "general_problem",
-        organizerType: "divisio_quotativa",
-        expectedOp: "/",
-        num1: 96,
-        num2: 8,
-        targetNumber: 12,
-        unitLabel: "caixes",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 100,
+        num2: 64,
+        targetNumber: 36,
+        unitLabel: "peces",
         organizerData: {
-          totLabel: "galetes en total",
-          totVal: 96,
-          partLabel: "galetes a cada caixa",
-          partVal: 8,
-          braceLabel: "caixes ompliran",
-          braceVal: "?"
+          totLabel: "peces en total",
+          totVal: 100,
+          part1Label: "peces col·locades",
+          part1Val: 64,
+          part2Label: "peces que falten",
+          part2Val: "?"
         },
         hints: [
-          "1r pas (Esquema): Sabem el TOT (96 galetes) i el valor de cada PART (8 galetes per caixa). Busquem el número de caixes (?) a la clau inferior. És una DIVISIÓ QUOTATIVA!",
-          "2n pas (Organitzador): Posa 96 al cercle TOT i 8 als cercles PART.",
-          "3r pas (Operació): 96 : 8 = 12 caixes!"
+          "1r pas: El TOT és 100 peces i la PART col·locada és 64. Busquem l'altra PART (?).",
+          "2n pas: Posa 100 a TOT, 64 a una PART i '?' a l'altra.",
+          "3r pas: 100 - 64 = 36 peces!"
         ]
       }
     ],
     3: [
       {
-        id: "rp_3_1",
-        title: "Estalvi per a la Bicicleta (Model RESTA)",
+        id: "pr_3_1",
+        title: "Estalvi per a la Bicicleta",
         lore: "Gestionem els nostres estalvis per comprar a la botiga d'esports.",
-        instruction: "Una bicicleta de muntanya costa <strong>240 euros</strong> en total. Si ja tinc <strong>165 euros</strong> estalviats a la guardiola, <strong>quants euros em falten encara per poder-la comprar?</strong>",
+        instruction: "Una bicicleta de muntanya costa <strong>240 euros en total</strong>. Si ja tinc <strong>165 euros</strong> estalviats a la guardiola, <strong>quants euros em falten encara per poder-la comprar?</strong>",
         type: "general_problem",
         organizerType: "resta",
         expectedOp: "-",
@@ -1886,14 +2288,390 @@ const CHALLENGES_DATA = {
           part2Val: "?"
         },
         hints: [
-          "1r pas (Esquema): Coneixem el TOT (240 €) i la PART que ja tenim (165 €). Volem trobar l'altra PART (?). És un problema de RESTA!",
-          "2n pas (Organitzador): Escriu 240 al cercle TOT i 165 al primer cercle PART.",
-          "3r pas (Operació): 240 - 165 = 75 euros!"
+          "1r pas: Coneixem el TOT (240 €) i la PART que ja tenim (165 €). Volem trobar l'altra PART (?).",
+          "2n pas: Escriu 240 al cercle TOT, 165 a una PART i '?' a l'altra.",
+          "3r pas: 240 - 165 = 75 euros!"
         ]
       },
       {
-        id: "rp_3_2",
-        title: "Les Capses de Retoladors de l'Escola (MULTIPLICACIÓ)",
+        id: "pr_3_2",
+        title: "Entrades del Teatre Municipal",
+        lore: "Quantes entrades queden a la taquilla?",
+        instruction: "El teatre del poble té <strong>350 butaques en total</strong>. Si ja s'han venut <strong>215 entrades</strong> per a l'obra d'avui, <strong>quantes butaques queden lliures?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 350,
+        num2: 215,
+        targetNumber: 135,
+        unitLabel: "butaques",
+        organizerData: {
+          totLabel: "butaques en total",
+          totVal: 350,
+          part1Label: "entrades venudes",
+          part1Val: 215,
+          part2Label: "butaques lliures",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (350 butaques) i una PART (215 venudes). Busquem l'altra PART (?).",
+          "2n pas: Posa 350 a TOT, 215 a una PART i '?' a l'altra.",
+          "3r pas: 350 - 215 = 135 butaques!"
+        ]
+      },
+      {
+        id: "pr_3_3",
+        title: "El Dipòsit d'Aigua de l'Hort",
+        lore: "Reguem els bancals d'enciams i tomàquets.",
+        instruction: "Un dipòsit de reg té <strong>500 litres d'aigua en total</strong>. Si al matí hem gastat <strong>185 litres</strong> per regar l'hort, <strong>quants litres d'aigua queden al dipòsit?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 500,
+        num2: 185,
+        targetNumber: 315,
+        unitLabel: "litres",
+        organizerData: {
+          totLabel: "litres en total",
+          totVal: 500,
+          part1Label: "litres gastats",
+          part1Val: 185,
+          part2Label: "litres que queden",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: El TOT és 500 litres i la PART gastada és 185 litres. Volem saber l'altra PART (?).",
+          "2n pas: Escriu 500 a TOT, 185 a una PART i '?' a l'altra.",
+          "3r pas: 500 - 185 = 315 litres!"
+        ]
+      },
+      {
+        id: "pr_3_4",
+        title: "Pressupost per a la Festa de Final de Curs",
+        lore: "Gestionem els diners de la classe de 6è.",
+        instruction: "La classe de 6è té <strong>420 euros en total</strong> per preparar la festa. Si han gastat <strong>275 euros en decoració i berenar</strong>, <strong>quants euros els sobren encara?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 420,
+        num2: 275,
+        targetNumber: 145,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 420,
+          part1Label: "euros gastats",
+          part1Val: 275,
+          part2Label: "euros que sobren",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (420 €) i una PART (275 € gastats). Busquem l'altra PART (?).",
+          "2n pas: Posa 420 a TOT, 275 a una PART i '?' a l'altra.",
+          "3r pas: 420 - 275 = 145 euros!"
+        ]
+      },
+      {
+        id: "pr_3_5",
+        title: "La Caminada per la Muntanya",
+        lore: "Excursió de senderisme amb l'escola.",
+        instruction: "La ruta d'avui fa <strong>850 metres de desnivell en total</strong>. Si abans de dinar ja hem pujat <strong>580 metres</strong>, <strong>quants metres ens falten per arribar al cim?</strong>",
+        type: "general_problem",
+        organizerType: "resta",
+        expectedOp: "-",
+        num1: 850,
+        num2: 580,
+        targetNumber: 270,
+        unitLabel: "metres",
+        organizerData: {
+          totLabel: "metres en total",
+          totVal: 850,
+          part1Label: "metres pujats",
+          part1Val: 580,
+          part2Label: "metres que falten",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas: El TOT és 850 m i la PART pujada és 580 m. Volem saber l'altra PART (?).",
+          "2n pas: Escriu 850 a TOT, 580 a una PART i '?' a l'altra.",
+          "3r pas: 850 - 580 = 270 metres!"
+        ]
+      }
+    ]
+  },
+
+  /* ------------------------------------------------------------------------
+     4. PROBLEMES DE MULTIPLICACIÓ (15 problemes en 3 nivells)
+     ------------------------------------------------------------------------ */
+  prob_multiplicacio: {
+    1: [
+      {
+        id: "pm_1_1",
+        title: "Comprant Samarretes",
+        lore: "Exemple del model MULTIPLICACIÓ: parts iguals que es repeteixen.",
+        instruction: "Una samarreta val <strong>15 euros</strong>. Si me'n compro <strong>2</strong>, <strong>quants diners em gastaré?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 15,
+        num2: 2,
+        targetNumber: 30,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "diners que gastaré",
+          totVal: "?",
+          partLabel: "euros cada samarreta",
+          partVal: 15,
+          braceLabel: "samarretes",
+          braceVal: 2
+        },
+        hints: [
+          "1r pas (Esquema): Sabem el valor de cada PART (15 euros) i el número de parts (2 samarretes). Volem saber el TOT (?).",
+          "2n pas (Organitzador): Posa '?' al cercle TOT, 15 a PART i 2 a la clau inferior (⏟).",
+          "3r pas (Operació): 15 × 2 = 30 euros!"
+        ]
+      },
+      {
+        id: "pm_1_2",
+        title: "Packs de Iogurts al Carretó",
+        lore: "Cada pack té el mateix nombre de iogurts.",
+        instruction: "Al supermercat agafem <strong>5 packs de iogurts</strong>, i a cada pack hi van <strong>4 iogurts</strong>. <strong>Quants iogurts portem en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 4,
+        num2: 5,
+        targetNumber: 20,
+        unitLabel: "iogurts",
+        organizerData: {
+          totLabel: "iogurts en total",
+          totVal: "?",
+          partLabel: "iogurts a cada pack",
+          partVal: 4,
+          braceLabel: "packs",
+          braceVal: 5
+        },
+        hints: [
+          "1r pas: Cada PART val 4 iogurts i es repeteix 5 vegades (5 packs). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 4 a PART i 5 a la clau inferior (⏟).",
+          "3r pas: 4 × 5 = 20 iogurts!"
+        ]
+      },
+      {
+        id: "pm_1_3",
+        title: "Les Capses de Llapis de Colors",
+        lore: "Material nou per a la taula de dibuix.",
+        instruction: "Hem comprat <strong>3 capses de llapis</strong> i a cada capsa hi ha <strong>10 llapis de colors</strong>. <strong>Quants llapis tenim en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 10,
+        num2: 3,
+        targetNumber: 30,
+        unitLabel: "llapis",
+        organizerData: {
+          totLabel: "llapis en total",
+          totVal: "?",
+          partLabel: "llapis a cada capsa",
+          partVal: 10,
+          braceLabel: "capses",
+          braceVal: 3
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (10 llapis) i el número de parts (3 capses). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 10 a PART i 3 a la clau inferior (⏟).",
+          "3r pas: 10 × 3 = 30 llapis!"
+        ]
+      },
+      {
+        id: "pm_1_4",
+        title: "Ampolles d'Aigua per a l'Excursió",
+        lore: "Comprem paquets d'aigua mineral.",
+        instruction: "Cada paquet d'aigua porta <strong>6 ampolles</strong>. Si comprem <strong>4 paquets iguals</strong>, <strong>quantes ampolles d'aigua tindrem en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 6,
+        num2: 4,
+        targetNumber: 24,
+        unitLabel: "ampolles",
+        organizerData: {
+          totLabel: "ampolles en total",
+          totVal: "?",
+          partLabel: "ampolles cada paquet",
+          partVal: 6,
+          braceLabel: "paquets",
+          braceVal: 4
+        },
+        hints: [
+          "1r pas: Cada PART val 6 ampolles i tenim 4 paquets iguals. Volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT, 6 a PART i 4 a la clau inferior (⏟).",
+          "3r pas: 6 × 4 = 24 ampolles!"
+        ]
+      },
+      {
+        id: "pm_1_5",
+        title: "Les Taules de l'Aula de 6è",
+        lore: "Organitzem els grups de treball cooperatiu.",
+        instruction: "A la classe hi ha <strong>6 taules de grup</strong> i a cada taula hi seuen <strong>5 alumnes</strong>. <strong>Quants alumnes hi ha en total a la classe?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 5,
+        num2: 6,
+        targetNumber: 30,
+        unitLabel: "alumnes",
+        organizerData: {
+          totLabel: "alumnes en total",
+          totVal: "?",
+          partLabel: "alumnes a cada taula",
+          partVal: 5,
+          braceLabel: "taules de grup",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (5 alumnes) i el número de parts (6 taules). Volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT, 5 a PART i 6 a la clau inferior (⏟).",
+          "3r pas: 5 × 6 = 30 alumnes!"
+        ]
+      }
+    ],
+    2: [
+      {
+        id: "pm_2_1",
+        title: "Packs Familiars de Iogurts",
+        lore: "Comparem grups iguals al carretó de la compra.",
+        instruction: "Cada pack familiar del supermercat porta <strong>8 iogurts</strong>. Si comprem <strong>6 packs iguals</strong>, <strong>quants iogurts tindrem en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 8,
+        num2: 6,
+        targetNumber: 48,
+        unitLabel: "iogurts",
+        organizerData: {
+          totLabel: "iogurts en total",
+          totVal: "?",
+          partLabel: "iogurts a cada pack",
+          partVal: 8,
+          braceLabel: "packs de iogurts",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (8 iogurts) i el número de parts (6 packs). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 8 als cercles PART i 6 a la clau inferior (⏟).",
+          "3r pas: 8 × 6 = 48 iogurts!"
+        ]
+      },
+      {
+        id: "pm_2_2",
+        title: "Safates de Magdalenes al Forn",
+        lore: "Enfornem magdalenes acabades de fer.",
+        instruction: "El forner treu del forn <strong>7 safates</strong> i a cada safata hi ha <strong>12 magdalenes</strong>. <strong>Quantes magdalenes ha cuit en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 12,
+        num2: 7,
+        targetNumber: 84,
+        unitLabel: "magdalenes",
+        organizerData: {
+          totLabel: "magdalenes en total",
+          totVal: "?",
+          partLabel: "magdalenes cada safata",
+          partVal: 12,
+          braceLabel: "safates",
+          braceVal: 7
+        },
+        hints: [
+          "1r pas: Cada PART és 12 magdalenes i es repeteix en 7 safates. Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 12 a PART i 7 a la clau inferior (⏟).",
+          "3r pas: 12 × 7 = 84 magdalenes!"
+        ]
+      },
+      {
+        id: "pm_2_3",
+        title: "Còmics per a la Biblioteca",
+        lore: "Renovem la col·lecció de lectura.",
+        instruction: "Cada còmic nou val <strong>14 euros</strong>. Si l'escola en compra <strong>5 exemplars iguals</strong>, <strong>quants euros costaran en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 14,
+        num2: 5,
+        targetNumber: 70,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: "?",
+          partLabel: "euros cada còmic",
+          partVal: 14,
+          braceLabel: "exemplars",
+          braceVal: 5
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (14 €) i el número de parts (5 exemplars). Volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT, 14 a PART i 5 a la clau inferior (⏟).",
+          "3r pas: 14 × 5 = 70 euros!"
+        ]
+      },
+      {
+        id: "pm_2_4",
+        title: "Caixes de Taronges de la Cooperativa",
+        lore: "Pesem les caixes de fruita.",
+        instruction: "Cada caixa de taronges pesa <strong>15 quilos</strong>. Si al camió hi carreguen <strong>6 caixes iguals</strong>, <strong>quants quilos de taronges porten en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 15,
+        num2: 6,
+        targetNumber: 90,
+        unitLabel: "quilos",
+        organizerData: {
+          totLabel: "quilos en total",
+          totVal: "?",
+          partLabel: "quilos cada caixa",
+          partVal: 15,
+          braceLabel: "caixes",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas: Cada PART és 15 kg i hi ha 6 caixes iguals. Volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT, 15 a PART i 6 a la clau inferior (⏟).",
+          "3r pas: 15 × 6 = 90 quilos!"
+        ]
+      },
+      {
+        id: "pm_2_5",
+        title: "Les Files de Cadires al Concert",
+        lore: "Preparem el pati per al concert de música.",
+        instruction: "Al pati hem muntat <strong>8 files de cadires</strong> amb <strong>11 cadires a cada fila</strong>. <strong>Quantes cadires hem posat en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 11,
+        num2: 8,
+        targetNumber: 88,
+        unitLabel: "cadires",
+        organizerData: {
+          totLabel: "cadires en total",
+          totVal: "?",
+          partLabel: "cadires a cada fila",
+          partVal: 11,
+          braceLabel: "files",
+          braceVal: 8
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (11 cadires) i el número de parts (8 files). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 11 a PART i 8 a la clau inferior (⏟).",
+          "3r pas: 11 × 8 = 88 cadires!"
+        ]
+      }
+    ],
+    3: [
+      {
+        id: "pm_3_1",
+        title: "Les Capses de Retoladors de l'Escola",
         lore: "Material escolar per a les aules de Primària.",
         instruction: "Per a les classes de plàstica s'han comprat <strong>9 capses grans</strong> amb <strong>24 retoladors a cada capsa</strong>. <strong>Quants retoladors hi ha en total?</strong>",
         type: "general_problem",
@@ -1912,14 +2690,390 @@ const CHALLENGES_DATA = {
           braceVal: 9
         },
         hints: [
-          "1r pas (Esquema): Sabem el valor de cada PART (24 retoladors) i el número de parts (9 capses). Busquem el TOT (?). És una MULTIPLICACIÓ!",
-          "2n pas (Organitzador): Posa 24 als cercles PART i 9 a la clau inferior.",
-          "3r pas (Operació): 24 × 9 = 216 retoladors!"
+          "1r pas: Sabem el valor de cada PART (24 retoladors) i el número de parts (9 capses). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 24 a PART i 9 a la clau inferior (⏟).",
+          "3r pas: 24 × 9 = 216 retoladors!"
         ]
       },
       {
-        id: "rp_3_3",
-        title: "Repartint la Collita de Taronges (DIVISIÓ PARTITIVA)",
+        id: "pm_3_2",
+        title: "Equipacions de Bàsquet del Club",
+        lore: "Comprem l'equipació per a tots els jugadors.",
+        instruction: "Cada equipació completa de bàsquet val <strong>28 euros</strong>. Si el club en compra <strong>12 equipacions iguals</strong>, <strong>quants euros pagarà en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 28,
+        num2: 12,
+        targetNumber: 336,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: "?",
+          partLabel: "euros cada equipació",
+          partVal: 28,
+          braceLabel: "equipacions",
+          braceVal: 12
+        },
+        hints: [
+          "1r pas: Cada PART val 28 € i es repeteix 12 vegades. Volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT, 28 a PART i 12 a la clau inferior (⏟).",
+          "3r pas: 28 × 12 = 336 euros!"
+        ]
+      },
+      {
+        id: "pm_3_3",
+        title: "Els Autocars de la Sortida Escolar",
+        lore: "Tota l'escola va d'excursió al teatre.",
+        instruction: "Per anar al teatre hem llogat <strong>4 autocars grans</strong> amb <strong>55 places a cada autocar</strong>. <strong>Quantes places tenim en total?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 55,
+        num2: 4,
+        targetNumber: 220,
+        unitLabel: "places",
+        organizerData: {
+          totLabel: "places en total",
+          totVal: "?",
+          partLabel: "places cada autocar",
+          partVal: 55,
+          braceLabel: "autocars",
+          braceVal: 4
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (55 places) i el número de parts (4 autocars). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 55 a PART i 4 a la clau inferior (⏟).",
+          "3r pas: 55 × 4 = 220 places!"
+        ]
+      },
+      {
+        id: "pm_3_4",
+        title: "Paquets de Folis per a la Fotocopiadora",
+        lore: "Comanda de paper per a tot el trimestre.",
+        instruction: "En una caixa hi ha <strong>8 paquets de paper</strong> i cada paquet té <strong>125 folis</strong>. <strong>Quants folis hi ha en total a la caixa?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 125,
+        num2: 8,
+        targetNumber: 1000,
+        unitLabel: "folis",
+        organizerData: {
+          totLabel: "folis en total",
+          totVal: "?",
+          partLabel: "folis cada paquet",
+          partVal: 125,
+          braceLabel: "paquets",
+          braceVal: 8
+        },
+        hints: [
+          "1r pas: Cada PART és 125 folis i tenim 8 paquets. Volem saber el TOT (?).",
+          "2n pas: Posa '?' a TOT, 125 a PART i 8 a la clau inferior (⏟).",
+          "3r pas: 125 × 8 = 1000 folis!"
+        ]
+      },
+      {
+        id: "pm_3_5",
+        title: "Estalvi Mensual durant tot l'Any",
+        lore: "Estalviem la mateixa quantitat cada mes.",
+        instruction: "Una família estalvia <strong>45 euros cada mes</strong> durant els <strong>12 mesos de l'any</strong>. <strong>Quants euros haurà estalviat en total al final de l'any?</strong>",
+        type: "general_problem",
+        organizerType: "multiplicacio",
+        expectedOp: "*",
+        num1: 45,
+        num2: 12,
+        targetNumber: 540,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: "?",
+          partLabel: "euros cada mes",
+          partVal: 45,
+          braceLabel: "mesos",
+          braceVal: 12
+        },
+        hints: [
+          "1r pas: Sabem el valor de cada PART (45 €) i el número de parts (12 mesos). Busquem el TOT (?).",
+          "2n pas: Posa '?' a TOT, 45 a PART i 12 a la clau inferior (⏟).",
+          "3r pas: 45 × 12 = 540 euros!"
+        ]
+      }
+    ]
+  },
+  /* ------------------------------------------------------------------------
+     5. PROBLEMES DE DIVISIÓ PARTITIVA (15 problemes en 3 nivells)
+     (Sabem el TOT i el número de parts; volem saber el valor de cada PART)
+     ------------------------------------------------------------------------ */
+  prob_div_partitiva: {
+    1: [
+      {
+        id: "pdp_1_1",
+        title: "Els Llibres dels Prestatges",
+        lore: "Exemple del model DIVISIÓ PARTITIVA: sabem el TOT i el número de parts.",
+        instruction: "Una escola ha comprat <strong>150 llibres</strong> i els vol repartir en <strong>6 prestatges</strong> a parts iguals. <strong>Quants llibres posarà a cada prestatge?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 150,
+        num2: 6,
+        targetNumber: 25,
+        unitLabel: "llibres",
+        organizerData: {
+          totLabel: "llibres en total",
+          totVal: 150,
+          partLabel: "llibres a cada prestatge",
+          partVal: "?",
+          braceLabel: "prestatges",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas (Esquema): Sabem el TOT (150 llibres) i el número de parts (6 prestatges). Volem saber el valor de cada PART (?).",
+          "2n pas (Organitzador): Posa 150 a TOT, '?' a PART i 6 a la clau inferior (⏟).",
+          "3r pas (Operació): 150 : 6 = 25 llibres!"
+        ]
+      },
+      {
+        id: "pdp_1_2",
+        title: "Repartint Galetes en Plats",
+        lore: "Berenar familiar a casa.",
+        instruction: "Tenim <strong>24 galetes en total</strong> i les volem repartir en <strong>4 plats</strong> a parts iguals. <strong>Quantes galetes posarem a cada plat?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 24,
+        num2: 4,
+        targetNumber: 6,
+        unitLabel: "galetes",
+        organizerData: {
+          totLabel: "galetes en total",
+          totVal: 24,
+          partLabel: "galetes a cada plat",
+          partVal: "?",
+          braceLabel: "plats",
+          braceVal: 4
+        },
+        hints: [
+          "1r pas: Sabem el TOT (24 galetes) i el número de parts (4 plats). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 24 a TOT, '?' a PART i 4 a la clau inferior (⏟).",
+          "3r pas: 24 : 4 = 6 galetes!"
+        ]
+      },
+      {
+        id: "pdp_1_3",
+        title: "Cromos entre Amics",
+        lore: "Repartim un sobre gegant de cromos.",
+        instruction: "Tres amics es reparteixen <strong>30 cromos en total</strong> a parts iguals entre tots <strong>3 amics</strong>. <strong>Quants cromos toquen a cada amic?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 30,
+        num2: 3,
+        targetNumber: 10,
+        unitLabel: "cromos",
+        organizerData: {
+          totLabel: "cromos en total",
+          totVal: 30,
+          partLabel: "cromos a cada amic",
+          partVal: "?",
+          braceLabel: "amics",
+          braceVal: 3
+        },
+        hints: [
+          "1r pas: El TOT és 30 cromos i el número de parts és 3 amics. Volem saber el valor de cada PART (?).",
+          "2n pas: Posa 30 a TOT, '?' a PART i 3 a la clau inferior (⏟).",
+          "3r pas: 30 : 3 = 10 cromos!"
+        ]
+      },
+      {
+        id: "pdp_1_4",
+        title: "Les Flors dels Gerros",
+        lore: "Decorem les taules del menjador.",
+        instruction: "Tenim <strong>20 flors en total</strong> i les repartim a parts iguals en <strong>5 gerros</strong>. <strong>Quantes flors hi haurà a cada gerro?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 20,
+        num2: 5,
+        targetNumber: 4,
+        unitLabel: "flors",
+        organizerData: {
+          totLabel: "flors en total",
+          totVal: 20,
+          partLabel: "flors a cada gerro",
+          partVal: "?",
+          braceLabel: "gerros",
+          braceVal: 5
+        },
+        hints: [
+          "1r pas: Sabem el TOT (20 flors) i el número de parts (5 gerros). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 20 a TOT, '?' a PART i 5 a la clau inferior (⏟).",
+          "3r pas: 20 : 5 = 4 flors!"
+        ]
+      },
+      {
+        id: "pdp_1_5",
+        title: "El Preu d'un Iogurt del Pack",
+        lore: "Mirem quant surt cada unitat al supermercat.",
+        instruction: "Un pack de <strong>6 iogurts iguals</strong> costa <strong>12 euros en total</strong>. <strong>Quants euros val cada iogurt?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 12,
+        num2: 6,
+        targetNumber: 2,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 12,
+          partLabel: "euros cada iogurt",
+          partVal: "?",
+          braceLabel: "iogurts",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas: Sabem el TOT (12 €) i el número de parts (6 iogurts). Volem saber el valor de cada PART (?).",
+          "2n pas: Posa 12 a TOT, '?' a PART i 6 a la clau inferior (⏟).",
+          "3r pas: 12 : 6 = 2 euros!"
+        ]
+      }
+    ],
+    2: [
+      {
+        id: "pdp_2_1",
+        title: "El Preu de les Entrades de Cinema",
+        lore: "Repartim el cost total entre els amics.",
+        instruction: "Una colla de <strong>8 amics</strong> ha pagat <strong>72 euros en total</strong> per les seves entrades de cinema, que costen totes el mateix. <strong>Quants euros val cada entrada?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 72,
+        num2: 8,
+        targetNumber: 9,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 72,
+          partLabel: "euros cada entrada",
+          partVal: "?",
+          braceLabel: "amics",
+          braceVal: 8
+        },
+        hints: [
+          "1r pas: Sabem el TOT (72 €) i el número de parts (8 amics). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 72 a TOT, '?' a PART i 8 a la clau inferior (⏟).",
+          "3r pas: 72 : 8 = 9 euros!"
+        ]
+      },
+      {
+        id: "pdp_2_2",
+        title: "Les Cadires de les Files del Saló d'Actes",
+        lore: "Organitzem el saló d'actes en files iguals.",
+        instruction: "Hem col·locat <strong>96 cadires en total</strong> repartides en <strong>8 files iguals</strong>. <strong>Quantes cadires hi ha a cada fila?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 96,
+        num2: 8,
+        targetNumber: 12,
+        unitLabel: "cadires",
+        organizerData: {
+          totLabel: "cadires en total",
+          totVal: 96,
+          partLabel: "cadires a cada fila",
+          partVal: "?",
+          braceLabel: "files iguals",
+          braceVal: 8
+        },
+        hints: [
+          "1r pas: Sabem el TOT (96 cadires) i el número de parts (8 files). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 96 a TOT, '?' a PART i 8 a la clau inferior (⏟).",
+          "3r pas: 96 : 8 = 12 cadires!"
+        ]
+      },
+      {
+        id: "pdp_2_3",
+        title: "Els Equips del Torneig Esportiu",
+        lore: "Fem equips amb el mateix nombre de participants.",
+        instruction: "Al torneig s'han apuntat <strong>84 alumnes en total</strong> i s'han format <strong>7 equips iguals</strong>. <strong>Quants alumnes hi ha a cada equip?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 84,
+        num2: 7,
+        targetNumber: 12,
+        unitLabel: "alumnes",
+        organizerData: {
+          totLabel: "alumnes en total",
+          totVal: 84,
+          partLabel: "alumnes a cada equip",
+          partVal: "?",
+          braceLabel: "equips iguals",
+          braceVal: 7
+        },
+        hints: [
+          "1r pas: El TOT és 84 alumnes i el número de parts és 7 equips. Volem saber el valor de cada PART (?).",
+          "2n pas: Posa 84 a TOT, '?' a PART i 7 a la clau inferior (⏟).",
+          "3r pas: 84 : 7 = 12 alumnes!"
+        ]
+      },
+      {
+        id: "pdp_2_4",
+        title: "Les Safates de Croissants del Forn",
+        lore: "Repartim la pasta en safates iguals.",
+        instruction: "El forner ha preparat <strong>90 croissants en total</strong> i els ha repartit en <strong>6 safates iguals</strong>. <strong>Quants croissants ha posat a cada safata?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 90,
+        num2: 6,
+        targetNumber: 15,
+        unitLabel: "croissants",
+        organizerData: {
+          totLabel: "croissants en total",
+          totVal: 90,
+          partLabel: "croissants cada safata",
+          partVal: "?",
+          braceLabel: "safates iguals",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas: Sabem el TOT (90 croissants) i el número de parts (6 safates). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 90 a TOT, '?' a PART i 6 a la clau inferior (⏟).",
+          "3r pas: 90 : 6 = 15 croissants!"
+        ]
+      },
+      {
+        id: "pdp_2_5",
+        title: "Pàgines Diàries de Lectura",
+        lore: "Planifiquem la lectura de la setmana.",
+        instruction: "Vols llegir un conte de <strong>105 pàgines en total</strong> repartint-les a parts iguals durant els <strong>7 dies de la setmana</strong>. <strong>Quantes pàgines has de llegir cada dia?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 105,
+        num2: 7,
+        targetNumber: 15,
+        unitLabel: "pàgines",
+        organizerData: {
+          totLabel: "pàgines en total",
+          totVal: 105,
+          partLabel: "pàgines cada dia",
+          partVal: "?",
+          braceLabel: "dies",
+          braceVal: 7
+        },
+        hints: [
+          "1r pas: Sabem el TOT (105 pàgines) i el número de parts (7 dies). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 105 a TOT, '?' a PART i 7 a la clau inferior (⏟).",
+          "3r pas: 105 : 7 = 15 pàgines!"
+        ]
+      }
+    ],
+    3: [
+      {
+        id: "pdp_3_1",
+        title: "Repartint la Collita de Taronges",
         lore: "Cooperativa agrícola del poble.",
         instruction: "Un pagès ha recollit <strong>360 quilos de taronges</strong> i els ha repartit en <strong>15 caixes iguals</strong>. <strong>Quants quilos de taronges ha posat a cada caixa?</strong>",
         type: "general_problem",
@@ -1938,16 +3092,393 @@ const CHALLENGES_DATA = {
           braceVal: 15
         },
         hints: [
-          "1r pas (Esquema): Sabem el TOT (360 kg) i el número de parts iguals (15 caixes). Volem saber el valor de cada PART (?). És una DIVISIÓ PARTITIVA!",
-          "2n pas (Organitzador): Posa 360 al cercle TOT i 15 a la clau de sota.",
-          "3r pas (Operació): 360 : 15 = 24 quilos!"
+          "1r pas: Sabem el TOT (360 kg) i el número de parts (15 caixes). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 360 a TOT, '?' a PART i 15 a la clau inferior (⏟).",
+          "3r pas: 360 : 15 = 24 quilos!"
         ]
       },
       {
-        id: "rp_3_4",
-        title: "Les Safates d'Ous del Mercat (DIVISIÓ QUOTATIVA)",
+        id: "pdp_3_2",
+        title: "El Preu de l'Autocar de les Colònies",
+        lore: "Repartim la despesa del viatge entre l'alumnat.",
+        instruction: "Llogar l'autocar costa <strong>450 euros en total</strong> i ho paguen a parts iguals entre <strong>18 alumnes</strong>. <strong>Quants euros ha de pagar cada alumne?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 450,
+        num2: 18,
+        targetNumber: 25,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 450,
+          partLabel: "euros cada alumne",
+          partVal: "?",
+          braceLabel: "alumnes",
+          braceVal: 18
+        },
+        hints: [
+          "1r pas: Sabem el TOT (450 €) i el número de parts (18 alumnes). Volem saber el valor de cada PART (?).",
+          "2n pas: Posa 450 a TOT, '?' a PART i 18 a la clau inferior (⏟).",
+          "3r pas: 450 : 18 = 25 euros!"
+        ]
+      },
+      {
+        id: "pdp_3_3",
+        title: "Pagament a Terminis del Televisor",
+        lore: "Comprem un electrodomèstic en quotes mensuals iguals.",
+        instruction: "Un televisor costa <strong>648 euros en total</strong> i es paga en <strong>12 quotes mensuals iguals</strong>. <strong>Quants euros es paguen cada mes?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 648,
+        num2: 12,
+        targetNumber: 54,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 648,
+          partLabel: "euros cada mes",
+          partVal: "?",
+          braceLabel: "quotes mensuals",
+          braceVal: 12
+        },
+        hints: [
+          "1r pas: Sabem el TOT (648 €) i el número de parts (12 mesos). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 648 a TOT, '?' a PART i 12 a la clau inferior (⏟).",
+          "3r pas: 648 : 12 = 54 euros!"
+        ]
+      },
+      {
+        id: "pdp_3_4",
+        title: "Ampolles d'Oli a la Cooperativa",
+        lore: "Repartim la producció en caixes iguals.",
+        instruction: "S'han produït <strong>432 ampolles d'oli en total</strong> i es guarden en <strong>16 caixes iguals</strong>. <strong>Quantes ampolles van a cada caixa?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 432,
+        num2: 16,
+        targetNumber: 27,
+        unitLabel: "ampolles",
+        organizerData: {
+          totLabel: "ampolles en total",
+          totVal: 432,
+          partLabel: "ampolles a cada caixa",
+          partVal: "?",
+          braceLabel: "caixes iguals",
+          braceVal: 16
+        },
+        hints: [
+          "1r pas: El TOT és 432 ampolles i el número de parts és 16 caixes. Volem saber el valor de cada PART (?).",
+          "2n pas: Posa 432 a TOT, '?' a PART i 16 a la clau inferior (⏟).",
+          "3r pas: 432 : 16 = 27 ampolles!"
+        ]
+      },
+      {
+        id: "pdp_3_5",
+        title: "Els Seients dels Vagons del Tren",
+        lore: "Tots els vagons tenen el mateix nombre de places.",
+        instruction: "Un tren d'alta velocitat té <strong>576 places en total</strong> repartides en <strong>9 vagons iguals</strong>. <strong>Quantes places té cada vagó?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_partitiva",
+        expectedOp: "/",
+        num1: 576,
+        num2: 9,
+        targetNumber: 64,
+        unitLabel: "places",
+        organizerData: {
+          totLabel: "places en total",
+          totVal: 576,
+          partLabel: "places cada vagó",
+          partVal: "?",
+          braceLabel: "vagons iguals",
+          braceVal: 9
+        },
+        hints: [
+          "1r pas: Sabem el TOT (576 places) i el número de parts (9 vagons). Busquem el valor de cada PART (?).",
+          "2n pas: Posa 576 a TOT, '?' a PART i 9 a la clau inferior (⏟).",
+          "3r pas: 576 : 9 = 64 places!"
+        ]
+      }
+    ]
+  },
+
+  /* ------------------------------------------------------------------------
+     6. PROBLEMES DE DIVISIÓ QUOTATIVA (15 problemes en 3 nivells)
+     (Sabem el TOT i el valor de cada part; volem saber el número de parts)
+     ------------------------------------------------------------------------ */
+  prob_div_quotativa: {
+    1: [
+      {
+        id: "pdq_1_1",
+        title: "Les Capses de Bombons",
+        lore: "Exemple del model DIVISIÓ QUOTATIVA: sabem el TOT i el valor de cada part.",
+        instruction: "Tinc <strong>20 bombons</strong> i els vull repartir en capses de manera que a cada capsa hi hagi <strong>5 bombons</strong>. <strong>Quantes capses necessitaré?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 20,
+        num2: 5,
+        targetNumber: 4,
+        unitLabel: "capses",
+        organizerData: {
+          totLabel: "bombons en total",
+          totVal: 20,
+          partLabel: "bombons a cada capsa",
+          partVal: 5,
+          braceLabel: "capses necessitaré",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas (Esquema): Sabem el TOT (20 bombons) i el valor de cada PART (5 bombons per capsa). Busquem el número de parts (?) a la clau inferior.",
+          "2n pas (Organitzador): Posa 20 a TOT, 5 a PART i '?' a la clau inferior (⏟).",
+          "3r pas (Operació): 20 : 5 = 4 capses!"
+        ]
+      },
+      {
+        id: "pdq_1_2",
+        title: "Envasant Ous en Ouers de 6",
+        lore: "Agrupem els ous de 6 en 6.",
+        instruction: "A la granja s'han recollit <strong>18 ous en total</strong> i es guarden en capses de <strong>6 ous a cada capsa</strong>. <strong>Quantes capses s'ompliran?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 18,
+        num2: 6,
+        targetNumber: 3,
+        unitLabel: "capses",
+        organizerData: {
+          totLabel: "ous en total",
+          totVal: 18,
+          partLabel: "ous a cada capsa",
+          partVal: 6,
+          braceLabel: "capses s'ompliran",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (18 ous) i el valor de cada PART (6 ous). Busquem el número de capses (?) a la clau inferior.",
+          "2n pas: Posa 18 a TOT, 6 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 18 : 6 = 3 capses!"
+        ]
+      },
+      {
+        id: "pdq_1_3",
+        title: "Equips de Bàsquet al Pati",
+        lore: "Fem equips de 5 jugadors.",
+        instruction: "Al pati hi ha <strong>30 alumnes en total</strong> i volen fer equips de <strong>5 alumnes a cada equip</strong>. <strong>Quants equips podran formar?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 30,
+        num2: 5,
+        targetNumber: 6,
+        unitLabel: "equips",
+        organizerData: {
+          totLabel: "alumnes en total",
+          totVal: 30,
+          partLabel: "alumnes a cada equip",
+          partVal: 5,
+          braceLabel: "equips podran formar",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: El TOT és 30 alumnes i cada PART és 5 alumnes. Volem saber el número d'equips (?) a la clau inferior.",
+          "2n pas: Posa 30 a TOT, 5 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 30 : 5 = 6 equips!"
+        ]
+      },
+      {
+        id: "pdq_1_4",
+        title: "Bosses de Taronges al Mercat",
+        lore: "Preparem bosses de 4 quilos.",
+        instruction: "Tenim <strong>28 quilos de taronges en total</strong> i els posem en bosses de <strong>4 quilos a cada bossa</strong>. <strong>Quantes bosses prepararem?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 28,
+        num2: 4,
+        targetNumber: 7,
+        unitLabel: "bosses",
+        organizerData: {
+          totLabel: "quilos en total",
+          totVal: 28,
+          partLabel: "quilos a cada bossa",
+          partVal: 4,
+          braceLabel: "bosses prepararem",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (28 kg) i cada PART (4 kg). Busquem el número de bosses (?) a la clau inferior.",
+          "2n pas: Posa 28 a TOT, 4 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 28 : 4 = 7 bosses!"
+        ]
+      },
+      {
+        id: "pdq_1_5",
+        title: "Comprant Llibretes a la Papereria",
+        lore: "Quantes llibretes podem comprar amb els nostres diners?",
+        instruction: "Portes <strong>24 euros en total</strong> i vols comprar llibretes que costen <strong>3 euros cada llibreta</strong>. <strong>Quantes llibretes pots comprar?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 24,
+        num2: 3,
+        targetNumber: 8,
+        unitLabel: "llibretes",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 24,
+          partLabel: "euros cada llibreta",
+          partVal: 3,
+          braceLabel: "llibretes",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (24 €) i el valor de cada PART (3 €). Volem saber el número de llibretes (?) a la clau inferior.",
+          "2n pas: Posa 24 a TOT, 3 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 24 : 3 = 8 llibretes!"
+        ]
+      }
+    ],
+    2: [
+      {
+        id: "pdq_2_1",
+        title: "Envasant Galetes al Forn",
+        lore: "Agrupem galetes en caixes iguals.",
+        instruction: "Al forn de pa han cuit <strong>96 galetes en total</strong> i les volen guardar en caixes posant <strong>8 galetes a cada caixa</strong>. <strong>Quantes caixes podran omplir?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 96,
+        num2: 8,
+        targetNumber: 12,
+        unitLabel: "caixes",
+        organizerData: {
+          totLabel: "galetes en total",
+          totVal: 96,
+          partLabel: "galetes a cada caixa",
+          partVal: 8,
+          braceLabel: "caixes ompliran",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (96 galetes) i el valor de cada PART (8 galetes). Busquem el número de caixes (?) a la clau inferior.",
+          "2n pas: Posa 96 a TOT, 8 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 96 : 8 = 12 caixes!"
+        ]
+      },
+      {
+        id: "pdq_2_2",
+        title: "Les Taules del Menjador Escolar",
+        lore: "Quantes taules necessitem per a l'alumnat?",
+        instruction: "Al menjador es queden a dinar <strong>84 alumnes en total</strong>. Si a cada taula hi caben <strong>6 alumnes</strong>, <strong>quantes taules es necessiten?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 84,
+        num2: 6,
+        targetNumber: 14,
+        unitLabel: "taules",
+        organizerData: {
+          totLabel: "alumnes en total",
+          totVal: 84,
+          partLabel: "alumnes a cada taula",
+          partVal: 6,
+          braceLabel: "taules es necessiten",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (84 alumnes) i cada PART (6 alumnes per taula). Busquem el número de taules (?) a la clau inferior.",
+          "2n pas: Posa 84 a TOT, 6 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 84 : 6 = 14 taules!"
+        ]
+      },
+      {
+        id: "pdq_2_3",
+        title: "Garrafes d'Aigua de 5 Litres",
+        lore: "Embotellem l'aigua d'una font.",
+        instruction: "Tenim <strong>75 litres d'aigua en total</strong> i els volem posar en garrafes on hi caben <strong>5 litres a cada garrafa</strong>. <strong>Quantes garrafes omplirem?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 75,
+        num2: 5,
+        targetNumber: 15,
+        unitLabel: "garrafes",
+        organizerData: {
+          totLabel: "litres en total",
+          totVal: 75,
+          partLabel: "litres a cada garrafa",
+          partVal: 5,
+          braceLabel: "garrafes omplirem",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: El TOT és 75 litres i cada PART és 5 litres. Volem saber el número de garrafes (?) a la clau inferior.",
+          "2n pas: Posa 75 a TOT, 5 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 75 : 5 = 15 garrafes!"
+        ]
+      },
+      {
+        id: "pdq_2_4",
+        title: "Àlbum de Fotografies de les Colònies",
+        lore: "Enganxem el mateix nombre de fotos a cada pàgina.",
+        instruction: "Hem imprès <strong>90 fotografies en total</strong> de les colònies i en posem <strong>6 fotografies a cada pàgina</strong> de l'àlbum. <strong>Quantes pàgines omplirem?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 90,
+        num2: 6,
+        targetNumber: 15,
+        unitLabel: "pàgines",
+        organizerData: {
+          totLabel: "fotografies en total",
+          totVal: 90,
+          partLabel: "fotografies cada pàgina",
+          partVal: 6,
+          braceLabel: "pàgines omplirem",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (90 fotos) i el valor de cada PART (6 fotos). Busquem el número de pàgines (?) a la clau inferior.",
+          "2n pas: Posa 90 a TOT, 6 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 90 : 6 = 15 pàgines!"
+        ]
+      },
+      {
+        id: "pdq_2_5",
+        title: "Packs de Llaunes de Refresc",
+        lore: "Agrupem les llaunes en packs de 6.",
+        instruction: "A la festa hi ha <strong>108 llaunes en total</strong> agrupades en packs de <strong>6 llaunes a cada pack</strong>. <strong>Quants packs hi ha?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 108,
+        num2: 6,
+        targetNumber: 18,
+        unitLabel: "packs",
+        organizerData: {
+          totLabel: "llaunes en total",
+          totVal: 108,
+          partLabel: "llaunes a cada pack",
+          partVal: 6,
+          braceLabel: "packs hi ha",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (108 llaunes) i cada PART (6 llaunes). Busquem el número de packs (?) a la clau inferior.",
+          "2n pas: Posa 108 a TOT, 6 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 108 : 6 = 18 packs!"
+        ]
+      }
+    ],
+    3: [
+      {
+        id: "pdq_3_1",
+        title: "Les Safates d'Ous del Mercat",
         lore: "Envasem ous a la parada del mercat.",
-        instruction: "Un granger té <strong>180 ous</strong> i els vol col·locar en safates de cartró on hi caben <strong>12 ous a cada safata</strong>. <strong>Quantes safates podrà omplir?</strong>",
+        instruction: "Un granger té <strong>180 ous en total</strong> i els vol col·locar en safates de cartró on hi caben <strong>12 ous a cada safata</strong>. <strong>Quantes safates podrà omplir?</strong>",
         type: "general_problem",
         organizerType: "divisio_quotativa",
         expectedOp: "/",
@@ -1964,35 +3495,545 @@ const CHALLENGES_DATA = {
           braceVal: "?"
         },
         hints: [
-          "1r pas (Esquema): Sabem el TOT (180 ous) i el valor de cada PART (12 ous per safata). Volem saber el número de parts (?) a la clau inferior. És una DIVISIÓ QUOTATIVA!",
-          "2n pas (Organitzador): Posa 180 al cercle TOT i 12 als cercles PART.",
-          "3r pas (Operació): 180 : 12 = 15 safates!"
+          "1r pas: Sabem el TOT (180 ous) i el valor de cada PART (12 ous). Busquem el número de safates (?) a la clau inferior.",
+          "2n pas: Posa 180 a TOT, 12 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 180 : 12 = 15 safates!"
         ]
       },
       {
-        id: "rp_3_5",
-        title: "Visitants a la Fira del Llibre (Model SUMA)",
-        lore: "Recompte total de participants del cap de setmana.",
-        instruction: "A la Fira del Llibre del barri hi van anar <strong>345 persones dissabte</strong> i <strong>428 persones diumenge</strong>. <strong>Quantes persones van visitar la fira en total durant el cap de setmana?</strong>",
+        id: "pdq_3_2",
+        title: "Els Autocars per a l'Excursió",
+        lore: "Quants autocars necessitem per a tota l'escola?",
+        instruction: "A l'excursió de final de curs hi van <strong>220 persones en total</strong>. Si a cada autocar hi caben <strong>55 persones</strong>, <strong>quants autocars cal llogar?</strong>",
         type: "general_problem",
-        organizerType: "suma",
-        expectedOp: "+",
-        num1: 345,
-        num2: 428,
-        targetNumber: 773,
-        unitLabel: "persones",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 220,
+        num2: 55,
+        targetNumber: 4,
+        unitLabel: "autocars",
         organizerData: {
           totLabel: "persones en total",
-          totVal: "?",
-          part1Label: "persones dissabte",
-          part1Val: 345,
-          part2Label: "persones diumenge",
-          part2Val: 428
+          totVal: 220,
+          partLabel: "persones cada autocar",
+          partVal: 55,
+          braceLabel: "autocars cal llogar",
+          braceVal: "?"
         },
         hints: [
-          "1r pas (Esquema): Coneixem les dues PARTS (345 dissabte i 428 diumenge) i volem saber el TOT (?). És una SUMA!",
-          "2n pas (Organitzador): Posa 345 i 428 als dos cercles PART.",
-          "3r pas (Operació): 345 + 428 = 773 persones!"
+          "1r pas: Sabem el TOT (220 persones) i cada PART (55 persones per autocar). Busquem el número d'autocars (?) a la clau inferior.",
+          "2n pas: Posa 220 a TOT, 55 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 220 : 55 = 4 autocars!"
+        ]
+      },
+      {
+        id: "pdq_3_3",
+        title: "Estalviant Setmana a Setmana",
+        lore: "Quantes setmanes necessito per reunir els diners?",
+        instruction: "Vols estalviar <strong>240 euros en total</strong> per a una tauleta digital. Si estalvies <strong>15 euros cada setmana</strong>, <strong>quantes setmanes necessitaràs?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 240,
+        num2: 15,
+        targetNumber: 16,
+        unitLabel: "setmanes",
+        organizerData: {
+          totLabel: "euros en total",
+          totVal: 240,
+          partLabel: "euros cada setmana",
+          partVal: 15,
+          braceLabel: "setmanes necessitaràs",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: El TOT és 240 € i cada PART és 15 €. Busquem el número de setmanes (?) a la clau inferior.",
+          "2n pas: Posa 240 a TOT, 15 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 240 : 15 = 16 setmanes!"
+        ]
+      },
+      {
+        id: "pdq_3_4",
+        title: "Caixes de Llibres per a la Biblioteca",
+        lore: "Empaquetem llibres de 24 en 24.",
+        instruction: "Una editorial envia <strong>336 llibres en total</strong> guardats en caixes on hi caben <strong>24 llibres a cada caixa</strong>. <strong>Quantes caixes ha enviat?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 336,
+        num2: 24,
+        targetNumber: 14,
+        unitLabel: "caixes",
+        organizerData: {
+          totLabel: "llibres en total",
+          totVal: 336,
+          partLabel: "llibres a cada caixa",
+          partVal: 24,
+          braceLabel: "caixes enviades",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (336 llibres) i cada PART (24 llibres). Busquem el número de caixes (?) a la clau inferior.",
+          "2n pas: Posa 336 a TOT, 24 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 336 : 24 = 14 caixes!"
+        ]
+      },
+      {
+        id: "pdq_3_5",
+        title: "Xarxes de Pilotes d'Educació Física",
+        lore: "Guardem les pilotes al magatzem del gimnàs.",
+        instruction: "Al gimnàs tenim <strong>144 pilotes en total</strong> i les guardem en xarxes on hi caben <strong>16 pilotes a cada xarxa</strong>. <strong>Quantes xarxes necessitem?</strong>",
+        type: "general_problem",
+        organizerType: "divisio_quotativa",
+        expectedOp: "/",
+        num1: 144,
+        num2: 16,
+        targetNumber: 9,
+        unitLabel: "xarxes",
+        organizerData: {
+          totLabel: "pilotes en total",
+          totVal: 144,
+          partLabel: "pilotes a cada xarxa",
+          partVal: 16,
+          braceLabel: "xarxes necessitem",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas: Sabem el TOT (144 pilotes) i cada PART (16 pilotes). Busquem el número de xarxes (?) a la clau inferior.",
+          "2n pas: Posa 144 a TOT, 16 a PART i '?' a la clau inferior (⏟).",
+          "3r pas: 144 : 16 = 9 xarxes!"
+        ]
+      }
+    ]
+  },
+
+  /* ------------------------------------------------------------------------
+     7. PROBLEMES BARREJATS I DE 2 OPERACIONS (15 problemes en 3 nivells)
+     ------------------------------------------------------------------------ */
+  prob_barrejats: {
+    1: [
+      {
+        id: "pb_1_1",
+        title: "El Canvi de la Compra al Supermercat (2 Operacions)",
+        lore: "Primer sumem el que gastem i després calculem el canvi!",
+        instruction: "Al supermercat compres un sac de pinso que val <strong>18 euros</strong> i una capsa de detergent que val <strong>14 euros</strong> (en total gastes <strong>32 euros</strong>). Si pagues amb un bitllet de <strong>50 euros</strong>, <strong>quants euros et tornaran de canvi?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "resta",
+        step1Expected: { a: 18, op: "+", b: 14, res: 32 },
+        expectedOp: "-",
+        num1: 50,
+        num2: 32,
+        targetNumber: 18,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros bitllet entregat",
+          totVal: 50,
+          part1Label: "euros gastats (18 + 14)",
+          part1Val: 32,
+          part2Label: "euros de canvi",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Suma): Calcula quant gastes en total: 18 + 14 = 32 euros.",
+          "2n pas (Organitzador TOT-PART de Resta): El TOT és el bitllet de 50 €, una PART és la despesa (32 €) i l'altra PART és el canvi (?).",
+          "3r pas (Operació 2 - Resta): 50 - 32 = 18 euros de canvi!"
+        ]
+      },
+      {
+        id: "pb_1_2",
+        title: "Els Packs d'Aigua i les Ampolles Soltes (2 Operacions)",
+        lore: "Primer multipliquem els packs i després hi sumem les ampolles soltes!",
+        instruction: "Al carretó poses <strong>6 packs d'aigua</strong> de <strong>6 ampolles cadascun</strong> (que són <strong>36 ampolles</strong> en packs) i a més agafes <strong>5 ampolles soltes</strong>. <strong>Quantes ampolles d'aigua portes en total?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "suma",
+        step1Expected: { a: 6, op: "*", b: 6, res: 36 },
+        expectedOp: "+",
+        num1: 36,
+        num2: 5,
+        targetNumber: 41,
+        unitLabel: "ampolles",
+        organizerData: {
+          totLabel: "ampolles en total",
+          totVal: "?",
+          part1Label: "ampolles en packs (6 × 6)",
+          part1Val: 36,
+          part2Label: "ampolles soltes",
+          part2Val: 5
+        },
+        hints: [
+          "1r pas (Operació 1 - Multiplicació): Calcula quantes ampolles hi ha als 6 packs: 6 × 6 = 36 ampolles.",
+          "2n pas (Organitzador TOT-PART de Suma): Les dues PARTS són 36 ampolles en packs i 5 ampolles soltes. Busquem el TOT (?).",
+          "3r pas (Operació 2 - Suma): 36 + 5 = 41 ampolles en total!"
+        ]
+      },
+      {
+        id: "pb_1_3",
+        title: "El Val de la Llibreria i els Còmics (2 Operacions)",
+        lore: "Primer multipliquem el preu dels còmics i després restem del val!",
+        instruction: "Tens un val de <strong>100 euros en total</strong> per a la llibreria. Compres <strong>4 còmics</strong> a <strong>16 euros cadascun</strong> (que costen <strong>64 euros</strong>). <strong>Quants euros et queden encara al val?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "resta",
+        step1Expected: { a: 4, op: "*", b: 16, res: 64 },
+        expectedOp: "-",
+        num1: 100,
+        num2: 64,
+        targetNumber: 36,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros del val en total",
+          totVal: 100,
+          part1Label: "euros dels 4 còmics",
+          part1Val: 64,
+          part2Label: "euros que queden al val",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Multiplicació): Calcula el preu dels 4 còmics: 4 × 16 = 64 euros.",
+          "2n pas (Organitzador TOT-PART de Resta): El TOT és 100 €, la PART gastada és 64 € i busquem la PART que queda (?).",
+          "3r pas (Operació 2 - Resta): 100 - 64 = 36 euros!"
+        ]
+      },
+      {
+        id: "pb_1_4",
+        title: "La Collita del Matí i de la Tarda en Caixes (2 Operacions)",
+        lore: "Primer sumem tota la collita i després la repartim en caixes iguals!",
+        instruction: "Un hortolà recull <strong>45 quilos</strong> de tomàquets al matí i <strong>39 quilos</strong> a la tarda (en total <strong>84 quilos</strong>). Els reparteix a parts iguals en <strong>7 caixes</strong>. <strong>Quants quilos posa a cada caixa?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "divisio_partitiva",
+        step1Expected: { a: 45, op: "+", b: 39, res: 84 },
+        expectedOp: "/",
+        num1: 84,
+        num2: 7,
+        targetNumber: 12,
+        unitLabel: "quilos",
+        organizerData: {
+          totLabel: "quilos collits en total",
+          totVal: 84,
+          partLabel: "quilos a cada caixa",
+          partVal: "?",
+          braceLabel: "caixes iguals",
+          braceVal: 7
+        },
+        hints: [
+          "1r pas (Operació 1 - Suma): Calcula tots els quilos recollits: 45 + 39 = 84 quilos.",
+          "2n pas (Organitzador de Divisió Partitiva): El TOT és 84 quilos, la clau inferior és 7 caixes i busquem el valor de cada PART (?).",
+          "3r pas (Operació 2 - Divisió): 84 : 7 = 12 quilos a cada caixa!"
+        ]
+      },
+      {
+        id: "pb_1_5",
+        title: "Estalvi Setmanal per a la Bicicleta (2 Operacions)",
+        lore: "Primer restem el que ja tenim i després dividim entre les setmanes!",
+        instruction: "Una bicicleta val <strong>180 euros</strong>. Si ja tens <strong>60 euros</strong> estalviats (et falten <strong>120 euros</strong>) i vols reunir el que et falta durant <strong>6 setmanes</strong> a parts iguals, <strong>quants euros has d'estalviar cada setmana?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "divisio_partitiva",
+        step1Expected: { a: 180, op: "-", b: 60, res: 120 },
+        expectedOp: "/",
+        num1: 120,
+        num2: 6,
+        targetNumber: 20,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros que falten reunir",
+          totVal: 120,
+          partLabel: "euros cada setmana",
+          partVal: "?",
+          braceLabel: "setmanes",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas (Operació 1 - Resta): Calcula quants diners et falten: 180 - 60 = 120 euros.",
+          "2n pas (Organitzador de Divisió Partitiva): El TOT per reunir és 120 €, el número de parts és 6 setmanes i busquem el valor de cada PART (?).",
+          "3r pas (Operació 2 - Divisió): 120 : 6 = 20 euros cada setmana!"
+        ]
+      }
+    ],
+    2: [
+      {
+        id: "pb_2_1",
+        title: "Places Buides a l'Autocar Escolar (2 Operacions)",
+        lore: "Sumem els viatgers i restem del total de seients.",
+        instruction: "Un autocar té <strong>60 seients en total</strong>. Hi pugen <strong>26 alumnes de 6è A</strong> i <strong>25 alumnes de 6è B</strong> (en total <strong>51 ocupats</strong>). <strong>Quants seients queden buits?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "resta",
+        step1Expected: { a: 26, op: "+", b: 25, res: 51 },
+        expectedOp: "-",
+        num1: 60,
+        num2: 51,
+        targetNumber: 9,
+        unitLabel: "seients",
+        organizerData: {
+          totLabel: "seients en total",
+          totVal: 60,
+          part1Label: "seients ocupats",
+          part1Val: 51,
+          part2Label: "seients buits",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Suma): Suma els alumnes que han pujat: 26 + 25 = 51 seients ocupats.",
+          "2n pas (Organitzador de Resta): El TOT és 60 seients, una PART és 51 ocupats i l'altra PART és els seients buits (?).",
+          "3r pas (Operació 2 - Resta): 60 - 51 = 9 seients buits!"
+        ]
+      },
+      {
+        id: "pb_2_2",
+        title: "Les Safates d'Ous Sense Trencar (2 Operacions)",
+        lore: "Restem els ous trencats i agrupem la resta en safates de 6.",
+        instruction: "A la parada del mercat tenen <strong>150 ous</strong>, però se'n trenquen <strong>6 ous</strong> (queden <strong>144 ous bons</strong>). Els envasen en safates posant <strong>6 ous a cada safata</strong>. <strong>Quantes safates ompliran?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "divisio_quotativa",
+        step1Expected: { a: 150, op: "-", b: 6, res: 144 },
+        expectedOp: "/",
+        num1: 144,
+        num2: 6,
+        targetNumber: 24,
+        unitLabel: "safates",
+        organizerData: {
+          totLabel: "ous bons en total",
+          totVal: 144,
+          partLabel: "ous a cada safata",
+          partVal: 6,
+          braceLabel: "safates ompliran",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Resta): Ous bons = 150 - 6 = 144 ous.",
+          "2n pas (Organitzador de Divisió Quotativa): El TOT d'ous bons és 144, cada PART és 6 ous per safata i busquem el número de safates (?) a la clau inferior.",
+          "3r pas (Operació 2 - Divisió): 144 : 6 = 24 safates!"
+        ]
+      },
+      {
+        id: "pb_2_3",
+        title: "La Parada Solidària de Pastissos (2 Operacions)",
+        lore: "Multipliquem els ingressos i descomptem la despesa d'ingredients.",
+        instruction: "A la fira escolar heu venut <strong>15 pastissos</strong> a <strong>12 euros cadascun</strong> (recaptant <strong>180 euros</strong>). Si comprar els ingredients va costar <strong>40 euros</strong>, <strong>quants euros de benefici net han quedat?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "resta",
+        step1Expected: { a: 15, op: "*", b: 12, res: 180 },
+        expectedOp: "-",
+        num1: 180,
+        num2: 40,
+        targetNumber: 140,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros recaptats en total",
+          totVal: 180,
+          part1Label: "euros despesa ingredients",
+          part1Val: 40,
+          part2Label: "euros benefici net",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Multiplicació): Calcula els diners recaptats: 15 × 12 = 180 euros.",
+          "2n pas (Organitzador de Resta): El TOT recaptat és 180 €, una PART és la despesa (40 €) i busquem l'altra PART de benefici (?).",
+          "3r pas (Operació 2 - Resta): 180 - 40 = 140 euros!"
+        ]
+      },
+      {
+        id: "pb_2_4",
+        title: "Les Mandarines del Menjador (2 Operacions)",
+        lore: "Sumem els alumnes de cada taula i multipliquem pel nombre de taules.",
+        instruction: "Al menjador hi ha <strong>8 taules</strong>. A cada taula hi seuen <strong>5 nens i 4 nenes</strong> (és a dir, <strong>9 alumnes a cada taula</strong>). <strong>Quants alumnes hi ha en total a les 8 taules?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "multiplicacio",
+        step1Expected: { a: 5, op: "+", b: 4, res: 9 },
+        expectedOp: "*",
+        num1: 9,
+        num2: 8,
+        targetNumber: 72,
+        unitLabel: "alumnes",
+        organizerData: {
+          totLabel: "alumnes en total",
+          totVal: "?",
+          partLabel: "alumnes a cada taula",
+          partVal: 9,
+          braceLabel: "taules",
+          braceVal: 8
+        },
+        hints: [
+          "1r pas (Operació 1 - Suma): Alumnes a cada taula = 5 + 4 = 9 alumnes.",
+          "2n pas (Organitzador de Multiplicació): Cada PART val 9 alumnes, la clau inferior és 8 taules i busquem el TOT (?).",
+          "3r pas (Operació 2 - Multiplicació): 9 × 8 = 72 alumnes!"
+        ]
+      },
+      {
+        id: "pb_2_5",
+        title: "Subvenció per a l'Autocar de Colònies (2 Operacions)",
+        lore: "Restem l'ajuda de l'AFA i repartim la resta entre els alumnes.",
+        instruction: "L'autocar de les colònies costa <strong>450 euros</strong>. L'AFA de l'escola en paga <strong>90 euros</strong> (queden <strong>360 euros</strong> per pagar) i la resta es reparteix en parts iguals entre <strong>18 alumnes</strong>. <strong>Quants euros paga cada alumne?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "divisio_partitiva",
+        step1Expected: { a: 450, op: "-", b: 90, res: 360 },
+        expectedOp: "/",
+        num1: 360,
+        num2: 18,
+        targetNumber: 20,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros a repartir",
+          totVal: 360,
+          partLabel: "euros cada alumne",
+          partVal: "?",
+          braceLabel: "alumnes",
+          braceVal: 18
+        },
+        hints: [
+          "1r pas (Operació 1 - Resta): Descomptem els 90 € de l'AFA: 450 - 90 = 360 euros.",
+          "2n pas (Organitzador de Divisió Partitiva): El TOT a repartir és 360 €, el número de parts és 18 alumnes i busquem el valor de cada PART (?).",
+          "3r pas (Operació 2 - Divisió): 360 : 18 = 20 euros cada alumne!"
+        ]
+      }
+    ],
+    3: [
+      {
+        id: "pb_3_1",
+        title: "L'Equipació d'Atletisme amb Descompte (2 Operacions)",
+        lore: "Multipliquem el cost de les equipacions i apliquem la rebaixa.",
+        instruction: "El club compra <strong>12 equipacions</strong> que valen <strong>25 euros cadascuna</strong> (en total <strong>300 euros</strong>). La botiga els fa un descompte de <strong>30 euros</strong>. <strong>Quants euros paguen finalment?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "resta",
+        step1Expected: { a: 12, op: "*", b: 25, res: 300 },
+        expectedOp: "-",
+        num1: 300,
+        num2: 30,
+        targetNumber: 270,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros preu inicial",
+          totVal: 300,
+          part1Label: "euros de descompte",
+          part1Val: 30,
+          part2Label: "euros a pagar finalment",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Multiplicació): 12 × 25 = 300 euros abans del descompte.",
+          "2n pas (Organitzador de Resta): El TOT és 300 €, una PART és el descompte (30 €) i l'altra PART és el preu final (?).",
+          "3r pas (Operació 2 - Resta): 300 - 30 = 270 euros!"
+        ]
+      },
+      {
+        id: "pb_3_2",
+        title: "Empaquetant Pomelos i Taronges (2 Operacions)",
+        lore: "Sumem tota la fruita i calculem quantes caixes de 15 kg omplirem.",
+        instruction: "Un pagès té <strong>190 quilos de taronges</strong> i <strong>110 quilos de pomelos</strong> (en total <strong>300 quilos</strong>). Els vol guardar en caixes posant <strong>15 quilos a cada caixa</strong>. <strong>Quantes caixes necessitarà?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "divisio_quotativa",
+        step1Expected: { a: 190, op: "+", b: 110, res: 300 },
+        expectedOp: "/",
+        num1: 300,
+        num2: 15,
+        targetNumber: 20,
+        unitLabel: "caixes",
+        organizerData: {
+          totLabel: "quilos de fruita en total",
+          totVal: 300,
+          partLabel: "quilos a cada caixa",
+          partVal: 15,
+          braceLabel: "caixes necessitarà",
+          braceVal: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Suma): Suma tota la fruita: 190 + 110 = 300 quilos.",
+          "2n pas (Organitzador de Divisió Quotativa): El TOT és 300 kg, cada PART és 15 kg per caixa i busquem el número de caixes (?) a la clau inferior.",
+          "3r pas (Operació 2 - Divisió): 300 : 15 = 20 caixes!"
+        ]
+      },
+      {
+        id: "pb_3_3",
+        title: "Les Capses de Retoladors que Queden (2 Operacions)",
+        lore: "Multipliquem les capses i restem els retoladors gastats.",
+        instruction: "A l'escola han comprat <strong>8 capses</strong> amb <strong>24 retoladors a cada capsa</strong> (en total <strong>192 retoladors</strong>). Si a final de trimestre se n'han gastat <strong>35 retoladors</strong>, <strong>quants retoladors nous queden?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "resta",
+        step1Expected: { a: 8, op: "*", b: 24, res: 192 },
+        expectedOp: "-",
+        num1: 192,
+        num2: 35,
+        targetNumber: 157,
+        unitLabel: "retoladors",
+        organizerData: {
+          totLabel: "retoladors comprats en total",
+          totVal: 192,
+          part1Label: "retoladors gastats",
+          part1Val: 35,
+          part2Label: "retoladors que queden",
+          part2Val: "?"
+        },
+        hints: [
+          "1r pas (Operació 1 - Multiplicació): 8 × 24 = 192 retoladors en total.",
+          "2n pas (Organitzador de Resta): El TOT és 192, una PART és 35 gastats i busquem l'altra PART que queda (?).",
+          "3r pas (Operació 2 - Resta): 192 - 35 = 157 retoladors!"
+        ]
+      },
+      {
+        id: "pb_3_4",
+        title: "Repartint el Premi del Concurs Literari (2 Operacions)",
+        lore: "Sumem els dos premis i els repartim a parts iguals entre l'equip.",
+        instruction: "Un grup de <strong>6 alumnes</strong> ha guanyat un primer premi de <strong>150 euros</strong> i un accèssit de <strong>90 euros</strong> (en total <strong>240 euros</strong>). Si es reparteixen el total a parts iguals entre els <strong>6 alumnes</strong>, <strong>quants euros rep cadascú?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "divisio_partitiva",
+        step1Expected: { a: 150, op: "+", b: 90, res: 240 },
+        expectedOp: "/",
+        num1: 240,
+        num2: 6,
+        targetNumber: 40,
+        unitLabel: "euros",
+        organizerData: {
+          totLabel: "euros de premi en total",
+          totVal: 240,
+          partLabel: "euros cada alumne",
+          partVal: "?",
+          braceLabel: "alumnes",
+          braceVal: 6
+        },
+        hints: [
+          "1r pas (Operació 1 - Suma): 150 + 90 = 240 euros de premi total.",
+          "2n pas (Organitzador de Divisió Partitiva): El TOT és 240 €, la clau inferior és 6 alumnes i busquem el valor de cada PART (?).",
+          "3r pas (Operació 2 - Divisió): 240 : 6 = 40 euros cada alumne!"
+        ]
+      },
+      {
+        id: "pb_3_5",
+        title: "Cadires per al Festival de Música (2 Operacions)",
+        lore: "Multipliquem les files del matí i hi sumem les cadires extra de la tarda.",
+        instruction: "Per al festival hem posat <strong>12 files</strong> amb <strong>15 cadires a cada fila</strong> (que són <strong>180 cadires</strong>) i després hem afegit <strong>45 cadires més</strong> al fons. <strong>Quantes cadires hi ha en total?</strong>",
+        type: "general_problem",
+        isTwoStep: true,
+        organizerType: "suma",
+        step1Expected: { a: 12, op: "*", b: 15, res: 180 },
+        expectedOp: "+",
+        num1: 180,
+        num2: 45,
+        targetNumber: 225,
+        unitLabel: "cadires",
+        organizerData: {
+          totLabel: "cadires en total",
+          totVal: "?",
+          part1Label: "cadires a les files (12 × 15)",
+          part1Val: 180,
+          part2Label: "cadires afegides al fons",
+          part2Val: 45
+        },
+        hints: [
+          "1r pas (Operació 1 - Multiplicació): 12 × 15 = 180 cadires a les files.",
+          "2n pas (Organitzador de Suma): Les dues PARTS són 180 cadires de les files i 45 cadires extra. Busquem el TOT (?).",
+          "3r pas (Operació 2 - Suma): 180 + 45 = 225 cadires en total!"
         ]
       }
     ]
@@ -2013,7 +4054,10 @@ const ORGANIZER_MODELS_INFO = {
       "Sabem les parts.",
       "Volem saber el tot.",
       "Les parts poden ser iguals o no."
-    ]
+    ],
+    exampleProblem: "Tinc una bossa amb 5 caramels de maduixa i una altra bossa amb 3 caramels de menta. Quants caramels tinc en total?",
+    exampleOperation: "5 + 3 = 8 caramels",
+    exampleDetails: "Cercle TOT = ? (caramels en total) · Cercle PART 1 = 5 (caramels de maduixa) · Cercle PART 2 = 3 (caramels de menta)."
   },
   resta: {
     id: "resta",
@@ -2027,7 +4071,10 @@ const ORGANIZER_MODELS_INFO = {
     bullets: [
       "Sabem el tot i una part.",
       "Volem saber l'altra part."
-    ]
+    ],
+    exampleProblem: "En un arbre hi ha 10 ocells. Si 4 ocells marxen volant, quants ocells queden a l'arbre?",
+    exampleOperation: "10 − 4 = 6 ocells",
+    exampleDetails: "Cercle TOT = 10 (ocells a l'arbre) · Cercle PART 1 = 4 (ocells marxen) · Cercle PART 2 = ? (ocells queden)."
   },
   multiplicacio: {
     id: "multiplicacio",
@@ -2042,7 +4089,10 @@ const ORGANIZER_MODELS_INFO = {
       "Sabem el valor de les parts i el número de parts.",
       "Volem saber el tot.",
       "Les parts són iguals i es repeteixen diverses vegades."
-    ]
+    ],
+    exampleProblem: "Una samarreta val 15 euros. Si me'n compro 2, quants diners em gastaré?",
+    exampleOperation: "15 × 2 = 30 euros",
+    exampleDetails: "Cercle TOT = ? (diners que gastaré) · Cercles PART = 15 (euros cada samarreta) · Clau inferior (⏟) = 2 (samarretes)."
   },
   divisio_partitiva: {
     id: "divisio_partitiva",
@@ -2057,7 +4107,10 @@ const ORGANIZER_MODELS_INFO = {
       "Sabem el tot i el número de parts.",
       "Volem saber el valor de cada part.",
       "Les parts són iguals."
-    ]
+    ],
+    exampleProblem: "Una escola ha comprat 150 llibres i els vol repartir en 6 prestatges a parts iguals. Quants llibres posarà a cada prestatge?",
+    exampleOperation: "150 : 6 = 25 llibres",
+    exampleDetails: "Cercle TOT = 150 (llibres en total) · Cercles PART = ? (llibres a cada prestatge) · Clau inferior (⏟) = 6 (prestatges)."
   },
   divisio_quotativa: {
     id: "divisio_quotativa",
@@ -2072,6 +4125,9 @@ const ORGANIZER_MODELS_INFO = {
       "Sabem el tot i el valor de les parts.",
       "Volem saber el número de parts.",
       "Les parts són iguals."
-    ]
+    ],
+    exampleProblem: "Tinc 20 bombons i els vull repartir en capses de manera que a cada capsa hi hagi 5 bombons. Quantes capses necessitaré?",
+    exampleOperation: "20 : 5 = 4 capses",
+    exampleDetails: "Cercle TOT = 20 (bombons en total) · Cercles PART = 5 (bombons a cada capsa) · Clau inferior (⏟) = ? (capses necessitaré)."
   }
 };

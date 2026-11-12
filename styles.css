@@ -254,7 +254,94 @@ body {
 }
 
 /* ==========================================================================
-   PESTANYES DE NAVEGACIÓ DELS TERRITORIS
+   SELECTOR SUPERIOR DELS 2 GRANS APARTATS (FRACCIONS vs OPERACIONS)
+   ========================================================================== */
+.main-area-bar {
+  background: var(--bg-parchment);
+  border-bottom: 2px solid var(--border-color);
+  padding: 0.65rem 1rem 0.5rem 1rem;
+}
+
+.main-area-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 780px) {
+  .main-area-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main-area-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 14px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.main-area-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.main-area-btn.active {
+  background: linear-gradient(135deg, #4338CA 0%, #2563EB 100%);
+  color: #FFFFFF;
+  border-color: #312E81;
+  box-shadow: 0 5px 14px rgba(67, 56, 202, 0.28);
+}
+
+.main-area-btn.area-operacions-btn.active {
+  background: linear-gradient(135deg, #6D28D9 0%, #9333EA 55%, #C026D3 100%);
+  border-color: #4C1D95;
+  box-shadow: 0 5px 14px rgba(124, 58, 237, 0.3);
+}
+
+.main-area-btn .area-icon {
+  font-size: 1.9rem;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.18);
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.main-area-btn .area-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.main-area-btn .area-text strong {
+  font-size: 1.02rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.main-area-btn .area-text span {
+  font-size: 0.8rem;
+  opacity: 0.88;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   PESTANYES DE NAVEGACIÓ DELS SUB-APARTATS
    ========================================================================== */
 .main-nav {
   background: var(--bg-card);
