@@ -42,7 +42,9 @@
     solverDivGroups: 1,             // Nombre de parts iguals per repartir el total dels blocs
     showBarModelGuide: true,        // Mostra o amaga el Model de Barres Part-Tot
     step1: { a: "", op: "+", b: "" },
-    step2: { a: "", op: "+", b: "" },
+    step2: { a: "", op: "+", b: "", res: "" },
+    selectedOrg1Type: "suma",
+    org1Inputs: { tot: "", part1: "", part2: "", part: "", brace: "", totLabel: "", part1Label: "", part2Label: "", partLabel: "", braceLabel: "" },
 
     // Estat de la Forja Lliure
     freeLeft: { num: 1, den: 2, maxUnits: 1 },
@@ -679,7 +681,20 @@
     state.solverBlocks = [];
     state.solverDivGroups = 1;
     state.showBarModelGuide = true;
-    state.selectedOrganizerType = ch.organizerType || "suma";
+    state.selectedOrg1Type = ch.isTwoStep ? "suma" : (ch.org1Type || "suma");
+    state.selectedOrganizerType = ch.isTwoStep ? "suma" : (ch.organizerType || "suma");
+    state.org1Inputs = {
+      tot: "",
+      part1: "",
+      part2: "",
+      part: "",
+      brace: "",
+      totLabel: "",
+      part1Label: "",
+      part2Label: "",
+      partLabel: "",
+      braceLabel: ""
+    };
     state.orgInputs = {
       tot: "",
       part1: "",
@@ -692,8 +707,8 @@
       partLabel: "",
       braceLabel: ""
     };
-    state.step1 = { a: "", op: ch.expectedOp || "+", b: "" };
-    state.step2 = { a: "", op: "+", b: "" };
+    state.step1 = { a: "", op: ch.isTwoStep ? "+" : (ch.expectedOp || "+"), b: "" };
+    state.step2 = { a: "", op: "+", b: "", res: "" };
     if (ch.defaultShape) {
       state.currentShape = ch.defaultShape;
     }
@@ -940,10 +955,312 @@
     `;
   }
 
+  function renderSingleTotPartSheetHTML(prefix, activeModel, inp, labelOptions, qmarkAttr) {
+    const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
+    const totValStr = String(inp.tot ?? "").trim();
+    const totIsQ = totValStr === "?";
+    const totCircleStateClass = totIsQ ? "unknown-circle" : (totValStr !== "" ? "known-circle" : "");
+
+    const totSectionHTML = `
+      <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
+        ${buildLabelSelectHTML(`${prefix}TotLabelSelect`, inp.totLabel || "", labelOptions, "📋 Què representa el TOT?")}
+        <div class="tot-part-purple-title">TOT</div>
+        <div class="tot-part-circle ${totCircleStateClass}">
+          <input type="text" inputmode="numeric" id="${prefix}TotInput"
+                 class="tot-part-circle-input ${totIsQ ? "is-qmark-input" : ""}"
+                 placeholder="Núm / ?" value="${totValStr}" aria-label="Quantitat del TOT o interrogant" />
+        </div>
+        <button type="button" class="circle-qmark-btn ${totIsQ ? "active" : ""}" ${qmarkAttr}="tot" title="Marca el TOT com la incògnita (?)">
+          ${totIsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
+        </button>
+      </div>
+    `;
+
+    let interactiveBottomHTML = "";
+    if (!isMulti) {
+      const p1ValStr = String(inp.part1 ?? "").trim();
+      const p2ValStr = String(inp.part2 ?? "").trim();
+      const p1IsQ = p1ValStr === "?";
+      const p2IsQ = p2ValStr === "?";
+      const p1CircleClass = p1IsQ ? "unknown-circle" : (p1ValStr !== "" ? "known-circle" : "");
+      const p2CircleClass = p2IsQ ? "unknown-circle" : (p2ValStr !== "" ? "known-circle" : "");
+
+      interactiveBottomHTML = `
+        <svg viewBox="0 0 280 42" style="width:100%; max-width:280px; height:42px; display:block; margin:0 auto;">
+          <line x1="140" y1="2" x2="65" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="140" y1="2" x2="215" y2="40" stroke="#1E293B" stroke-width="3" />
+        </svg>
+        <div style="display:flex; justify-content:center; gap:1.5rem; align-items:flex-start; flex-wrap:wrap;">
+          <!-- PART 1 -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
+            <div class="tot-part-circle ${p1CircleClass}">
+              <input type="text" inputmode="numeric" id="${prefix}Part1Input"
+                     class="tot-part-circle-input ${p1IsQ ? "is-qmark-input" : ""}"
+                     placeholder="Núm / ?" value="${p1ValStr}" aria-label="Quantitat de la Part 1 o interrogant" />
+            </div>
+            <button type="button" class="circle-qmark-btn ${p1IsQ ? "active" : ""}" ${qmarkAttr}="part1">
+              ${p1IsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
+            </button>
+            <div class="tot-part-purple-title">PART</div>
+            ${buildLabelSelectHTML(`${prefix}Part1LabelSelect`, inp.part1Label || "", labelOptions, "📋 Què representa?")}
+          </div>
+
+          <!-- PART 2 -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
+            <div class="tot-part-circle ${p2CircleClass}">
+              <input type="text" inputmode="numeric" id="${prefix}Part2Input"
+                     class="tot-part-circle-input ${p2IsQ ? "is-qmark-input" : ""}"
+                     placeholder="Núm / ?" value="${p2ValStr}" aria-label="Quantitat de la Part 2 o interrogant" />
+            </div>
+            <button type="button" class="circle-qmark-btn ${p2IsQ ? "active" : ""}" ${qmarkAttr}="part2">
+              ${p2IsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
+            </button>
+            <div class="tot-part-purple-title">PART</div>
+            ${buildLabelSelectHTML(`${prefix}Part2LabelSelect`, inp.part2Label || "", labelOptions, "📋 Què representa?")}
+          </div>
+        </div>
+      `;
+    } else {
+      const partValStr = String(inp.part ?? "").trim();
+      const braceValStr = String(inp.brace ?? "").trim();
+      const partIsQ = partValStr === "?";
+      const braceIsQ = braceValStr === "?";
+      const partCircleClass = partIsQ ? "unknown-circle" : (partValStr !== "" ? "known-circle" : "");
+
+      const partMirrorDisplay = partIsQ
+        ? `<span class="tot-part-qmark">?</span>`
+        : `<span class="tot-part-MirrorVal-${prefix}" style="font-size:1.3rem; font-weight:900; color:#0F172A;">${partValStr || "·"}</span>`;
+
+      interactiveBottomHTML = `
+        <svg viewBox="0 0 320 42" style="width:100%; max-width:320px; height:42px; display:block; margin:0 auto;">
+          <line x1="160" y1="2" x2="50" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="135" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="270" y2="40" stroke="#1E293B" stroke-width="3" />
+        </svg>
+
+        <div style="display:flex; justify-content:center; gap:0.55rem; align-items:flex-start;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle ${partCircleClass}">
+              <input type="text" inputmode="numeric" id="${prefix}PartInput"
+                     class="tot-part-circle-input ${partIsQ ? "is-qmark-input" : ""}"
+                     placeholder="Núm / ?" value="${partValStr}" aria-label="Valor de cada PART o interrogant" />
+            </div>
+            <button type="button" class="circle-qmark-btn ${partIsQ ? "active" : ""}" ${qmarkAttr}="part">
+              ${partIsQ ? "❓ Incògnita (?)" : "❓ Posa ?"}
+            </button>
+            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle ${partCircleClass}">
+              ${partMirrorDisplay}
+            </div>
+            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
+          </div>
+
+          <span class="tot-part-ellipsis" style="margin-top:1.35rem;">...</span>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle ${partCircleClass}">
+              ${partMirrorDisplay}
+            </div>
+            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
+          </div>
+        </div>
+
+        <div style="margin-top:0.25rem; display:flex; justify-content:center;">
+          ${buildLabelSelectHTML(`${prefix}PartLabelSelect`, inp.partLabel || "", labelOptions, "📋 Què representa cada PART?")}
+        </div>
+
+        <!-- Clau horitzontal inferior ⏟ per al número de parts -->
+        <div style="display:flex; flex-direction:column; align-items:center; margin-top:0.25rem;">
+          <svg viewBox="0 0 300 28" style="width:100%; max-width:290px; height:26px; display:block;">
+            <path d="M 15 4 Q 15 15 30 15 L 135 15 Q 150 15 150 26 Q 150 15 165 15 L 270 15 Q 285 15 285 4"
+                  fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0.4rem; margin-top:0.15rem;">
+            <input type="text" inputmode="numeric" id="${prefix}BraceInput"
+                   class="tot-part-circle-input ${braceIsQ ? "is-qmark-input" : ""}"
+                   placeholder="Núm / ?" value="${braceValStr}" aria-label="Número de parts o interrogant" />
+            <button type="button" class="circle-qmark-btn ${braceIsQ ? "active" : ""}" ${qmarkAttr}="brace" style="margin-top:0;">
+              ${braceIsQ ? "❓ Incògnita (?)" : "❓ Posa ?"}
+            </button>
+            ${buildLabelSelectHTML(`${prefix}BraceLabelSelect`, inp.braceLabel || "", labelOptions, "📋 Què indica la clau (⏟)?")}
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="tot-part-sheet">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          ${totSectionHTML}
+          ${interactiveBottomHTML}
+        </div>
+      </div>
+    `;
+  }
+
   function renderGeneralProblemStageHTML(ch, prevProbInput) {
+    // Cas especial: PROBLEMES DE 2 OPERACIONS (Apartat 7: prob_barrejats)
+    // L'alumne ha de fer LES DUES REPRESENTACIONS als dos organitzadors TOT-PART i calcular ELL MATEIX les dues operacions!
+    if (ch.isTwoStep && ch.org1Data && ch.step1Expected) {
+      const activeModel1 = state.selectedOrg1Type || "suma";
+      const activeModel2 = state.selectedOrganizerType || "suma";
+      const org1 = ch.org1Data;
+      const org2 = ch.organizerData || {};
+      const inp1 = state.org1Inputs || {};
+      const inp2 = state.orgInputs || {};
+
+      const rawLabels1 = (ch.org1Type === "suma" || ch.org1Type === "resta")
+        ? [org1.totLabel, org1.part1Label, org1.part2Label].filter(Boolean)
+        : [org1.totLabel, org1.partLabel, org1.braceLabel].filter(Boolean);
+      const labelOptions1 = [...rawLabels1].sort((a, b) => a.localeCompare(b, "ca"));
+
+      const rawLabels2 = (ch.organizerType === "suma" || ch.organizerType === "resta")
+        ? [org2.totLabel, org2.part1Label, org2.part2Label].filter(Boolean)
+        : [org2.totLabel, org2.partLabel, org2.braceLabel].filter(Boolean);
+      const labelOptions2 = [...rawLabels2].sort((a, b) => a.localeCompare(b, "ca"));
+
+      const step1Nums = [ch.step1Expected.a, ch.step1Expected.b, "?"];
+      // Al Pas 2 no revelem el resultat del Pas 1 a les targetes! Mostrem l'altra dada del problema i "Resultat Pas 1"
+      const otherKnownNum2 = ch.num1 === ch.step1Expected.res ? ch.num2 : ch.num1;
+
+      const matches1 = activeModel1 === ch.org1Type;
+      const matches2 = activeModel2 === ch.organizerType;
+
+      return `
+        <div class="problem-solver-grid">
+          <!-- COLUMNA ESQUERRA: 1a REPRESENTACIÓ (ORGANITZADOR 1) + 1a OPERACIÓ I CÀLCUL -->
+          <div class="solver-panel-card" style="border:2px solid #93C5FD;">
+            <div class="panel-header-bar">
+              <span class="panel-title" style="color:#1E40AF;">1️⃣ PAS 1: Primera Representació i 1a Operació</span>
+              <button type="button" class="tool-btn" id="btnAutoFillOrg1" style="font-size:0.76rem; padding:0.25rem 0.55rem;" title="Ajuda DUA: omple el 1r organitzador">
+                🪄 Ajuda Pas 1
+              </button>
+            </div>
+
+            <div style="font-size:0.82rem; font-weight:800; color:#334155;">
+              🧭 Tria l'esquema TOT-PART de la <strong>1a operació</strong>:
+            </div>
+            <div class="organizer-selector-bar" role="group" aria-label="Model del primer organitzador">
+              <button type="button" class="organizer-type-btn ${activeModel1 === "suma" ? "active" : ""}" data-org1-model="suma">➕ SUMA</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "resta" ? "active" : ""}" data-org1-model="resta">➖ RESTA</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "multiplicacio" ? "active" : ""}" data-org1-model="multiplicacio">✖️ MULTIPLICACIÓ</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "divisio_partitiva" ? "active" : ""}" data-org1-model="divisio_partitiva">➗ DIV. PARTITIVA</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "divisio_quotativa" ? "active" : ""}" data-org1-model="divisio_quotativa">📦 DIV. QUOTATIVA</button>
+            </div>
+
+            <div style="padding:0.35rem 0.65rem; border-radius:8px; font-size:0.82rem; font-weight:800; text-align:center;
+                        background:${matches1 ? "var(--emerald-light)" : "var(--gold-light)"};
+                        color:${matches1 ? "var(--emerald)" : "#92400E"};
+                        border:1px solid ${matches1 ? "var(--emerald)" : "var(--gold)"};">
+              ${matches1
+                ? `✅ Esquema del Pas 1 correcte (${ORGANIZER_MODELS_INFO[activeModel1]?.title})!`
+                : "💡 Quin esquema TOT-PART correspon a la primera operació del problema?"}
+            </div>
+
+            <div class="organizer-cards-tray">
+              <span style="font-size:0.78rem; font-weight:900; color:#581C87;">🃏 Dades Pas 1:</span>
+              ${step1Nums.map(v => `
+                <span class="org-concept-card ${v === "?" ? "qmark-card" : "num-card"}">
+                  ${v === "?" ? "❓ Incògnita: ?" : `🔢 Quantitat: ${v}`}
+                </span>
+              `).join("")}
+              <span style="font-size:0.78rem; font-weight:900; color:#581C87; margin-left:0.25rem;">🏷️ Etiquetes:</span>
+              ${labelOptions1.map(lbl => `<span class="org-concept-card">🟣 ${lbl}</span>`).join("")}
+            </div>
+
+            ${renderSingleTotPartSheetHTML("org1", activeModel1, inp1, labelOptions1, "data-set-qmark1")}
+
+            <!-- 1a OPERACIÓ (L'ALUMNE FA EL CÀLCUL ELL MATEIX) -->
+            <div class="tot-part-operation-card" style="background:#EFF6FF; border-color:#60A5FA;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.35rem;">
+                <strong style="font-size:0.9rem; color:#1E3A8A;">🧮 1a Operació i Càlcul (calcula tu el resultat!):</strong>
+              </div>
+              <div class="tot-part-op-equation">
+                <input type="number" id="step2A" class="step-calc-input" placeholder="Núm 1" value="${state.step2.a}" aria-label="Primer número de la 1a operació" />
+                <select id="step2Op" class="step-calc-select" aria-label="Símbol de la 1a operació">
+                  <option value="+" ${state.step2.op === "+" ? "selected" : ""}>+</option>
+                  <option value="-" ${state.step2.op === "-" ? "selected" : ""}>−</option>
+                  <option value="*" ${state.step2.op === "*" ? "selected" : ""}>×</option>
+                  <option value="/" ${state.step2.op === "/" ? "selected" : ""}>:</option>
+                </select>
+                <input type="number" id="step2B" class="step-calc-input" placeholder="Núm 2" value="${state.step2.b}" aria-label="Segon número de la 1a operació" />
+                <span style="font-weight:900;">=</span>
+                <input type="number" id="step2ResInput" class="whole-num-input" style="width:95px; border-color:#2563EB;" placeholder="?" value="${state.step2.res ?? ""}" aria-label="Resultat calculat de la 1a operació" />
+                <strong style="color:#1E40AF; font-size:0.92rem;">${ch.step1Expected.unitLabel || ""}</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DRETA: 2a REPRESENTACIÓ (ORGANITZADOR 2) + 2a OPERACIÓ I RESULTAT FINAL -->
+          <div class="solver-panel-card" style="border:2px solid #C084FC;">
+            <div class="panel-header-bar">
+              <span class="panel-title" style="color:#6B21A8;">2️⃣ PAS 2: Segona Representació i 2a Operació</span>
+              <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.76rem; padding:0.25rem 0.55rem;" title="Ajuda DUA: omple el 2n organitzador">
+                🪄 Ajuda Pas 2
+              </button>
+            </div>
+
+            <div style="font-size:0.82rem; font-weight:800; color:#334155;">
+              🧭 Tria l'esquema TOT-PART de la <strong>2a operació</strong>:
+            </div>
+            <div class="organizer-selector-bar" role="group" aria-label="Model del segon organitzador">
+              <button type="button" class="organizer-type-btn ${activeModel2 === "suma" ? "active" : ""}" data-org-model="suma">➕ SUMA</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "resta" ? "active" : ""}" data-org-model="resta">➖ RESTA</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "multiplicacio" ? "active" : ""}" data-org-model="multiplicacio">✖️ MULTIPLICACIÓ</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "divisio_partitiva" ? "active" : ""}" data-org-model="divisio_partitiva">➗ DIV. PARTITIVA</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "divisio_quotativa" ? "active" : ""}" data-org-model="divisio_quotativa">📦 DIV. QUOTATIVA</button>
+            </div>
+
+            <div style="padding:0.35rem 0.65rem; border-radius:8px; font-size:0.82rem; font-weight:800; text-align:center;
+                        background:${matches2 ? "var(--emerald-light)" : "var(--gold-light)"};
+                        color:${matches2 ? "var(--emerald)" : "#92400E"};
+                        border:1px solid ${matches2 ? "var(--emerald)" : "var(--gold)"};">
+              ${matches2
+                ? `✅ Esquema del Pas 2 correcte (${ORGANIZER_MODELS_INFO[activeModel2]?.title})!`
+                : "💡 Quin esquema TOT-PART correspon a la segona operació del problema?"}
+            </div>
+
+            <div class="organizer-cards-tray">
+              <span style="font-size:0.78rem; font-weight:900; color:#581C87;">🃏 Dades Pas 2:</span>
+              <span class="org-concept-card num-card">🔢 Resultat del Pas 1</span>
+              <span class="org-concept-card num-card">🔢 Quantitat: ${otherKnownNum2}</span>
+              <span class="org-concept-card qmark-card">❓ Incògnita: ?</span>
+              <span style="font-size:0.78rem; font-weight:900; color:#581C87; margin-left:0.25rem;">🏷️ Etiquetes:</span>
+              ${labelOptions2.map(lbl => `<span class="org-concept-card">🟣 ${lbl}</span>`).join("")}
+            </div>
+
+            ${renderSingleTotPartSheetHTML("org", activeModel2, inp2, labelOptions2, "data-set-qmark")}
+
+            <!-- 2a OPERACIÓ (L'ALUMNE FA EL CÀLCUL FINAL ELL MATEIX) -->
+            <div class="tot-part-operation-card">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.35rem;">
+                <strong style="font-size:0.9rem; color:#0F172A;">🧮 2a Operació i Resultat Final (calcula tu el resultat!):</strong>
+              </div>
+              <div class="tot-part-op-equation">
+                <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" aria-label="Primer número de la 2a operació" />
+                <select id="step1Op" class="step-calc-select" aria-label="Símbol de la 2a operació">
+                  <option value="+" ${state.step1.op === "+" ? "selected" : ""}>+</option>
+                  <option value="-" ${state.step1.op === "-" ? "selected" : ""}>−</option>
+                  <option value="*" ${state.step1.op === "*" ? "selected" : ""}>×</option>
+                  <option value="/" ${state.step1.op === "/" ? "selected" : ""}>:</option>
+                </select>
+                <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" aria-label="Segon número de la 2a operació" />
+                <span style="font-weight:900;">=</span>
+                <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:100px; border-color:#EA580C;" placeholder="?" value="${prevProbInput}" aria-label="Resultat final del problema" />
+                <strong style="color:#7E22CE; font-size:1rem;">${ch.unitLabel || ""}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Cas estàndard: PROBLEMES D'1 OPERACIÓ (Suma, Resta, Multiplicació, Divisió Partitiva, Divisió Quotativa)
     const activeModel = state.selectedOrganizerType || ch.organizerType || "suma";
     const org = ch.organizerData || {};
-    const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
     const matchesProblemModel = activeModel === ch.organizerType;
     const inp = state.orgInputs || {};
 
@@ -969,144 +1286,6 @@
         `).join("")}
       </div>
     `;
-
-    // Càlcul de l'operació escrita a la caixa d'operació
-    const res1 = computeStepResult(state.step1);
-
-    // Cercle superior TOT (l'alumne hi escriu el número o '?' i tria què representa al desplegable)
-    const totValStr = String(inp.tot ?? "").trim();
-    const totIsQ = totValStr === "?";
-    const totCircleStateClass = totIsQ ? "unknown-circle" : (totValStr !== "" ? "known-circle" : "");
-
-    const totSectionHTML = `
-      <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
-        ${buildLabelSelectHTML("orgTotLabelSelect", inp.totLabel || "", labelOptions, "📋 Què representa el TOT?")}
-        <div class="tot-part-purple-title">TOT</div>
-        <div class="tot-part-circle ${totCircleStateClass}">
-          <input type="text" inputmode="numeric" id="orgTotInput"
-                 class="tot-part-circle-input ${totIsQ ? "is-qmark-input" : ""}"
-                 placeholder="Núm / ?" value="${totValStr}" aria-label="Quantitat del TOT o interrogant" />
-        </div>
-        <button type="button" class="circle-qmark-btn ${totIsQ ? "active" : ""}" data-set-qmark="tot" title="Marca el TOT com la incògnita (?)">
-          ${totIsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
-        </button>
-      </div>
-    `;
-
-    let interactiveBottomHTML = "";
-    if (!isMulti) {
-      const p1ValStr = String(inp.part1 ?? "").trim();
-      const p2ValStr = String(inp.part2 ?? "").trim();
-      const p1IsQ = p1ValStr === "?";
-      const p2IsQ = p2ValStr === "?";
-      const p1CircleClass = p1IsQ ? "unknown-circle" : (p1ValStr !== "" ? "known-circle" : "");
-      const p2CircleClass = p2IsQ ? "unknown-circle" : (p2ValStr !== "" ? "known-circle" : "");
-
-      interactiveBottomHTML = `
-        <svg viewBox="0 0 280 42" style="width:100%; max-width:280px; height:42px; display:block; margin:0 auto;">
-          <line x1="140" y1="2" x2="65" y2="40" stroke="#1E293B" stroke-width="3" />
-          <line x1="140" y1="2" x2="215" y2="40" stroke="#1E293B" stroke-width="3" />
-        </svg>
-        <div style="display:flex; justify-content:center; gap:2rem; align-items:flex-start; flex-wrap:wrap;">
-          <!-- PART 1 -->
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
-            <div class="tot-part-circle ${p1CircleClass}">
-              <input type="text" inputmode="numeric" id="orgPart1Input"
-                     class="tot-part-circle-input ${p1IsQ ? "is-qmark-input" : ""}"
-                     placeholder="Núm / ?" value="${p1ValStr}" aria-label="Quantitat de la Part 1 o interrogant" />
-            </div>
-            <button type="button" class="circle-qmark-btn ${p1IsQ ? "active" : ""}" data-set-qmark="part1">
-              ${p1IsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
-            </button>
-            <div class="tot-part-purple-title">PART</div>
-            ${buildLabelSelectHTML("orgPart1LabelSelect", inp.part1Label || "", labelOptions, "📋 Què representa?")}
-          </div>
-
-          <!-- PART 2 -->
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.22rem;">
-            <div class="tot-part-circle ${p2CircleClass}">
-              <input type="text" inputmode="numeric" id="orgPart2Input"
-                     class="tot-part-circle-input ${p2IsQ ? "is-qmark-input" : ""}"
-                     placeholder="Núm / ?" value="${p2ValStr}" aria-label="Quantitat de la Part 2 o interrogant" />
-            </div>
-            <button type="button" class="circle-qmark-btn ${p2IsQ ? "active" : ""}" data-set-qmark="part2">
-              ${p2IsQ ? "❓ És la incògnita (?)" : "❓ Posa ?"}
-            </button>
-            <div class="tot-part-purple-title">PART</div>
-            ${buildLabelSelectHTML("orgPart2LabelSelect", inp.part2Label || "", labelOptions, "📋 Què representa?")}
-          </div>
-        </div>
-      `;
-    } else {
-      const partValStr = String(inp.part ?? "").trim();
-      const braceValStr = String(inp.brace ?? "").trim();
-      const partIsQ = partValStr === "?";
-      const braceIsQ = braceValStr === "?";
-      const partCircleClass = partIsQ ? "unknown-circle" : (partValStr !== "" ? "known-circle" : "");
-
-      const partMirrorDisplay = partIsQ
-        ? `<span class="tot-part-qmark">?</span>`
-        : `<span class="tot-part-MirrorVal" style="font-size:1.3rem; font-weight:900; color:#0F172A;">${partValStr || "·"}</span>`;
-
-      interactiveBottomHTML = `
-        <svg viewBox="0 0 320 42" style="width:100%; max-width:320px; height:42px; display:block; margin:0 auto;">
-          <line x1="160" y1="2" x2="50" y2="40" stroke="#1E293B" stroke-width="3" />
-          <line x1="160" y1="2" x2="135" y2="40" stroke="#1E293B" stroke-width="3" />
-          <line x1="160" y1="2" x2="270" y2="40" stroke="#1E293B" stroke-width="3" />
-        </svg>
-
-        <div style="display:flex; justify-content:center; gap:0.55rem; align-items:flex-start;">
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
-            <div class="tot-part-circle ${partCircleClass}">
-              <input type="text" inputmode="numeric" id="orgPartInput"
-                     class="tot-part-circle-input ${partIsQ ? "is-qmark-input" : ""}"
-                     placeholder="Núm / ?" value="${partValStr}" aria-label="Valor de cada PART o interrogant" />
-            </div>
-            <button type="button" class="circle-qmark-btn ${partIsQ ? "active" : ""}" data-set-qmark="part">
-              ${partIsQ ? "❓ Incògnita (?)" : "❓ Posa ?"}
-            </button>
-            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
-          </div>
-
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
-            <div class="tot-part-circle ${partCircleClass}">
-              ${partMirrorDisplay}
-            </div>
-            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
-          </div>
-
-          <span class="tot-part-ellipsis" style="margin-top:1.35rem;">...</span>
-
-          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
-            <div class="tot-part-circle ${partCircleClass}">
-              ${partMirrorDisplay}
-            </div>
-            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
-          </div>
-        </div>
-
-        <div style="margin-top:0.25rem; display:flex; justify-content:center;">
-          ${buildLabelSelectHTML("orgPartLabelSelect", inp.partLabel || "", labelOptions, "📋 Què representa cada PART?")}
-        </div>
-
-        <!-- Clau horitzontal inferior ⏟ per al número de parts -->
-        <div style="display:flex; flex-direction:column; align-items:center; margin-top:0.25rem;">
-          <svg viewBox="0 0 300 28" style="width:100%; max-width:290px; height:26px; display:block;">
-            <path d="M 15 4 Q 15 15 30 15 L 135 15 Q 150 15 150 26 Q 150 15 165 15 L 270 15 Q 285 15 285 4"
-                  fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round" />
-          </svg>
-          <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0.4rem; margin-top:0.15rem;">
-            <input type="text" inputmode="numeric" id="orgBraceInput"
-                   class="tot-part-circle-input ${braceIsQ ? "is-qmark-input" : ""}"
-                   placeholder="Núm / ?" value="${braceValStr}" aria-label="Número de parts o interrogant" />
-            <button type="button" class="circle-qmark-btn ${braceIsQ ? "active" : ""}" data-set-qmark="brace" style="margin-top:0;">
-              ${braceIsQ ? "❓ Incògnita (?)" : "❓ Posa ?"}
-            </button>
-            ${buildLabelSelectHTML("orgBraceLabelSelect", inp.braceLabel || "", labelOptions, "📋 Què indica la clau (⏟)?")}
-          </div>
-        </div>
-      `;
-    }
 
     return `
       <div class="problem-solver-grid">
@@ -1157,46 +1336,18 @@
 
           ${cardsTrayHTML}
 
-          <div class="tot-part-sheet">
-            <div style="display:flex; flex-direction:column; align-items:center;">
-              ${totSectionHTML}
-              ${interactiveBottomHTML}
-            </div>
-          </div>
+          ${renderSingleTotPartSheetHTML("org", activeModel, inp, labelOptions, "data-set-qmark")}
 
-          <!-- CAIXA D'OPERACIÓ (1 OPERACIÓ O 2 OPERACIONS SEGONS EL PROBLEMA) -->
+          <!-- CAIXA D'OPERACIÓ (L'ALUMNE ESCRIU L'OPERACIÓ I EL RESULTAT) -->
           <div class="tot-part-operation-card">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem;">
               <strong style="font-size:0.95rem; color:#0F172A;">
-                🧮 ${ch.isTwoStep ? "Pas 3: Resol les 2 Operacions del Problema:" : "Pas 3: Escriu l'Operació i el Resultat:"}
+                🧮 Pas 3: Escriu l'Operació i Calcula el Resultat:
               </strong>
               <span class="tot-part-result-pill">
                 🧡 El resultat descobreix el valor de <strong>?</strong>
               </span>
             </div>
-
-            ${ch.isTwoStep ? `
-              <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; padding:0.55rem 0.75rem;">
-                <div style="font-size:0.8rem; font-weight:900; color:#1E40AF; margin-bottom:0.35rem;">
-                  1️⃣ Primera operació (calcula la dada intermèdia):
-                </div>
-                <div class="tot-part-op-equation" style="justify-content:flex-start;">
-                  <input type="number" id="step2A" class="step-calc-input" placeholder="Núm 1" value="${state.step2.a}" aria-label="Primer número del pas 1" />
-                  <select id="step2Op" class="step-calc-select" aria-label="Operació del pas 1">
-                    <option value="+" ${state.step2.op === "+" ? "selected" : ""}>+</option>
-                    <option value="-" ${state.step2.op === "-" ? "selected" : ""}>−</option>
-                    <option value="*" ${state.step2.op === "*" ? "selected" : ""}>×</option>
-                    <option value="/" ${state.step2.op === "/" ? "selected" : ""}>:</option>
-                  </select>
-                  <input type="number" id="step2B" class="step-calc-input" placeholder="Núm 2" value="${state.step2.b}" aria-label="Segon número del pas 1" />
-                  <span style="font-weight:900;">=</span>
-                  <span class="step-calc-result" id="step2ResBadge">${computeStepResult(state.step2) !== null ? computeStepResult(state.step2) : "?"}</span>
-                </div>
-              </div>
-              <div style="font-size:0.8rem; font-weight:900; color:#7E22CE; margin-top:0.15rem;">
-                2️⃣ Segona operació (resol la incògnita ? de l'organitzador):
-              </div>
-            ` : ""}
 
             <div class="tot-part-op-equation">
               <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" aria-label="Primer número de l'operació" />
@@ -1208,7 +1359,7 @@
               </select>
               <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" aria-label="Segon número de l'operació" />
               <span style="font-weight:900;">=</span>
-              <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:105px; border-color:#EA580C;" placeholder="?" value="${prevProbInput || (res1 !== null ? res1 : "")}" aria-label="Resultat final del problema" />
+              <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:105px; border-color:#EA580C;" placeholder="?" value="${prevProbInput}" aria-label="Resultat final del problema" />
               <strong style="color:#7E22CE; font-size:1.05rem;">${ch.unitLabel || ""}</strong>
             </div>
           </div>
@@ -1380,12 +1531,17 @@
   /* ==========================================================================
      6. VERIFICACIÓ DE REPTES I RETROALIMENTACIÓ FORMATIVA DUA
      ========================================================================== */
-  function validateOrganizerInputs(ch) {
-    const org = ch.organizerData || {};
-    const inp = state.orgInputs || {};
-    const activeModel = state.selectedOrganizerType || ch.organizerType || "suma";
-    const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
+  function validateSingleOrganizer(org, inp, activeModel, expectedModel, stepTag) {
+    const tagPrefix = stepTag ? `[${stepTag}] ` : "";
+    if (expectedModel && activeModel !== expectedModel) {
+      return {
+        complete: true,
+        valid: false,
+        msg: `🧭 ${tagPrefix}Revisa el tipus d'esquema TOT-PART seleccionat: fixa't en si sabem el TOT o busquem el TOT, i si les parts són iguals o diferents!`
+      };
+    }
 
+    const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
     const normVal = (v) => String(v ?? "").trim();
     const totV = normVal(inp.tot);
     const totL = normVal(inp.totLabel);
@@ -1394,7 +1550,7 @@
       return {
         complete: false,
         valid: false,
-        msg: "📋 Abans de comprovar, omple el cercle superior TOT (escriu la quantitat o prem '❓ Posa ?') i tria què representa al desplegable lila!"
+        msg: `📋 ${tagPrefix}Omple el cercle superior TOT (escriu la quantitat o prem '❓ Posa ?') i tria què representa al desplegable lila!`
       };
     }
 
@@ -1408,7 +1564,7 @@
         return {
           complete: false,
           valid: false,
-          msg: "📋 Completa els dos cercles de les PARTS amb les seves quantitats (o '?') i selecciona què representa cada PART als desplegables liles!"
+          msg: `📋 ${tagPrefix}Completa els dos cercles de les PARTS amb les seves quantitats (o '?') i selecciona què representa cada PART als desplegables liles!`
         };
       }
 
@@ -1417,11 +1573,10 @@
         return {
           complete: true,
           valid: false,
-          msg: `🔍 Revisa el cercle superior TOT: has posat "${totV}" (${totL}), però fixa't en quina és la dada total del problema i si ja la sabem o és la incògnita (?).`
+          msg: `🔍 ${tagPrefix}Revisa el cercle superior TOT: has posat "${totV}" (${totL}), però fixa't en quina és la dada total d'aquest pas i si ja la sabem o és la incògnita (?).`
         };
       }
 
-      // En SUMA i RESTA acceptem les dues parts en qualsevol ordre (esquerra-dreta o dreta-esquerra) sempre que cada quantitat vagi amb la seva etiqueta correcta!
       const directMatch = (
         p1V === String(org.part1Val) && p1L === org.part1Label &&
         p2V === String(org.part2Val) && p2L === org.part2Label
@@ -1435,7 +1590,7 @@
         return {
           complete: true,
           valid: false,
-          msg: "🔍 Revisa els cercles de les PARTS: comprova que cada número (o '?') estigui aparellat amb el desplegable correcte del que representa!"
+          msg: `🔍 ${tagPrefix}Revisa els cercles de les PARTS: comprova que cada número (o '?') estigui aparellat amb el desplegable correcte del que representa!`
         };
       }
 
@@ -1450,7 +1605,7 @@
         return {
           complete: false,
           valid: false,
-          msg: "📋 Completa el cercle PART i la clau inferior (⏟) amb les seves quantitats (o '?') i tria què representen als desplegables liles!"
+          msg: `📋 ${tagPrefix}Completa el cercle PART i la clau inferior (⏟) amb les seves quantitats (o '?') i tria què representen als desplegables liles!`
         };
       }
 
@@ -1459,7 +1614,7 @@
         return {
           complete: true,
           valid: false,
-          msg: `🔍 Revisa el cercle superior TOT: comprova si el TOT és conegut o és la incògnita (?) i quina etiqueta li correspon.`
+          msg: `🔍 ${tagPrefix}Revisa el cercle superior TOT: comprova si el TOT és conegut o és la incògnita (?) i quina etiqueta li correspon.`
         };
       }
 
@@ -1468,7 +1623,7 @@
         return {
           complete: true,
           valid: false,
-          msg: `🔍 Revisa els cercles PART: fixa't en quin és el valor de CADA part igual (o si és '?') i què representa.`
+          msg: `🔍 ${tagPrefix}Revisa els cercles PART: fixa't en quin és el valor de CADA part igual (o si és '?') i què representa.`
         };
       }
 
@@ -1477,12 +1632,26 @@
         return {
           complete: true,
           valid: false,
-          msg: `🔍 Revisa la clau inferior (⏟): indica el número de parts iguals en què es repeteix o reparteix!`
+          msg: `🔍 ${tagPrefix}Revisa la clau inferior (⏟): indica el número de parts iguals en què es repeteix o reparteix!`
         };
       }
 
       return { complete: true, valid: true, msg: "" };
     }
+  }
+
+  function validateOperationEquation(aVal, opVal, bVal, expectedA, expectedOp, expectedB) {
+    const a = parseFloat(aVal);
+    const b = parseFloat(bVal);
+    if (isNaN(a) || isNaN(b)) return { complete: false, valid: false };
+    if (opVal !== expectedOp) return { complete: true, valid: false };
+    if (expectedOp === "+" || expectedOp === "*") {
+      const ok = (Math.abs(a - expectedA) < 0.01 && Math.abs(b - expectedB) < 0.01) ||
+                 (Math.abs(a - expectedB) < 0.01 && Math.abs(b - expectedA) < 0.01);
+      return { complete: true, valid: ok };
+    }
+    const ok = Math.abs(a - expectedA) < 0.01 && Math.abs(b - expectedB) < 0.01;
+    return { complete: true, valid: ok };
   }
 
   function verifyCurrentChallenge() {
@@ -1624,37 +1793,138 @@
         feedbackMsg = `🔍 ${userVal} no és la quantitat exacta. Prem el botó '🪄 Reparteix els ${ch.totalQuantity} dins de les parts' per veure quant val cada part!`;
       }
     } else if (ch.type === "general_problem") {
-      // 1. Primer validem que l'Organitzador Gràfic TOT - PART (quantitats/? i desplegables de què representa) estigui complet i correcte
-      const orgCheck = validateOrganizerInputs(ch);
-      if (!orgCheck.complete) {
-        showFeedbackBanner(false, orgCheck.msg);
-        return;
-      }
-      if (!orgCheck.valid) {
-        handleMistake(orgCheck.msg);
-        return;
-      }
+      if (ch.isTwoStep && ch.org1Data && ch.step1Expected) {
+        // 1. Validem la 1a Representació (Organitzador 1 del Pas 1)
+        const org1Check = validateSingleOrganizer(
+          ch.org1Data,
+          state.org1Inputs || {},
+          state.selectedOrg1Type || "suma",
+          ch.org1Type,
+          "Pas 1 · 1a Representació"
+        );
+        if (!org1Check.complete) {
+          showFeedbackBanner(false, org1Check.msg);
+          return;
+        }
+        if (!org1Check.valid) {
+          handleMistake(org1Check.msg);
+          return;
+        }
 
-      // 2. A continuació validem l'operació i el resultat final
-      let userVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
-      const calcVal = computeStepResult(state.step1);
-      if (isNaN(userVal) && calcVal !== null) {
-        userVal = calcVal;
-        const ansEl = document.getElementById("ansProblemNumInput");
-        if (ansEl) ansEl.value = userVal;
-      }
-      if (isNaN(userVal)) {
-        showFeedbackBanner(false, "✍️ Molt bé l'organitzador! Ara completa l'operació o escriu el resultat a la casella final abans de comprovar!");
-        return;
-      }
-      if (Math.abs(userVal - ch.targetNumber) < 0.01) {
-        isCorrect = true;
-        const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
-        const opSymDisplay = ch.expectedOp === "*" ? "×" : ch.expectedOp === "/" ? ":" : ch.expectedOp;
-        feedbackMsg = `🌟 Excel·lent! Has completat l'organitzador de ${modelInfo.title} (quantitats i etiquetes) i l'operació: ${ch.num1} ${opSymDisplay} ${ch.num2} = ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+        // 2. Validem la 1a Operació i que l'alumne hagi calculat i escrit el resultat del Pas 1
+        const s1Eq = validateOperationEquation(
+          state.step2.a,
+          state.step2.op,
+          state.step2.b,
+          ch.step1Expected.a,
+          ch.step1Expected.op,
+          ch.step1Expected.b
+        );
+        const userStep1Res = parseFloat(document.getElementById("step2ResInput")?.value ?? state.step2.res);
+        if (!s1Eq.complete || isNaN(userStep1Res)) {
+          showFeedbackBanner(false, "✍️ [Pas 1] Molt bé el 1r organitzador! Ara escriu els números de la 1a Operació i calcula'n tu mateix el resultat a la casella blava abans de comprovar!");
+          return;
+        }
+        if (!s1Eq.valid) {
+          handleMistake("🔍 [Pas 1 · 1a Operació] Revisa quins números i quin signe d'operació (+, −, ×, :) has posat a la 1a Operació!");
+          return;
+        }
+        if (Math.abs(userStep1Res - ch.step1Expected.res) >= 0.01) {
+          handleMistake(`🔍 [Pas 1 · Càlcul] L'operació plantejada és correcta, però el resultat que has calculat (${userStep1Res}) no és exacte. Torna a fer el càlcul de la 1a operació!`);
+          return;
+        }
+
+        // 3. Validem la 2a Representació (Organitzador 2 del Pas 2)
+        const org2Check = validateSingleOrganizer(
+          ch.organizerData || {},
+          state.orgInputs || {},
+          state.selectedOrganizerType || "suma",
+          ch.organizerType,
+          "Pas 2 · 2a Representació"
+        );
+        if (!org2Check.complete) {
+          showFeedbackBanner(false, org2Check.msg);
+          return;
+        }
+        if (!org2Check.valid) {
+          handleMistake(org2Check.msg);
+          return;
+        }
+
+        // 4. Validem la 2a Operació i el Resultat Final calculat per l'alumne
+        const s2Eq = validateOperationEquation(
+          state.step1.a,
+          state.step1.op,
+          state.step1.b,
+          ch.num1,
+          ch.expectedOp,
+          ch.num2
+        );
+        const userFinalVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
+        if (!s2Eq.complete || isNaN(userFinalVal)) {
+          showFeedbackBanner(false, "✍️ [Pas 2] Els dos organitzadors i la 1a operació estan genial! Ara escriu la 2a Operació i calcula'n el resultat final a la casella taronja!");
+          return;
+        }
+        if (!s2Eq.valid) {
+          handleMistake("🔍 [Pas 2 · 2a Operació] Revisa els números i el signe d'operació de la 2a Operació (recorda utilitzar el resultat que has obtingut al Pas 1)!");
+          return;
+        }
+        if (Math.abs(userFinalVal - ch.targetNumber) < 0.01) {
+          isCorrect = true;
+          const m1 = ORGANIZER_MODELS_INFO[ch.org1Type]?.title || "Pas 1";
+          const m2 = ORGANIZER_MODELS_INFO[ch.organizerType]?.title || "Pas 2";
+          const op1Sym = ch.step1Expected.op === "*" ? "×" : ch.step1Expected.op === "/" ? ":" : ch.step1Expected.op;
+          const op2Sym = ch.expectedOp === "*" ? "×" : ch.expectedOp === "/" ? ":" : ch.expectedOp;
+          feedbackMsg = `🌟 Brutal! Has completat les 2 representacions (${m1} i ${m2}) i els 2 càlculs: 1) ${ch.step1Expected.a} ${op1Sym} ${ch.step1Expected.b} = ${ch.step1Expected.res} · 2) ${ch.num1} ${op2Sym} ${ch.num2} = ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+        } else {
+          feedbackMsg = `🔍 [Pas 2 · Càlcul Final] Les dues representacions i el plantejament estan molt bé, però el resultat final (${userFinalVal}) no és exacte. Revisa el càlcul de la 2a operació!`;
+        }
       } else {
-        const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
-        feedbackMsg = `🔍 L'organitzador de ${modelInfo.title} està molt bé, però el resultat de l'operació (${userVal}) no és exacte. Revisa el càlcul!`;
+        // Cas d'1 operació:
+        // 1. Primer validem que l'Organitzador Gràfic TOT - PART (quantitats/? i desplegables de què representa) estigui complet i correcte
+        const orgCheck = validateSingleOrganizer(
+          ch.organizerData || {},
+          state.orgInputs || {},
+          state.selectedOrganizerType || ch.organizerType || "suma",
+          ch.organizerType,
+          ""
+        );
+        if (!orgCheck.complete) {
+          showFeedbackBanner(false, orgCheck.msg);
+          return;
+        }
+        if (!orgCheck.valid) {
+          handleMistake(orgCheck.msg);
+          return;
+        }
+
+        // 2. Validem l'operació plantejada i el resultat calculat per l'alumne (sense autocompletar-lo!)
+        const eqCheck = validateOperationEquation(
+          state.step1.a,
+          state.step1.op,
+          state.step1.b,
+          ch.num1,
+          ch.expectedOp,
+          ch.num2
+        );
+        const userVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
+        if (!eqCheck.complete || isNaN(userVal)) {
+          showFeedbackBanner(false, "✍️ Molt bé l'organitzador! Ara escriu els números de l'operació i calcula tu mateix el resultat a la casella final abans de comprovar!");
+          return;
+        }
+        if (!eqCheck.valid) {
+          handleMistake("🔍 L'organitzador està bé, però revisa els números i el signe d'operació (+, −, ×, :) que has posat a les caselles de l'operació!");
+          return;
+        }
+        if (Math.abs(userVal - ch.targetNumber) < 0.01) {
+          isCorrect = true;
+          const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
+          const opSymDisplay = ch.expectedOp === "*" ? "×" : ch.expectedOp === "/" ? ":" : ch.expectedOp;
+          feedbackMsg = `🌟 Excel·lent! Has completat l'organitzador de ${modelInfo.title} (quantitats i etiquetes) i has calculat l'operació: ${ch.num1} ${opSymDisplay} ${ch.num2} = ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+        } else {
+          const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
+          feedbackMsg = `🔍 L'organitzador de ${modelInfo.title} i l'operació estan ben plantejats, però el resultat que has calculat (${userVal}) no és exacte. Revisa el càlcul!`;
+        }
       }
     }
 
@@ -1823,29 +2093,40 @@
           <button type="button" class="tts-btn" id="btnSpeakOpGuideChapter">🔊 Escolta l'explicació</button>
         </div>
         <h3>🔀 Com resolem Problemes amb 2 Operacions?</h3>
-        <p>En moltes situacions quotidianes (com pagar més d'un producte al supermercat i calcular el canvi, o collir fruita al matí i a la tarda i repartir-la en caixes), abans de trobar la resposta final necessitem <strong>calcular una dada intermèdia</strong>:</p>
-        <div class="formula-highlight-box" style="border-left: 5px solid #7C3AED;">
-          <strong>1️⃣ Pas 1 (Primera operació):</strong> Calculem la dada que ens falta per poder omplir l'organitzador.<br/>
-          <em>Exemple:</em> Si comprem pinso de 18 € i detergent de 14 €, primer sumem la despesa: <strong>18 + 14 = 32 € gastats</strong>.
+        <p>Quan un problema té dues operacions, fem <strong>les dues representacions amb els organitzadors TOT-PART</strong> i els seus dos càlculs pas a pas:</p>
+        <div class="formula-highlight-box" style="border-left: 5px solid #2563EB;">
+          <strong>1️⃣ Pas 1 (1a Representació a l'Organitzador + 1a Operació):</strong><br/>
+          Triem quin esquema TOT-PART correspon al primer pas, col·loquem les dades i calculem el resultat.<br/>
+          <em>Exemple:</em> Si comprem pinso de <strong>18 €</strong> i detergent de <strong>14 €</strong>, fem l'organitzador de <strong>SUMA</strong> (PARTS = 18 i 14, TOT = ?) i calculem: <strong>18 + 14 = 32 € gastats</strong>.
         </div>
         <div class="formula-highlight-box" style="border-left: 5px solid #EA580C;">
-          <strong>2️⃣ Pas 2 (Organitzador TOT-PART i Segona operació):</strong> Col·loquem el resultat del Pas 1 dins de l'organitzador i resolem la incògnita <strong>(?)</strong>.<br/>
-          <em>Exemple:</em> El TOT és el bitllet de <strong>50 €</strong>, una PART és els <strong>32 € gastats</strong> i l'altra PART és el canvi <strong>(?)</strong>: <strong>50 − 32 = 18 € de canvi!</strong>
+          <strong>2️⃣ Pas 2 (2a Representació a l'Organitzador + 2a Operació):</strong><br/>
+          Utilitzem el resultat que hem calculat al Pas 1 com a dada dins del segon organitzador TOT-PART per resoldre la pregunta final.<br/>
+          <em>Exemple:</em> Ara fem l'organitzador de <strong>RESTA</strong>: el TOT és el bitllet de <strong>50 €</strong>, una PART és els <strong>32 € gastats</strong> i l'altra PART és el canvi <strong>(?)</strong>. Calculem: <strong>50 − 32 = 18 € de canvi!</strong>
         </div>
       `;
       diagramCard.innerHTML = `
         <div class="sim-header">
-          <h3>🧭 Esquema de 2 Passos</h3>
-          <span class="sim-subtitle">Exemple del canvi al supermercat (Suma + Resta)</span>
+          <h3>🧭 Els 2 Organitzadors del Problema</h3>
+          <span class="sim-subtitle">Exemple del canvi al supermercat: 1r Organitzador (SUMA) + 2n Organitzador (RESTA)</span>
         </div>
-        ${renderTotPartReferenceDiagramHTML("resta")}
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+          <div>
+            <div style="font-weight:900; color:#1E40AF; font-size:0.85rem; text-align:center; margin-bottom:0.3rem;">1️⃣ 1a Representació (SUMA)</div>
+            ${renderTotPartReferenceDiagramHTML("suma")}
+          </div>
+          <div>
+            <div style="font-weight:900; color:#6B21A8; font-size:0.85rem; text-align:center; margin-bottom:0.3rem;">2️⃣ 2a Representació (RESTA)</div>
+            ${renderTotPartReferenceDiagramHTML("resta")}
+          </div>
+        </div>
         <div class="tot-part-operation-card" style="margin-top:0.85rem;">
           <div><strong>1️⃣ Primera operació:</strong> 18 + 14 = <strong>32 € gastats</strong></div>
           <div><strong>2️⃣ Segona operació:</strong> 50 − 32 = <strong style="color:#EA580C;">18 € de canvi</strong></div>
         </div>
       `;
       document.getElementById("btnSpeakOpGuideChapter")?.addEventListener("click", () => {
-        speakCatalan("Problemes de dues operacions. En el primer pas calculem la dada intermèdia que ens falta, i en el segon pas la col·loquem a l'organitzador TOT PART per descobrir la incògnita final.");
+        speakCatalan("Problemes de dues operacions. En el primer pas fem la primera representació a l'organitzador TOT PART i calculem la primera operació. En el segon pas fem la segona representació amb el resultat obtingut i calculem la resposta final.");
       });
       return;
     }
@@ -2454,7 +2735,19 @@
         return;
       }
 
-      // 8. Controls de l'Organitzador Gràfic TOT - PART (Apartat 2: Resolució de Problemes)
+      // 8. Controls dels Organitzadors Gràfics TOT - PART (Apartat 2: Resolució de Problemes)
+      const org1ModelBtn = e.target.closest("[data-org1-model]");
+      if (org1ModelBtn) {
+        playMagicSound("click");
+        const modelKey = org1ModelBtn.dataset.org1Model;
+        state.selectedOrg1Type = modelKey;
+        if (ORGANIZER_MODELS_INFO[modelKey]) {
+          state.step2.op = ORGANIZER_MODELS_INFO[modelKey].opSymbol;
+        }
+        refreshCurrentActiveView();
+        return;
+      }
+
       const orgModelBtn = e.target.closest("[data-org-model]");
       if (orgModelBtn) {
         playMagicSound("click");
@@ -2463,6 +2756,18 @@
         if (ORGANIZER_MODELS_INFO[modelKey]) {
           state.step1.op = ORGANIZER_MODELS_INFO[modelKey].opSymbol;
         }
+        refreshCurrentActiveView();
+        return;
+      }
+
+      const qmark1Btn = e.target.closest("[data-set-qmark1]");
+      if (qmark1Btn) {
+        playMagicSound("click");
+        const fieldKey = qmark1Btn.dataset.setQmark1;
+        if (!state.org1Inputs) {
+          state.org1Inputs = { tot: "", part1: "", part2: "", part: "", brace: "", totLabel: "", part1Label: "", part2Label: "", partLabel: "", braceLabel: "" };
+        }
+        state.org1Inputs[fieldKey] = state.org1Inputs[fieldKey] === "?" ? "" : "?";
         refreshCurrentActiveView();
         return;
       }
@@ -2476,6 +2781,35 @@
         }
         state.orgInputs[fieldKey] = state.orgInputs[fieldKey] === "?" ? "" : "?";
         refreshCurrentActiveView();
+        return;
+      }
+
+      if (e.target.closest("#btnAutoFillOrg1")) {
+        playMagicSound("spell");
+        const ch = getCurrentChallenge();
+        if (ch && ch.org1Data && ch.step1Expected) {
+          state.selectedOrg1Type = ch.org1Type || "suma";
+          const od1 = ch.org1Data;
+          state.org1Inputs = {
+            tot: od1.totVal !== undefined ? String(od1.totVal) : "",
+            part1: od1.part1Val !== undefined ? String(od1.part1Val) : "",
+            part2: od1.part2Val !== undefined ? String(od1.part2Val) : "",
+            part: od1.partVal !== undefined ? String(od1.partVal) : "",
+            brace: od1.braceVal !== undefined ? String(od1.braceVal) : "",
+            totLabel: od1.totLabel || "",
+            part1Label: od1.part1Label || "",
+            part2Label: od1.part2Label || "",
+            partLabel: od1.partLabel || "",
+            braceLabel: od1.braceLabel || ""
+          };
+          state.step2 = {
+            a: String(ch.step1Expected.a ?? ""),
+            op: ch.step1Expected.op || "+",
+            b: String(ch.step1Expected.b ?? ""),
+            res: state.step2.res || ""
+          };
+          refreshCurrentActiveView();
+        }
         return;
       }
 
@@ -2502,34 +2836,58 @@
             op: ch.expectedOp || "+",
             b: String(ch.num2 ?? "")
           };
-          if (ch.isTwoStep && ch.step2Data) {
-            state.step2 = {
-              a: String(ch.step2Data.num1 ?? ""),
-              op: ch.step2Data.op || "+",
-              b: String(ch.step2Data.num2 ?? "")
-            };
-          }
           refreshCurrentActiveView();
-          const ansEl = document.getElementById("ansProblemNumInput");
-          if (ch.isTwoStep) {
-            const r2 = computeStepResult(state.step2);
-            if (ansEl && r2 !== null) ansEl.value = r2;
-          } else {
-            const r1 = computeStepResult(state.step1);
-            if (ansEl && r1 !== null) ansEl.value = r1;
-          }
         }
         return;
       }
     });
 
-    // Actualització en temps real dels cercles, desplegables d'etiquetes i Caixa d'Operació de l'Organitzador TOT-PART
+    // Actualització en temps real dels cercles, desplegables d'etiquetes i Caixes d'Operació dels Organitzadors TOT-PART
+    // (Sense fer mai el càlcul automàtic per l'alumne!)
     function handleStepCalcChange(e) {
       const id = e.target.id;
+      if (!state.org1Inputs) {
+        state.org1Inputs = { tot: "", part1: "", part2: "", part: "", brace: "", totLabel: "", part1Label: "", part2Label: "", partLabel: "", braceLabel: "" };
+      }
       if (!state.orgInputs) {
         state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "", totLabel: "", part1Label: "", part2Label: "", partLabel: "", braceLabel: "" };
       }
 
+      // Cercles del 1r Organitzador (Pas 1 en problemes de 2 operacions)
+      if (["org1TotInput", "org1Part1Input", "org1Part2Input", "org1PartInput", "org1BraceInput"].includes(id)) {
+        const val = e.target.value.trim();
+        if (id === "org1TotInput") state.org1Inputs.tot = val;
+        if (id === "org1Part1Input") state.org1Inputs.part1 = val;
+        if (id === "org1Part2Input") state.org1Inputs.part2 = val;
+        if (id === "org1PartInput") {
+          state.org1Inputs.part = val;
+          document.querySelectorAll(".tot-part-MirrorVal-org1").forEach(el => {
+            el.textContent = val || "·";
+          });
+        }
+        if (id === "org1BraceInput") state.org1Inputs.brace = val;
+
+        const parentCircle = e.target.closest(".tot-part-circle");
+        if (parentCircle) {
+          parentCircle.classList.toggle("unknown-circle", val === "?");
+          parentCircle.classList.toggle("known-circle", val !== "" && val !== "?");
+        }
+        e.target.classList.toggle("is-qmark-input", val === "?");
+        return;
+      }
+
+      if (["org1TotLabelSelect", "org1Part1LabelSelect", "org1Part2LabelSelect", "org1PartLabelSelect", "org1BraceLabelSelect"].includes(id)) {
+        const val = e.target.value;
+        if (id === "org1TotLabelSelect") state.org1Inputs.totLabel = val;
+        if (id === "org1Part1LabelSelect") state.org1Inputs.part1Label = val;
+        if (id === "org1Part2LabelSelect") state.org1Inputs.part2Label = val;
+        if (id === "org1PartLabelSelect") state.org1Inputs.partLabel = val;
+        if (id === "org1BraceLabelSelect") state.org1Inputs.braceLabel = val;
+        e.target.classList.toggle("selected-ok", Boolean(val));
+        return;
+      }
+
+      // Cercles del 2n Organitzador (o organitzador principal)
       if (["orgTotInput", "orgPart1Input", "orgPart2Input", "orgPartInput", "orgBraceInput"].includes(id)) {
         const val = e.target.value.trim();
         if (id === "orgTotInput") state.orgInputs.tot = val;
@@ -2537,7 +2895,7 @@
         if (id === "orgPart2Input") state.orgInputs.part2 = val;
         if (id === "orgPartInput") {
           state.orgInputs.part = val;
-          document.querySelectorAll(".tot-part-MirrorVal").forEach(el => {
+          document.querySelectorAll(".tot-part-MirrorVal-org").forEach(el => {
             el.textContent = val || "·";
           });
         }
@@ -2563,32 +2921,16 @@
         return;
       }
 
-      if (["step1A", "step1Op", "step1B", "step2A", "step2Op", "step2B"].includes(id)) {
+      if (["step1A", "step1Op", "step1B", "step2A", "step2Op", "step2B", "step2ResInput"].includes(id)) {
         state.step1.a = document.getElementById("step1A")?.value ?? state.step1.a;
         state.step1.op = document.getElementById("step1Op")?.value ?? state.step1.op;
         state.step1.b = document.getElementById("step1B")?.value ?? state.step1.b;
 
-        if (!state.step2) state.step2 = { a: "", op: "+", b: "" };
+        if (!state.step2) state.step2 = { a: "", op: "+", b: "", res: "" };
         if (document.getElementById("step2A")) state.step2.a = document.getElementById("step2A").value;
         if (document.getElementById("step2Op")) state.step2.op = document.getElementById("step2Op").value;
         if (document.getElementById("step2B")) state.step2.b = document.getElementById("step2B").value;
-
-        const r1 = computeStepResult(state.step1);
-        const r2 = computeStepResult(state.step2);
-        const s1Badge = document.getElementById("step1ResBadge");
-        if (s1Badge) s1Badge.textContent = r1 !== null ? r1 : "?";
-        const s2Badge = document.getElementById("step2ResBadge");
-        if (s2Badge) s2Badge.textContent = r2 !== null ? r2 : "?";
-
-        const ch = getCurrentChallenge();
-        const ansEl = document.getElementById("ansProblemNumInput");
-        if (ansEl) {
-          if (ch && ch.isTwoStep) {
-            if (r2 !== null) ansEl.value = r2;
-          } else if (r1 !== null) {
-            ansEl.value = r1;
-          }
-        }
+        if (document.getElementById("step2ResInput")) state.step2.res = document.getElementById("step2ResInput").value;
       }
     }
     document.querySelector(".app-container").addEventListener("input", handleStepCalcChange);

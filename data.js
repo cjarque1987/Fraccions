@@ -3609,18 +3609,30 @@ const CHALLENGES_DATA = {
 
   /* ------------------------------------------------------------------------
      7. PROBLEMES BARREJATS I DE 2 OPERACIONS (15 problemes en 3 nivells)
+        Cada problema requereix:
+        - 1a Representació a l'Organitzador TOT-PART (org1Type + org1Data) i 1r Càlcul (step1Expected) fet per l'alumne.
+        - 2a Representació a l'Organitzador TOT-PART (organizerType + organizerData) i 2n Càlcul final fet per l'alumne.
      ------------------------------------------------------------------------ */
   prob_barrejats: {
     1: [
       {
         id: "pb_1_1",
-        title: "El Canvi de la Compra al Supermercat (2 Operacions)",
-        lore: "Primer sumem el que gastem i després calculem el canvi!",
-        instruction: "Al supermercat compres un sac de pinso que val <strong>18 euros</strong> i una capsa de detergent que val <strong>14 euros</strong> (en total gastes <strong>32 euros</strong>). Si pagues amb un bitllet de <strong>50 euros</strong>, <strong>quants euros et tornaran de canvi?</strong>",
+        title: "El Canvi de la Compra al Supermercat (Suma + Resta)",
+        lore: "Primer representem i calculem el que gastem, i després representem i calculem el canvi!",
+        instruction: "Al supermercat compres un sac de pinso que val <strong>18 euros</strong> i una capsa de detergent que val <strong>14 euros</strong>. Si pagues tota la compra amb un bitllet de <strong>50 euros</strong>, <strong>quants euros et tornaran de canvi?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "suma",
+        org1Data: {
+          totLabel: "euros gastats en total",
+          totVal: "?",
+          part1Label: "euros sac de pinso",
+          part1Val: 18,
+          part2Label: "euros capsa de detergent",
+          part2Val: 14
+        },
+        step1Expected: { a: 18, op: "+", b: 14, res: 32, unitLabel: "euros gastats" },
         organizerType: "resta",
-        step1Expected: { a: 18, op: "+", b: 14, res: 32 },
         expectedOp: "-",
         num1: 50,
         num2: 32,
@@ -3629,26 +3641,35 @@ const CHALLENGES_DATA = {
         organizerData: {
           totLabel: "euros bitllet entregat",
           totVal: 50,
-          part1Label: "euros gastats (18 + 14)",
+          part1Label: "euros gastats en total",
           part1Val: 32,
           part2Label: "euros de canvi",
           part2Val: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Suma): Calcula quant gastes en total: 18 + 14 = 32 euros.",
-          "2n pas (Organitzador TOT-PART de Resta): El TOT és el bitllet de 50 €, una PART és la despesa (32 €) i l'altra PART és el canvi (?).",
-          "3r pas (Operació 2 - Resta): 50 - 32 = 18 euros de canvi!"
+          "1r pas (1a Representació - SUMA): Les dues PARTS són 18 € (pinso) i 14 € (detergent), i busquem el TOT gastat (?). Calcula 18 + 14.",
+          "2n pas (2a Representació - RESTA): El TOT és el bitllet de 50 €, una PART és el que has obtingut al 1r pas i l'altra PART és el canvi (?).",
+          "3r pas (2a Operació): Resta a 50 el resultat de la primera operació per trobar el canvi!"
         ]
       },
       {
         id: "pb_1_2",
-        title: "Els Packs d'Aigua i les Ampolles Soltes (2 Operacions)",
-        lore: "Primer multipliquem els packs i després hi sumem les ampolles soltes!",
-        instruction: "Al carretó poses <strong>6 packs d'aigua</strong> de <strong>6 ampolles cadascun</strong> (que són <strong>36 ampolles</strong> en packs) i a més agafes <strong>5 ampolles soltes</strong>. <strong>Quantes ampolles d'aigua portes en total?</strong>",
+        title: "Els Packs d'Aigua i les Ampolles Soltes (Multiplicació + Suma)",
+        lore: "Primer representem i calculem les ampolles dels packs, i després hi sumem les ampolles soltes!",
+        instruction: "Al carretó poses <strong>6 packs d'aigua</strong> amb <strong>6 ampolles a cada pack</strong>, i a més agafes <strong>5 ampolles soltes</strong>. <strong>Quantes ampolles d'aigua portes en total?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "multiplicacio",
+        org1Data: {
+          totLabel: "ampolles als packs",
+          totVal: "?",
+          partLabel: "ampolles a cada pack",
+          partVal: 6,
+          braceLabel: "packs d'aigua",
+          braceVal: 6
+        },
+        step1Expected: { a: 6, op: "*", b: 6, res: 36, unitLabel: "ampolles als packs" },
         organizerType: "suma",
-        step1Expected: { a: 6, op: "*", b: 6, res: 36 },
         expectedOp: "+",
         num1: 36,
         num2: 5,
@@ -3657,26 +3678,35 @@ const CHALLENGES_DATA = {
         organizerData: {
           totLabel: "ampolles en total",
           totVal: "?",
-          part1Label: "ampolles en packs (6 × 6)",
+          part1Label: "ampolles als packs",
           part1Val: 36,
           part2Label: "ampolles soltes",
           part2Val: 5
         },
         hints: [
-          "1r pas (Operació 1 - Multiplicació): Calcula quantes ampolles hi ha als 6 packs: 6 × 6 = 36 ampolles.",
-          "2n pas (Organitzador TOT-PART de Suma): Les dues PARTS són 36 ampolles en packs i 5 ampolles soltes. Busquem el TOT (?).",
-          "3r pas (Operació 2 - Suma): 36 + 5 = 41 ampolles en total!"
+          "1r pas (1a Representació - MULTIPLICACIÓ): Cada PART val 6 ampolles i es repeteix en 6 packs (clau inferior ⏟). Busquem el TOT d'ampolles als packs (?).",
+          "2n pas (2a Representació - SUMA): Ajuntem les dues PARTS: el resultat del 1r pas (ampolles als packs) i les 5 ampolles soltes per trobar el TOT (?).",
+          "3r pas (2a Operació): Suma el resultat del 1r pas més 5!"
         ]
       },
       {
         id: "pb_1_3",
-        title: "El Val de la Llibreria i els Còmics (2 Operacions)",
-        lore: "Primer multipliquem el preu dels còmics i després restem del val!",
-        instruction: "Tens un val de <strong>100 euros en total</strong> per a la llibreria. Compres <strong>4 còmics</strong> a <strong>16 euros cadascun</strong> (que costen <strong>64 euros</strong>). <strong>Quants euros et queden encara al val?</strong>",
+        title: "El Val de la Llibreria i els Còmics (Multiplicació + Resta)",
+        lore: "Primer representem i calculem quant costen els còmics, i després ho restem del val!",
+        instruction: "Tens un val de <strong>100 euros en total</strong> per gastar a la llibreria. Compres <strong>4 còmics iguals</strong> que valen <strong>16 euros cadascun</strong>. <strong>Quants euros et queden encara al val?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "multiplicacio",
+        org1Data: {
+          totLabel: "euros cost dels còmics",
+          totVal: "?",
+          partLabel: "euros cada còmic",
+          partVal: 16,
+          braceLabel: "còmics comprats",
+          braceVal: 4
+        },
+        step1Expected: { a: 16, op: "*", b: 4, res: 64, unitLabel: "euros" },
         organizerType: "resta",
-        step1Expected: { a: 4, op: "*", b: 16, res: 64 },
         expectedOp: "-",
         num1: 100,
         num2: 64,
@@ -3685,26 +3715,35 @@ const CHALLENGES_DATA = {
         organizerData: {
           totLabel: "euros del val en total",
           totVal: 100,
-          part1Label: "euros dels 4 còmics",
+          part1Label: "euros cost dels còmics",
           part1Val: 64,
           part2Label: "euros que queden al val",
           part2Val: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Multiplicació): Calcula el preu dels 4 còmics: 4 × 16 = 64 euros.",
-          "2n pas (Organitzador TOT-PART de Resta): El TOT és 100 €, la PART gastada és 64 € i busquem la PART que queda (?).",
-          "3r pas (Operació 2 - Resta): 100 - 64 = 36 euros!"
+          "1r pas (1a Representació - MULTIPLICACIÓ): Cada PART val 16 € i comprem 4 còmics (clau inferior ⏟). Busquem el TOT que costen els còmics (?).",
+          "2n pas (2a Representació - RESTA): El TOT és 100 € del val, una PART és el que costen els còmics (resultat del 1r pas) i busquem la PART que queda (?).",
+          "3r pas (2a Operació): Resta a 100 el resultat de la multiplicació!"
         ]
       },
       {
         id: "pb_1_4",
-        title: "La Collita del Matí i de la Tarda en Caixes (2 Operacions)",
-        lore: "Primer sumem tota la collita i després la repartim en caixes iguals!",
-        instruction: "Un hortolà recull <strong>45 quilos</strong> de tomàquets al matí i <strong>39 quilos</strong> a la tarda (en total <strong>84 quilos</strong>). Els reparteix a parts iguals en <strong>7 caixes</strong>. <strong>Quants quilos posa a cada caixa?</strong>",
+        title: "La Collita del Matí i de la Tarda en Caixes (Suma + Divisió Partitiva)",
+        lore: "Primer representem i sumem tota la collita, i després la repartim a parts iguals en caixes!",
+        instruction: "Un hortolà recull <strong>45 quilos</strong> de tomàquets al matí i <strong>39 quilos</strong> a la tarda. Després reparteix tots els tomàquets a parts iguals en <strong>7 caixes</strong>. <strong>Quants quilos posa a cada caixa?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "suma",
+        org1Data: {
+          totLabel: "quilos collits en total",
+          totVal: "?",
+          part1Label: "quilos del matí",
+          part1Val: 45,
+          part2Label: "quilos de la tarda",
+          part2Val: 39
+        },
+        step1Expected: { a: 45, op: "+", b: 39, res: 84, unitLabel: "quilos" },
         organizerType: "divisio_partitiva",
-        step1Expected: { a: 45, op: "+", b: 39, res: 84 },
         expectedOp: "/",
         num1: 84,
         num2: 7,
@@ -3719,20 +3758,29 @@ const CHALLENGES_DATA = {
           braceVal: 7
         },
         hints: [
-          "1r pas (Operació 1 - Suma): Calcula tots els quilos recollits: 45 + 39 = 84 quilos.",
-          "2n pas (Organitzador de Divisió Partitiva): El TOT és 84 quilos, la clau inferior és 7 caixes i busquem el valor de cada PART (?).",
-          "3r pas (Operació 2 - Divisió): 84 : 7 = 12 quilos a cada caixa!"
+          "1r pas (1a Representació - SUMA): Les dues PARTS són 45 kg i 39 kg, i busquem el TOT de quilos collits (?).",
+          "2n pas (2a Representació - DIVISIÓ PARTITIVA): El TOT és el resultat del 1r pas, la clau inferior és 7 caixes i busquem el valor de cada PART (?).",
+          "3r pas (2a Operació): Divideix el total de quilos entre 7 caixes!"
         ]
       },
       {
         id: "pb_1_5",
-        title: "Estalvi Setmanal per a la Bicicleta (2 Operacions)",
-        lore: "Primer restem el que ja tenim i després dividim entre les setmanes!",
-        instruction: "Una bicicleta val <strong>180 euros</strong>. Si ja tens <strong>60 euros</strong> estalviats (et falten <strong>120 euros</strong>) i vols reunir el que et falta durant <strong>6 setmanes</strong> a parts iguals, <strong>quants euros has d'estalviar cada setmana?</strong>",
+        title: "Estalvi Setmanal per a la Bicicleta (Resta + Divisió Partitiva)",
+        lore: "Primer representem i restem el que ja tenim, i després repartim el que falta entre les setmanes!",
+        instruction: "Una bicicleta val <strong>180 euros en total</strong>. Si ja tens <strong>60 euros</strong> estalviats i vols reunir els diners que et falten durant <strong>6 setmanes</strong> a parts iguals, <strong>quants euros has d'estalviar cada setmana?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "resta",
+        org1Data: {
+          totLabel: "preu total bicicleta",
+          totVal: 180,
+          part1Label: "euros ja estalviats",
+          part1Val: 60,
+          part2Label: "euros que falten reunir",
+          part2Val: "?"
+        },
+        step1Expected: { a: 180, op: "-", b: 60, res: 120, unitLabel: "euros" },
         organizerType: "divisio_partitiva",
-        step1Expected: { a: 180, op: "-", b: 60, res: 120 },
         expectedOp: "/",
         num1: 120,
         num2: 6,
@@ -3747,78 +3795,105 @@ const CHALLENGES_DATA = {
           braceVal: 6
         },
         hints: [
-          "1r pas (Operació 1 - Resta): Calcula quants diners et falten: 180 - 60 = 120 euros.",
-          "2n pas (Organitzador de Divisió Partitiva): El TOT per reunir és 120 €, el número de parts és 6 setmanes i busquem el valor de cada PART (?).",
-          "3r pas (Operació 2 - Divisió): 120 : 6 = 20 euros cada setmana!"
+          "1r pas (1a Representació - RESTA): El TOT és 180 €, una PART és 60 € estalviats i busquem la PART que falta reunir (?).",
+          "2n pas (2a Representació - DIVISIÓ PARTITIVA): El TOT a reunir és el resultat del 1r pas, la clau inferior és 6 setmanes i busquem quant estalviar cada setmana (?).",
+          "3r pas (2a Operació): Divideix els euros que et falten entre 6 setmanes!"
         ]
       }
     ],
     2: [
       {
         id: "pb_2_1",
-        title: "Places Buides a l'Autocar Escolar (2 Operacions)",
-        lore: "Sumem els viatgers i restem del total de seients.",
-        instruction: "Un autocar té <strong>60 seients en total</strong>. Hi pugen <strong>26 alumnes de 6è A</strong> i <strong>25 alumnes de 6è B</strong> (en total <strong>51 ocupats</strong>). <strong>Quants seients queden buits?</strong>",
+        title: "Places Buides a l'Autocar Escolar (Suma + Resta)",
+        lore: "Primer representem i sumem els viatgers, i després restem del total de seients!",
+        instruction: "Un autocar té <strong>60 seients en total</strong>. Hi pugen <strong>26 alumnes de 6è A</strong> i <strong>25 alumnes de 6è B</strong>. <strong>Quants seients queden buits a l'autocar?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "suma",
+        org1Data: {
+          totLabel: "seients ocupats en total",
+          totVal: "?",
+          part1Label: "alumnes de 6è A",
+          part1Val: 26,
+          part2Label: "alumnes de 6è B",
+          part2Val: 25
+        },
+        step1Expected: { a: 26, op: "+", b: 25, res: 51, unitLabel: "seients ocupats" },
         organizerType: "resta",
-        step1Expected: { a: 26, op: "+", b: 25, res: 51 },
         expectedOp: "-",
         num1: 60,
         num2: 51,
         targetNumber: 9,
         unitLabel: "seients",
         organizerData: {
-          totLabel: "seients en total",
+          totLabel: "seients de l'autocar en total",
           totVal: 60,
-          part1Label: "seients ocupats",
+          part1Label: "seients ocupats en total",
           part1Val: 51,
           part2Label: "seients buits",
           part2Val: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Suma): Suma els alumnes que han pujat: 26 + 25 = 51 seients ocupats.",
-          "2n pas (Organitzador de Resta): El TOT és 60 seients, una PART és 51 ocupats i l'altra PART és els seients buits (?).",
-          "3r pas (Operació 2 - Resta): 60 - 51 = 9 seients buits!"
+          "1r pas (1a Representació - SUMA): Les dues PARTS són 26 i 25 alumnes, i busquem el TOT de seients ocupats (?).",
+          "2n pas (2a Representació - RESTA): El TOT de l'autocar és 60 seients, una PART és els seients ocupats (resultat del 1r pas) i busquem els seients buits (?).",
+          "3r pas (2a Operació): Resta a 60 el nombre de seients ocupats!"
         ]
       },
       {
         id: "pb_2_2",
-        title: "Les Safates d'Ous Sense Trencar (2 Operacions)",
-        lore: "Restem els ous trencats i agrupem la resta en safates de 6.",
-        instruction: "A la parada del mercat tenen <strong>150 ous</strong>, però se'n trenquen <strong>6 ous</strong> (queden <strong>144 ous bons</strong>). Els envasen en safates posant <strong>6 ous a cada safata</strong>. <strong>Quantes safates ompliran?</strong>",
+        title: "Les Safates d'Ous Sense Trencar (Resta + Divisió Quotativa)",
+        lore: "Primer restem els ous trencats i després agrupem els ous bons en safates de 6!",
+        instruction: "A la parada del mercat tenen <strong>150 ous en total</strong>, però pel camí se'n trenquen <strong>6 ous</strong>. Els ous bons que queden els envasen en safates posant <strong>6 ous a cada safata</strong>. <strong>Quantes safates ompliran?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "resta",
+        org1Data: {
+          totLabel: "ous inicials en total",
+          totVal: 150,
+          part1Label: "ous trencats",
+          part1Val: 6,
+          part2Label: "ous bons que queden",
+          part2Val: "?"
+        },
+        step1Expected: { a: 150, op: "-", b: 6, res: 144, unitLabel: "ous bons" },
         organizerType: "divisio_quotativa",
-        step1Expected: { a: 150, op: "-", b: 6, res: 144 },
         expectedOp: "/",
         num1: 144,
         num2: 6,
         targetNumber: 24,
         unitLabel: "safates",
         organizerData: {
-          totLabel: "ous bons en total",
+          totLabel: "ous bons que queden",
           totVal: 144,
           partLabel: "ous a cada safata",
           partVal: 6,
-          braceLabel: "safates ompliran",
+          braceLabel: "safates que ompliran",
           braceVal: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Resta): Ous bons = 150 - 6 = 144 ous.",
-          "2n pas (Organitzador de Divisió Quotativa): El TOT d'ous bons és 144, cada PART és 6 ous per safata i busquem el número de safates (?) a la clau inferior.",
-          "3r pas (Operació 2 - Divisió): 144 : 6 = 24 safates!"
+          "1r pas (1a Representació - RESTA): El TOT inicial és 150 ous, una PART és 6 ous trencats i busquem la PART d'ous bons que queden (?).",
+          "2n pas (2a Representació - DIVISIÓ QUOTATIVA): El TOT d'ous bons és el resultat del 1r pas, cada PART és 6 ous per safata i busquem quantes safates ompliran (?) a la clau inferior.",
+          "3r pas (2a Operació): Divideix els ous bons entre 6!"
         ]
       },
       {
         id: "pb_2_3",
-        title: "La Parada Solidària de Pastissos (2 Operacions)",
-        lore: "Multipliquem els ingressos i descomptem la despesa d'ingredients.",
-        instruction: "A la fira escolar heu venut <strong>15 pastissos</strong> a <strong>12 euros cadascun</strong> (recaptant <strong>180 euros</strong>). Si comprar els ingredients va costar <strong>40 euros</strong>, <strong>quants euros de benefici net han quedat?</strong>",
+        title: "La Parada Solidària de Pastissos (Multiplicació + Resta)",
+        lore: "Primer representem i multipliquem els ingressos, i després descomptem la despesa d'ingredients!",
+        instruction: "A la fira escolar heu venut <strong>15 pastissos</strong> a <strong>12 euros cada pastís</strong>. Si comprar els ingredients va costar <strong>40 euros</strong>, <strong>quants euros de benefici net han quedat?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "multiplicacio",
+        org1Data: {
+          totLabel: "euros recaptats en total",
+          totVal: "?",
+          partLabel: "euros cada pastís",
+          partVal: 12,
+          braceLabel: "pastissos venuts",
+          braceVal: 15
+        },
+        step1Expected: { a: 12, op: "*", b: 15, res: 180, unitLabel: "euros recaptats" },
         organizerType: "resta",
-        step1Expected: { a: 15, op: "*", b: 12, res: 180 },
         expectedOp: "-",
         num1: 180,
         num2: 40,
@@ -3833,55 +3908,73 @@ const CHALLENGES_DATA = {
           part2Val: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Multiplicació): Calcula els diners recaptats: 15 × 12 = 180 euros.",
-          "2n pas (Organitzador de Resta): El TOT recaptat és 180 €, una PART és la despesa (40 €) i busquem l'altra PART de benefici (?).",
-          "3r pas (Operació 2 - Resta): 180 - 40 = 140 euros!"
+          "1r pas (1a Representació - MULTIPLICACIÓ): Cada PART és 12 € i es repeteix en 15 pastissos (clau inferior ⏟). Busquem el TOT recaptat (?).",
+          "2n pas (2a Representació - RESTA): El TOT és els euros recaptats al 1r pas, una PART és 40 € d'ingredients i busquem el benefici net (?).",
+          "3r pas (2a Operació): Resta 40 al total recaptat!"
         ]
       },
       {
         id: "pb_2_4",
-        title: "Les Mandarines del Menjador (2 Operacions)",
-        lore: "Sumem els alumnes de cada taula i multipliquem pel nombre de taules.",
-        instruction: "Al menjador hi ha <strong>8 taules</strong>. A cada taula hi seuen <strong>5 nens i 4 nenes</strong> (és a dir, <strong>9 alumnes a cada taula</strong>). <strong>Quants alumnes hi ha en total a les 8 taules?</strong>",
+        title: "Els Alumnes del Menjador Escolar (Suma + Multiplicació)",
+        lore: "Primer representem i sumem els alumnes d'una taula, i després multipliquem pel nombre de taules!",
+        instruction: "Al menjador de l'escola hi ha <strong>8 taules iguals</strong>. A cada taula hi seuen <strong>5 nens i 4 nenes</strong>. <strong>Quants alumnes hi ha en total a les 8 taules?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "suma",
+        org1Data: {
+          totLabel: "alumnes a cada taula",
+          totVal: "?",
+          part1Label: "nens a cada taula",
+          part1Val: 5,
+          part2Label: "nenes a cada taula",
+          part2Val: 4
+        },
+        step1Expected: { a: 5, op: "+", b: 4, res: 9, unitLabel: "alumnes per taula" },
         organizerType: "multiplicacio",
-        step1Expected: { a: 5, op: "+", b: 4, res: 9 },
         expectedOp: "*",
         num1: 9,
         num2: 8,
         targetNumber: 72,
         unitLabel: "alumnes",
         organizerData: {
-          totLabel: "alumnes en total",
+          totLabel: "alumnes en total al menjador",
           totVal: "?",
           partLabel: "alumnes a cada taula",
           partVal: 9,
-          braceLabel: "taules",
+          braceLabel: "taules iguals",
           braceVal: 8
         },
         hints: [
-          "1r pas (Operació 1 - Suma): Alumnes a cada taula = 5 + 4 = 9 alumnes.",
-          "2n pas (Organitzador de Multiplicació): Cada PART val 9 alumnes, la clau inferior és 8 taules i busquem el TOT (?).",
-          "3r pas (Operació 2 - Multiplicació): 9 × 8 = 72 alumnes!"
+          "1r pas (1a Representació - SUMA): Ajuntem les dues PARTS d'una taula (5 nens i 4 nenes) per trobar el TOT d'alumnes d'una taula (?).",
+          "2n pas (2a Representació - MULTIPLICACIÓ): Cada PART val el resultat del 1r pas (alumnes a cada taula), la clau inferior és 8 taules i busquem el TOT del menjador (?).",
+          "3r pas (2a Operació): Multiplica els alumnes de cada taula per 8 taules!"
         ]
       },
       {
         id: "pb_2_5",
-        title: "Subvenció per a l'Autocar de Colònies (2 Operacions)",
-        lore: "Restem l'ajuda de l'AFA i repartim la resta entre els alumnes.",
-        instruction: "L'autocar de les colònies costa <strong>450 euros</strong>. L'AFA de l'escola en paga <strong>90 euros</strong> (queden <strong>360 euros</strong> per pagar) i la resta es reparteix en parts iguals entre <strong>18 alumnes</strong>. <strong>Quants euros paga cada alumne?</strong>",
+        title: "Subvenció per a l'Autocar de Colònies (Resta + Divisió Partitiva)",
+        lore: "Primer representem i restem l'ajuda de l'AFA, i després repartim la resta entre els alumnes!",
+        instruction: "L'autocar de les colònies costa <strong>450 euros en total</strong>. L'AFA de l'escola en paga <strong>90 euros</strong> i la resta es reparteix en parts iguals entre <strong>18 alumnes</strong>. <strong>Quants euros ha de pagar cada alumne?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "resta",
+        org1Data: {
+          totLabel: "cost total autocar",
+          totVal: 450,
+          part1Label: "euros que paga l'AFA",
+          part1Val: 90,
+          part2Label: "euros a repartir entre alumnes",
+          part2Val: "?"
+        },
+        step1Expected: { a: 450, op: "-", b: 90, res: 360, unitLabel: "euros" },
         organizerType: "divisio_partitiva",
-        step1Expected: { a: 450, op: "-", b: 90, res: 360 },
         expectedOp: "/",
         num1: 360,
         num2: 18,
         targetNumber: 20,
         unitLabel: "euros",
         organizerData: {
-          totLabel: "euros a repartir",
+          totLabel: "euros a repartir entre alumnes",
           totVal: 360,
           partLabel: "euros cada alumne",
           partVal: "?",
@@ -3889,29 +3982,38 @@ const CHALLENGES_DATA = {
           braceVal: 18
         },
         hints: [
-          "1r pas (Operació 1 - Resta): Descomptem els 90 € de l'AFA: 450 - 90 = 360 euros.",
-          "2n pas (Organitzador de Divisió Partitiva): El TOT a repartir és 360 €, el número de parts és 18 alumnes i busquem el valor de cada PART (?).",
-          "3r pas (Operació 2 - Divisió): 360 : 18 = 20 euros cada alumne!"
+          "1r pas (1a Representació - RESTA): El TOT és 450 €, una PART és 90 € de l'AFA i busquem la PART que queda per repartir (?).",
+          "2n pas (2a Representació - DIVISIÓ PARTITIVA): El TOT a repartir és el resultat del 1r pas, la clau inferior és 18 alumnes i busquem quant paga cada alumne (?).",
+          "3r pas (2a Operació): Divideix els euros restants entre 18 alumnes!"
         ]
       }
     ],
     3: [
       {
         id: "pb_3_1",
-        title: "L'Equipació d'Atletisme amb Descompte (2 Operacions)",
-        lore: "Multipliquem el cost de les equipacions i apliquem la rebaixa.",
-        instruction: "El club compra <strong>12 equipacions</strong> que valen <strong>25 euros cadascuna</strong> (en total <strong>300 euros</strong>). La botiga els fa un descompte de <strong>30 euros</strong>. <strong>Quants euros paguen finalment?</strong>",
+        title: "L'Equipació d'Atletisme amb Descompte (Multiplicació + Resta)",
+        lore: "Primer representem i multipliquem el cost de les equipacions, i després apliquem la rebaixa!",
+        instruction: "El club compra <strong>12 equipacions</strong> que valen <strong>25 euros cadascuna</strong>. A la caixa de la botiga els fan una rebaixa total de <strong>30 euros</strong>. <strong>Quants euros paguen finalment?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "multiplicacio",
+        org1Data: {
+          totLabel: "euros preu sense descompte",
+          totVal: "?",
+          partLabel: "euros cada equipació",
+          partVal: 25,
+          braceLabel: "equipacions comprades",
+          braceVal: 12
+        },
+        step1Expected: { a: 25, op: "*", b: 12, res: 300, unitLabel: "euros" },
         organizerType: "resta",
-        step1Expected: { a: 12, op: "*", b: 25, res: 300 },
         expectedOp: "-",
         num1: 300,
         num2: 30,
         targetNumber: 270,
         unitLabel: "euros",
         organizerData: {
-          totLabel: "euros preu inicial",
+          totLabel: "euros preu sense descompte",
           totVal: 300,
           part1Label: "euros de descompte",
           part1Val: 30,
@@ -3919,20 +4021,29 @@ const CHALLENGES_DATA = {
           part2Val: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Multiplicació): 12 × 25 = 300 euros abans del descompte.",
-          "2n pas (Organitzador de Resta): El TOT és 300 €, una PART és el descompte (30 €) i l'altra PART és el preu final (?).",
-          "3r pas (Operació 2 - Resta): 300 - 30 = 270 euros!"
+          "1r pas (1a Representació - MULTIPLICACIÓ): Cada PART val 25 € i comprem 12 equipacions (clau inferior ⏟). Busquem el TOT sense descompte (?).",
+          "2n pas (2a Representació - RESTA): El TOT és el resultat del 1r pas, una PART és els 30 € de descompte i busquem la PART a pagar finalment (?).",
+          "3r pas (2a Operació): Resta 30 al resultat de la multiplicació!"
         ]
       },
       {
         id: "pb_3_2",
-        title: "Empaquetant Pomelos i Taronges (2 Operacions)",
-        lore: "Sumem tota la fruita i calculem quantes caixes de 15 kg omplirem.",
-        instruction: "Un pagès té <strong>190 quilos de taronges</strong> i <strong>110 quilos de pomelos</strong> (en total <strong>300 quilos</strong>). Els vol guardar en caixes posant <strong>15 quilos a cada caixa</strong>. <strong>Quantes caixes necessitarà?</strong>",
+        title: "Empaquetant Pomelos i Taronges (Suma + Divisió Quotativa)",
+        lore: "Primer representem i sumem tota la fruita, i després calculem quantes caixes de 15 kg omplirem!",
+        instruction: "Un pagès té <strong>190 quilos de taronges</strong> i <strong>110 quilos de pomelos</strong>. Vol guardar tota la fruita en caixes posant <strong>15 quilos a cada caixa</strong>. <strong>Quantes caixes necessitarà?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "suma",
+        org1Data: {
+          totLabel: "quilos de fruita en total",
+          totVal: "?",
+          part1Label: "quilos de taronges",
+          part1Val: 190,
+          part2Label: "quilos de pomelos",
+          part2Val: 110
+        },
+        step1Expected: { a: 190, op: "+", b: 110, res: 300, unitLabel: "quilos" },
         organizerType: "divisio_quotativa",
-        step1Expected: { a: 190, op: "+", b: 110, res: 300 },
         expectedOp: "/",
         num1: 300,
         num2: 15,
@@ -3947,20 +4058,29 @@ const CHALLENGES_DATA = {
           braceVal: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Suma): Suma tota la fruita: 190 + 110 = 300 quilos.",
-          "2n pas (Organitzador de Divisió Quotativa): El TOT és 300 kg, cada PART és 15 kg per caixa i busquem el número de caixes (?) a la clau inferior.",
-          "3r pas (Operació 2 - Divisió): 300 : 15 = 20 caixes!"
+          "1r pas (1a Representació - SUMA): Les dues PARTS són 190 kg i 110 kg, i busquem el TOT de quilos de fruita (?).",
+          "2n pas (2a Representació - DIVISIÓ QUOTATIVA): El TOT és el resultat del 1r pas, cada PART és 15 kg per caixa i busquem el número de caixes (?) a la clau inferior.",
+          "3r pas (2a Operació): Divideix el total de quilos entre 15!"
         ]
       },
       {
         id: "pb_3_3",
-        title: "Les Capses de Retoladors que Queden (2 Operacions)",
-        lore: "Multipliquem les capses i restem els retoladors gastats.",
-        instruction: "A l'escola han comprat <strong>8 capses</strong> amb <strong>24 retoladors a cada capsa</strong> (en total <strong>192 retoladors</strong>). Si a final de trimestre se n'han gastat <strong>35 retoladors</strong>, <strong>quants retoladors nous queden?</strong>",
+        title: "Les Capses de Retoladors que Queden (Multiplicació + Resta)",
+        lore: "Primer representem i multipliquem les capses, i després restem els retoladors gastats!",
+        instruction: "A l'escola han comprat <strong>8 capses iguals</strong> amb <strong>24 retoladors a cada capsa</strong>. Si a final de trimestre se n'han gastat <strong>35 retoladors</strong>, <strong>quants retoladors nous queden?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "multiplicacio",
+        org1Data: {
+          totLabel: "retoladors comprats en total",
+          totVal: "?",
+          partLabel: "retoladors a cada capsa",
+          partVal: 24,
+          braceLabel: "capses comprades",
+          braceVal: 8
+        },
+        step1Expected: { a: 24, op: "*", b: 8, res: 192, unitLabel: "retoladors" },
         organizerType: "resta",
-        step1Expected: { a: 8, op: "*", b: 24, res: 192 },
         expectedOp: "-",
         num1: 192,
         num2: 35,
@@ -3975,20 +4095,29 @@ const CHALLENGES_DATA = {
           part2Val: "?"
         },
         hints: [
-          "1r pas (Operació 1 - Multiplicació): 8 × 24 = 192 retoladors en total.",
-          "2n pas (Organitzador de Resta): El TOT és 192, una PART és 35 gastats i busquem l'altra PART que queda (?).",
-          "3r pas (Operació 2 - Resta): 192 - 35 = 157 retoladors!"
+          "1r pas (1a Representació - MULTIPLICACIÓ): Cada PART és 24 retoladors i hi ha 8 capses (clau inferior ⏟). Busquem el TOT comprat (?).",
+          "2n pas (2a Representació - RESTA): El TOT és el resultat del 1r pas, una PART és 35 gastats i busquem la PART que queda (?).",
+          "3r pas (2a Operació): Resta 35 al total de retoladors comprats!"
         ]
       },
       {
         id: "pb_3_4",
-        title: "Repartint el Premi del Concurs Literari (2 Operacions)",
-        lore: "Sumem els dos premis i els repartim a parts iguals entre l'equip.",
-        instruction: "Un grup de <strong>6 alumnes</strong> ha guanyat un primer premi de <strong>150 euros</strong> i un accèssit de <strong>90 euros</strong> (en total <strong>240 euros</strong>). Si es reparteixen el total a parts iguals entre els <strong>6 alumnes</strong>, <strong>quants euros rep cadascú?</strong>",
+        title: "Repartint el Premi del Concurs Literari (Suma + Divisió Partitiva)",
+        lore: "Primer representem i sumem els dos premis, i després els repartim a parts iguals entre l'equip!",
+        instruction: "Un grup de <strong>6 alumnes</strong> ha guanyat un primer premi de <strong>150 euros</strong> i un accèssit de <strong>90 euros</strong>. Si es reparteixen tots els diners a parts iguals entre els <strong>6 alumnes</strong>, <strong>quants euros rep cadascú?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "suma",
+        org1Data: {
+          totLabel: "euros de premi en total",
+          totVal: "?",
+          part1Label: "euros primer premi",
+          part1Val: 150,
+          part2Label: "euros accèssit",
+          part2Val: 90
+        },
+        step1Expected: { a: 150, op: "+", b: 90, res: 240, unitLabel: "euros" },
         organizerType: "divisio_partitiva",
-        step1Expected: { a: 150, op: "+", b: 90, res: 240 },
         expectedOp: "/",
         num1: 240,
         num2: 6,
@@ -3999,41 +4128,50 @@ const CHALLENGES_DATA = {
           totVal: 240,
           partLabel: "euros cada alumne",
           partVal: "?",
-          braceLabel: "alumnes",
+          braceLabel: "alumnes de l'equip",
           braceVal: 6
         },
         hints: [
-          "1r pas (Operació 1 - Suma): 150 + 90 = 240 euros de premi total.",
-          "2n pas (Organitzador de Divisió Partitiva): El TOT és 240 €, la clau inferior és 6 alumnes i busquem el valor de cada PART (?).",
-          "3r pas (Operació 2 - Divisió): 240 : 6 = 40 euros cada alumne!"
+          "1r pas (1a Representació - SUMA): Les dues PARTS són 150 € i 90 €, i busquem el TOT del premi (?).",
+          "2n pas (2a Representació - DIVISIÓ PARTITIVA): El TOT és el resultat del 1r pas, la clau inferior és 6 alumnes i busquem el valor de cada PART (?).",
+          "3r pas (2a Operació): Divideix el premi total entre 6 alumnes!"
         ]
       },
       {
         id: "pb_3_5",
-        title: "Cadires per al Festival de Música (2 Operacions)",
-        lore: "Multipliquem les files del matí i hi sumem les cadires extra de la tarda.",
-        instruction: "Per al festival hem posat <strong>12 files</strong> amb <strong>15 cadires a cada fila</strong> (que són <strong>180 cadires</strong>) i després hem afegit <strong>45 cadires més</strong> al fons. <strong>Quantes cadires hi ha en total?</strong>",
+        title: "Cadires per al Festival de Música (Multiplicació + Suma)",
+        lore: "Primer representem i multipliquem les files, i després hi sumem les cadires extra del fons!",
+        instruction: "Per al festival de música hem col·locat <strong>12 files iguals</strong> amb <strong>15 cadires a cada fila</strong>, i després hem afegit <strong>45 cadires més</strong> al fons del gimnàs. <strong>Quantes cadires hi ha en total?</strong>",
         type: "general_problem",
         isTwoStep: true,
+        org1Type: "multiplicacio",
+        org1Data: {
+          totLabel: "cadires a les files",
+          totVal: "?",
+          partLabel: "cadires a cada fila",
+          partVal: 15,
+          braceLabel: "files iguals",
+          braceVal: 12
+        },
+        step1Expected: { a: 15, op: "*", b: 12, res: 180, unitLabel: "cadires a les files" },
         organizerType: "suma",
-        step1Expected: { a: 12, op: "*", b: 15, res: 180 },
         expectedOp: "+",
         num1: 180,
         num2: 45,
         targetNumber: 225,
         unitLabel: "cadires",
         organizerData: {
-          totLabel: "cadires en total",
+          totLabel: "cadires en total al gimnàs",
           totVal: "?",
-          part1Label: "cadires a les files (12 × 15)",
+          part1Label: "cadires a les files",
           part1Val: 180,
           part2Label: "cadires afegides al fons",
           part2Val: 45
         },
         hints: [
-          "1r pas (Operació 1 - Multiplicació): 12 × 15 = 180 cadires a les files.",
-          "2n pas (Organitzador de Suma): Les dues PARTS són 180 cadires de les files i 45 cadires extra. Busquem el TOT (?).",
-          "3r pas (Operació 2 - Suma): 180 + 45 = 225 cadires en total!"
+          "1r pas (1a Representació - MULTIPLICACIÓ): Cada PART és 15 cadires i hi ha 12 files (clau inferior ⏟). Busquem el TOT de cadires a les files (?).",
+          "2n pas (2a Representació - SUMA): Les dues PARTS són el resultat del 1r pas (cadires a les files) i les 45 cadires del fons. Busquem el TOT (?).",
+          "3r pas (2a Operació): Suma el resultat de la multiplicació més 45!"
         ]
       }
     ]
