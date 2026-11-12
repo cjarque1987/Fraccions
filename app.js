@@ -677,7 +677,9 @@
     state.solverBlocks = [];
     state.solverDivGroups = 1;
     state.showBarModelGuide = true;
-    state.step1 = { a: "", op: "+", b: "" };
+    state.selectedOrganizerType = ch.organizerType || "suma";
+    state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "" };
+    state.step1 = { a: "", op: ch.expectedOp || "+", b: "" };
     state.step2 = { a: "", op: "+", b: "" };
     if (ch.defaultShape) {
       state.currentShape = ch.defaultShape;
@@ -805,201 +807,295 @@
     return null;
   }
 
-  function renderGeneralProblemStageHTML(ch, prevProbInput) {
-    // 1. Model de Barres Part-Tot
-    let barModelHTML = "";
-    if (ch.barModel && state.showBarModelGuide) {
-      const totalSum = ch.barModel.parts.reduce((acc, p) => acc + (p.value || 10), 0);
-      const partsHTML = ch.barModel.parts.map(p => {
-        const widthPct = Math.max(18, Math.round(((p.value || 10) / totalSum) * 100));
-        return `
-          <div class="bar-model-part ${p.isUnknown ? "unknown-part" : ""}"
-               style="flex: ${widthPct}; background: ${p.color};">
-            ${p.label}
-          </div>
-        `;
-      }).join("");
+  function renderTotPartReferenceDiagramHTML(modelKey) {
+    const info = (typeof ORGANIZER_MODELS_INFO !== "undefined" && ORGANIZER_MODELS_INFO[modelKey])
+      ? ORGANIZER_MODELS_INFO[modelKey]
+      : ORGANIZER_MODELS_INFO.suma;
 
-      barModelHTML = `
-        <div class="bar-model-box">
-          <div style="font-size:0.82rem; font-weight:800; color:var(--text-muted); margin-bottom:0.35rem;">
-            📊 Esquema Visual del Model de Barres (Relació Part - Tot):
+    const totInside = info.totStatus === "?"
+      ? `<span class="tot-part-qmark">?</span>`
+      : `<span class="tot-part-check">✓</span>`;
+    const totCircleClass = info.totStatus === "?" ? "unknown-circle" : "known-circle";
+
+    let bottomSectionHTML = "";
+    if (!info.isMultiPart) {
+      const p1Inside = info.part1Status === "?" ? `<span class="tot-part-qmark">?</span>` : `<span class="tot-part-check">✓</span>`;
+      const p2Inside = info.part2Status === "?" ? `<span class="tot-part-qmark">?</span>` : `<span class="tot-part-check">✓</span>`;
+      const p1Class = info.part1Status === "?" ? "unknown-circle" : "known-circle";
+      const p2Class = info.part2Status === "?" ? "unknown-circle" : "known-circle";
+
+      bottomSectionHTML = `
+        <svg viewBox="0 0 280 42" style="width:100%; max-width:280px; height:42px; display:block; margin:0 auto;">
+          <line x1="140" y1="2" x2="65" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="140" y1="2" x2="215" y2="40" stroke="#1E293B" stroke-width="3" />
+        </svg>
+        <div style="display:flex; justify-content:center; gap:3.2rem; align-items:flex-start;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
+            <div class="tot-part-circle small-circle ${p1Class}">${p1Inside}</div>
+            <div class="tot-part-purple-title">PART</div>
           </div>
-          <div class="bar-model-total-bar">${ch.barModel.totalLabel}</div>
-          <div class="bar-model-parts-row">${partsHTML}</div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
+            <div class="tot-part-circle small-circle ${p2Class}">${p2Inside}</div>
+            <div class="tot-part-purple-title">PART</div>
+          </div>
+        </div>
+      `;
+    } else {
+      const pInside = info.partStatus === "?" ? `<span class="tot-part-qmark">?</span>` : `<span class="tot-part-check">✓</span>`;
+      const pClass = info.partStatus === "?" ? "unknown-circle" : "known-circle";
+      const braceInside = info.braceStatus === "?"
+        ? `<span class="tot-part-qmark" style="font-size:1.85rem;">?</span>`
+        : `<span class="tot-part-check" style="font-size:1.85rem;">✓</span>`;
+
+      bottomSectionHTML = `
+        <svg viewBox="0 0 320 42" style="width:100%; max-width:320px; height:42px; display:block; margin:0 auto;">
+          <line x1="160" y1="2" x2="50" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="135" y2="40" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="270" y2="40" stroke="#1E293B" stroke-width="3" />
+        </svg>
+        <div style="display:flex; justify-content:center; gap:0.65rem; align-items:center;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle small-circle ${pClass}">${pInside}</div>
+            <div class="tot-part-purple-title" style="font-size:0.9rem;">PART</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle small-circle ${pClass}">${pInside}</div>
+            <div class="tot-part-purple-title" style="font-size:0.9rem;">PART</div>
+          </div>
+          <span class="tot-part-ellipsis">...</span>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle small-circle ${pClass}">${pInside}</div>
+            <div class="tot-part-purple-title" style="font-size:0.9rem;">PART</div>
+          </div>
+        </div>
+        <!-- Clau horitzontal inferior ⏟ -->
+        <div style="display:flex; flex-direction:column; align-items:center; margin-top:0.2rem;">
+          <svg viewBox="0 0 300 28" style="width:100%; max-width:290px; height:26px; display:block;">
+            <path d="M 15 4 Q 15 15 30 15 L 135 15 Q 150 15 150 26 Q 150 15 165 15 L 270 15 Q 285 15 285 4"
+                  fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <div style="margin-top:0.1rem;">${braceInside}</div>
         </div>
       `;
     }
 
-    // 2. Safata de Blocs i Bitllets Manipulatius
-    const blocksTotal = state.solverBlocks.reduce((acc, v) => acc + v, 0);
-    const dividedVal = state.solverDivGroups > 1
-      ? Math.round((blocksTotal / state.solverDivGroups) * 100) / 100
-      : null;
-
-    const blocksChipsHTML = state.solverBlocks.length === 0
-      ? `<span style="color:var(--text-muted); font-size:0.9rem; font-style:italic;">Fes clic als botons de sota o a "🪄 Carrega les dades" per posar blocs i bitllets al tauler (fes clic a un bloc per treure'l).</span>`
-      : state.solverBlocks.map((val, idx) => `
-          <button type="button" class="math-block-chip ${val < 0 ? "negative-block" : ""}"
-                  data-remove-block="${idx}" title="Fes clic per eliminar aquest bloc">
-            ${val >= 0 ? `+${val}` : val} ✖
-          </button>
-        `).join("");
-
-    // 3. Resultats dels passos 1 i 2
-    const res1 = computeStepResult(state.step1);
-    const res2 = computeStepResult(state.step2);
-
     return `
-      <div class="problem-solver-grid">
-        <!-- ESQUERRA: MODEL DE BARRES + BLOCS I BITLLETS MANIPULATIUS -->
-        <div class="solver-panel-card">
-          <div class="panel-header-bar">
-            <span class="panel-title">🧱 1. Representació Manipulativa (Model de Barres i Blocs)</span>
-            <button type="button" class="tool-btn" id="btnToggleBarModelGuide" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
-              📊 ${state.showBarModelGuide ? "Amaga esquema" : "Mostra esquema"}
-            </button>
+      <div class="tot-part-sheet">
+        <div class="tot-part-header-banner">
+          <h4>${info.title}</h4>
+          <p>${info.subtitle}</p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="tot-part-purple-title" style="margin-bottom:0.2rem;">TOT</div>
+          <div class="tot-part-circle small-circle ${totCircleClass}">${totInside}</div>
+          ${bottomSectionHTML}
+        </div>
+
+        <div class="yellow-rule-sticky" style="margin-top:0.85rem;">
+          <strong>📌 Quan fem servir aquest esquema?</strong>
+          <ul>
+            ${info.bullets.map(b => `<li>${b}</li>`).join("")}
+          </ul>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderGeneralProblemStageHTML(ch, prevProbInput) {
+    const activeModel = state.selectedOrganizerType || ch.organizerType || "suma";
+    const org = ch.organizerData || {};
+    const isMulti = activeModel === "multiplicacio" || activeModel === "divisio_partitiva" || activeModel === "divisio_quotativa";
+    const matchesProblemModel = activeModel === ch.organizerType;
+
+    // Càlcul de l'operació escrita a la caixa d'operació
+    const res1 = computeStepResult(state.step1);
+
+    // Construeix l'organitzador interactiu amb les dades del problema a la dreta
+    const totIsUnknown = org.totVal === "?";
+    const totNodeContent = totIsUnknown
+      ? `<span class="tot-part-qmark">?</span>`
+      : `<input type="number" id="orgTotInput" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.tot ?? ""}" aria-label="Valor del TOT" />`;
+
+    let interactiveBottomHTML = "";
+    if (!isMulti) {
+      const p1IsUnknown = org.part1Val === "?";
+      const p2IsUnknown = org.part2Val === "?";
+
+      const p1Content = p1IsUnknown
+        ? `<span class="tot-part-qmark">?</span>`
+        : `<input type="number" id="orgPart1Input" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.part1 ?? ""}" aria-label="Valor de la Part 1" />`;
+
+      const p2Content = p2IsUnknown
+        ? `<span class="tot-part-qmark">?</span>`
+        : `<input type="number" id="orgPart2Input" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.part2 ?? ""}" aria-label="Valor de la Part 2" />`;
+
+      interactiveBottomHTML = `
+        <svg viewBox="0 0 280 44" style="width:100%; max-width:280px; height:44px; display:block; margin:0 auto;">
+          <line x1="140" y1="2" x2="65" y2="42" stroke="#1E293B" stroke-width="3" />
+          <line x1="140" y1="2" x2="215" y2="42" stroke="#1E293B" stroke-width="3" />
+        </svg>
+        <div style="display:flex; justify-content:center; gap:2.6rem; align-items:flex-start;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
+            <div class="tot-part-circle ${p1IsUnknown ? "unknown-circle" : "known-circle"}">
+              ${p1Content}
+            </div>
+            <div class="tot-part-purple-title">PART</div>
+            <div class="tot-part-purple-sub">${org.part1Label || ""}</div>
           </div>
 
-          ${barModelHTML}
-
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.4rem;">
-              <strong style="font-size:0.9rem;">🧰 Tauler de Blocs i Bitllets:</strong>
-              <div style="display:flex; gap:0.4rem;">
-                <button type="button" class="tool-btn" id="btnLoadSuggestedBlocks" style="font-size:0.8rem; padding:0.28rem 0.6rem;">
-                  🪄 Carrega les dades del problema
-                </button>
-                <button type="button" class="tool-btn" id="btnClearSolverBlocks" style="font-size:0.8rem; padding:0.28rem 0.6rem;">
-                  🗑️ Buida blocs
-                </button>
-              </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
+            <div class="tot-part-circle ${p2IsUnknown ? "unknown-circle" : "known-circle"}">
+              ${p2Content}
             </div>
+            <div class="tot-part-purple-title">PART</div>
+            <div class="tot-part-purple-sub">${org.part2Label || ""}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      const partIsUnknown = org.partVal === "?";
+      const braceIsUnknown = org.braceVal === "?";
 
-            <div class="manipulative-blocks-tray">
-              ${blocksChipsHTML}
+      const partContent = partIsUnknown
+        ? `<span class="tot-part-qmark">?</span>`
+        : `<input type="number" id="orgPartInput" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.part ?? ""}" aria-label="Valor de cada PART" />`;
+
+      const partMirrorDisplay = partIsUnknown
+        ? `<span class="tot-part-qmark">?</span>`
+        : `<span style="font-size:1.35rem; font-weight:900; color:#0F172A;">${state.orgInputs?.part || "?"}</span>`;
+
+      const braceContent = braceIsUnknown
+        ? `<span class="tot-part-qmark" style="font-size:1.9rem;">?</span>`
+        : `<input type="number" id="orgBraceInput" class="tot-part-circle-input" placeholder="?" value="${state.orgInputs?.brace ?? ""}" aria-label="Número de parts" />`;
+
+      interactiveBottomHTML = `
+        <svg viewBox="0 0 320 44" style="width:100%; max-width:320px; height:44px; display:block; margin:0 auto;">
+          <line x1="160" y1="2" x2="50" y2="42" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="135" y2="42" stroke="#1E293B" stroke-width="3" />
+          <line x1="160" y1="2" x2="270" y2="42" stroke="#1E293B" stroke-width="3" />
+        </svg>
+
+        <div style="display:flex; justify-content:center; gap:0.55rem; align-items:flex-start;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle ${partIsUnknown ? "unknown-circle" : "known-circle"}">
+              ${partContent}
             </div>
+            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
+            <div class="tot-part-purple-sub">${org.partLabel || ""}</div>
           </div>
 
-          <!-- Botons ràpids per afegir bitllets/blocs i repetir/repartir -->
-          <div class="manipulative-controls-row" style="justify-content:flex-start;">
-            <span class="control-pill-label">➕ Afegeix ràpid:</span>
-            <button type="button" class="spell-chip-btn" data-add-block="50">+50</button>
-            <button type="button" class="spell-chip-btn" data-add-block="20">+20</button>
-            <button type="button" class="spell-chip-btn" data-add-block="10">+10</button>
-            <button type="button" class="spell-chip-btn" data-add-block="5">+5</button>
-            <button type="button" class="spell-chip-btn" data-add-block="1">+1</button>
-            <button type="button" class="spell-chip-btn" style="border-color:var(--ruby); color:var(--ruby);" data-add-block="-10">−10</button>
-            <button type="button" class="spell-chip-btn" style="border-color:var(--ruby); color:var(--ruby);" data-add-block="-5">−5</button>
-            <button type="button" class="spell-chip-btn" style="border-color:var(--ruby); color:var(--ruby);" data-add-block="-1">−1</button>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle ${partIsUnknown ? "unknown-circle" : "known-circle"}">
+              ${partMirrorDisplay}
+            </div>
+            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
           </div>
 
-          <!-- Afegir bloc personalitzat o repetir (Multiplicació) i repartir (Divisió) -->
-          <div class="manipulative-controls-row" style="justify-content:space-between;">
-            <div style="display:flex; align-items:center; gap:0.35rem; flex-wrap:wrap;">
-              <input type="number" id="customBlockValInput" class="step-calc-input" style="width:66px;" placeholder="Valor" value="12" />
-              <span style="font-weight:800;">×</span>
-              <input type="number" id="customBlockTimesInput" class="step-calc-input" style="width:54px;" placeholder="Cops" value="1" min="1" max="20" />
-              <button type="button" class="tool-btn" id="btnAddCustomBlocks" style="padding:0.35rem 0.65rem;">
-                ➕ Posa bloc(s)
-              </button>
-            </div>
+          <span class="tot-part-ellipsis" style="margin-top:1.4rem;">...</span>
 
-            <div class="control-pill-group">
-              <span class="control-pill-label">➗ Reparteix en grups:</span>
-              <button type="button" class="step-btn" id="btnDivGroupsMinus" ${state.solverDivGroups <= 1 ? "disabled" : ""}>−</button>
-              <span class="control-val-display">${state.solverDivGroups}</span>
-              <button type="button" class="step-btn" id="btnDivGroupsPlus">+</button>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+            <div class="tot-part-circle ${partIsUnknown ? "unknown-circle" : "known-circle"}">
+              ${partMirrorDisplay}
             </div>
-          </div>
-
-          <!-- Resum automàtic del tauler de blocs -->
-          <div class="area-meter-wrap" style="background:var(--primary-light); border-color:var(--primary);">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; font-weight:800;">
-              <span>🧮 Total dels blocs al tauler: <strong style="font-size:1.15rem; color:var(--primary);">${blocksTotal}</strong></span>
-              ${dividedVal !== null ? `
-                <span style="background:var(--gold-light); color:#92400E; padding:0.2rem 0.65rem; border-radius:999px; border:1px solid var(--gold);">
-                  ➗ Repartit en ${state.solverDivGroups} parts iguals = <strong>${dividedVal}</strong> cadascuna
-                </span>
-              ` : ""}
-            </div>
+            <div class="tot-part-purple-title" style="font-size:0.92rem;">PART</div>
           </div>
         </div>
 
-        <!-- DRETA: QUADERN DE PASSOS D'OPERACIÓ (MÈTODE DUA PAS A PAS) -->
+        <!-- Clau horitzontal inferior ⏟ per al número de parts -->
+        <div style="display:flex; flex-direction:column; align-items:center; margin-top:0.2rem;">
+          <svg viewBox="0 0 300 28" style="width:100%; max-width:290px; height:26px; display:block;">
+            <path d="M 15 4 Q 15 15 30 15 L 135 15 Q 150 15 150 26 Q 150 15 165 15 L 270 15 Q 285 15 285 4"
+                  fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <div style="display:flex; align-items:center; gap:0.45rem; margin-top:0.15rem;">
+            ${braceContent}
+            <span class="tot-part-purple-title" style="font-size:0.95rem;">${org.braceLabel || ""}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="problem-solver-grid">
+        <!-- COLUMNA ESQUERRA: 1. SELECCIÓ DE L'ESQUEMA TEÒRIC TOT - PART DEL PDF -->
         <div class="solver-panel-card">
           <div class="panel-header-bar">
-            <span class="panel-title">📝 2. Quadern d'Operacions Pas a Pas</span>
+            <span class="panel-title">🧭 Pas 1: Tria l'Esquema de l'Organitzador (TOT - PART)</span>
           </div>
 
-          <p style="font-size:0.88rem; color:var(--text-muted);">
-            Pots provar les operacions del problema pas a pas aquí abans d'escriure la resposta final:
-          </p>
+          <div class="organizer-selector-bar" role="group" aria-label="Models d'organitzador de problemes">
+            <button type="button" class="organizer-type-btn ${activeModel === "suma" ? "active" : ""}" data-org-model="suma">
+              ➕ SUMA
+            </button>
+            <button type="button" class="organizer-type-btn ${activeModel === "resta" ? "active" : ""}" data-org-model="resta">
+              ➖ RESTA
+            </button>
+            <button type="button" class="organizer-type-btn ${activeModel === "multiplicacio" ? "active" : ""}" data-org-model="multiplicacio">
+              ✖️ MULTIPLICACIÓ
+            </button>
+            <button type="button" class="organizer-type-btn ${activeModel === "divisio_partitiva" ? "active" : ""}" data-org-model="divisio_partitiva">
+              ➗ DIV. PARTITIVA
+            </button>
+            <button type="button" class="organizer-type-btn ${activeModel === "divisio_quotativa" ? "active" : ""}" data-org-model="divisio_quotativa">
+              📦 DIV. QUOTATIVA
+            </button>
+          </div>
 
-          <!-- PAS 1 -->
-          <div>
-            <label style="font-size:0.84rem; font-weight:800; color:var(--primary); display:block; margin-bottom:0.25rem;">
-              1️⃣ Primera operació:
-            </label>
-            <div class="step-calc-row">
-              <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" />
-              <select id="step1Op" class="step-calc-select" aria-label="Operació pas 1">
-                <option value="+" ${state.step1.op === "+" ? "selected" : ""}>➕</option>
-                <option value="-" ${state.step1.op === "-" ? "selected" : ""}>➖</option>
-                <option value="*" ${state.step1.op === "*" ? "selected" : ""}>✖️</option>
-                <option value="/" ${state.step1.op === "/" ? "selected" : ""}>➗</option>
+          <div style="padding:0.45rem 0.75rem; border-radius:8px; font-size:0.86rem; font-weight:800; text-align:center;
+                      background:${matchesProblemModel ? "var(--emerald-light)" : "var(--gold-light)"};
+                      color:${matchesProblemModel ? "var(--emerald)" : "#92400E"};
+                      border:1px solid ${matchesProblemModel ? "var(--emerald)" : "var(--gold)"};">
+            ${matchesProblemModel
+              ? "✅ Aquest és exactament l'esquema TOT - PART d'aquest problema!"
+              : "💡 Observa quines dades coneixem (✓) i quina ens demanen (?) per triar l'esquema adequat."}
+          </div>
+
+          ${renderTotPartReferenceDiagramHTML(activeModel)}
+        </div>
+
+        <!-- COLUMNA DRETA: 2. ORGANITZADOR INTERACTIU AMB LES DADES DEL PROBLEMA + OPERACIÓ -->
+        <div class="solver-panel-card">
+          <div class="panel-header-bar">
+            <span class="panel-title">✍️ Pas 2: Col·loca les Dades a l'Organitzador i Resol</span>
+            <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
+              🪄 Col·loca les dades als cercles
+            </button>
+          </div>
+
+          <div class="tot-part-sheet">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+              <div class="tot-part-purple-sub">${org.totLabel || ""}</div>
+              <div class="tot-part-purple-title" style="margin-bottom:0.2rem;">TOT</div>
+              <div class="tot-part-circle ${totIsUnknown ? "unknown-circle" : "known-circle"}">
+                ${totNodeContent}
+              </div>
+
+              ${interactiveBottomHTML}
+            </div>
+          </div>
+
+          <!-- CAIXA D'OPERACIÓ (COM A LA PART INFERIOR DEL PDF) -->
+          <div class="tot-part-operation-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem;">
+              <strong style="font-size:0.95rem; color:#0F172A;">🧮 Operació del problema:</strong>
+              <span class="tot-part-result-pill">
+                🧡 El resultat descobreix el valor de <strong>?</strong>
+              </span>
+            </div>
+
+            <div class="tot-part-op-equation">
+              <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" aria-label="Primer número de l'operació" />
+              <select id="step1Op" class="step-calc-select" aria-label="Símbol de l'operació">
+                <option value="+" ${state.step1.op === "+" ? "selected" : ""}>+</option>
+                <option value="-" ${state.step1.op === "-" ? "selected" : ""}>−</option>
+                <option value="*" ${state.step1.op === "*" ? "selected" : ""}>×</option>
+                <option value="/" ${state.step1.op === "/" ? "selected" : ""}>:</option>
               </select>
-              <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" />
+              <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" aria-label="Segon número de l'operació" />
               <span style="font-weight:900;">=</span>
-              <span class="step-calc-result" id="step1ResBadge">${res1 !== null ? res1 : "?"}</span>
-              ${res1 !== null ? `
-                <button type="button" class="tool-btn" id="btnUseStep1InStep2" style="font-size:0.78rem; padding:0.25rem 0.5rem;" title="Baixa aquest resultat al Pas 2">
-                  ⤵️ Baixa al Pas 2
-                </button>
-              ` : ""}
-            </div>
-          </div>
-
-          <!-- PAS 2 -->
-          <div>
-            <label style="font-size:0.84rem; font-weight:800; color:var(--primary); display:block; margin-bottom:0.25rem;">
-              2️⃣ Segona operació (si el problema té més d'un pas):
-            </label>
-            <div class="step-calc-row">
-              <input type="number" id="step2A" class="step-calc-input" placeholder="Núm 1" value="${state.step2.a}" />
-              <select id="step2Op" class="step-calc-select" aria-label="Operació pas 2">
-                <option value="+" ${state.step2.op === "+" ? "selected" : ""}>➕</option>
-                <option value="-" ${state.step2.op === "-" ? "selected" : ""}>➖</option>
-                <option value="*" ${state.step2.op === "*" ? "selected" : ""}>✖️</option>
-                <option value="/" ${state.step2.op === "/" ? "selected" : ""}>➗</option>
-              </select>
-              <input type="number" id="step2B" class="step-calc-input" placeholder="Núm 2" value="${state.step2.b}" />
-              <span style="font-weight:900;">=</span>
-              <span class="step-calc-result" id="step2ResBadge">${res2 !== null ? res2 : "?"}</span>
-            </div>
-          </div>
-
-          <!-- RESPOSTA FINAL DEL PROBLEMA -->
-          <div class="symbolic-answer-zone" style="margin-top:auto; flex-direction:column; align-items:stretch; gap:0.65rem;">
-            <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0.6rem;">
-              <label for="ansProblemNumInput" class="answer-zone-prompt">🎯 Resposta final:</label>
-              <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:110px;" placeholder="?" value="${prevProbInput}" />
-              <strong style="color:var(--primary);">${ch.unitLabel || ""}</strong>
-            </div>
-
-            <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:0.45rem;">
-              <button type="button" class="tool-btn" id="btnCopyBlocksToFinal" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
-                🪄 Passa del tauler de blocs (${dividedVal !== null ? dividedVal : blocksTotal})
-              </button>
-              ${res2 !== null ? `
-                <button type="button" class="tool-btn" id="btnCopyStep2ToFinal" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
-                  🪄 Passa el resultat del Pas 2 (${res2})
-                </button>
-              ` : res1 !== null ? `
-                <button type="button" class="tool-btn" id="btnCopyStep1ToFinal" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
-                  🪄 Passa el resultat del Pas 1 (${res1})
-                </button>
-              ` : ""}
+              <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:105px; border-color:#EA580C;" placeholder="?" value="${prevProbInput || (res1 !== null ? res1 : "")}" aria-label="Resultat final del problema" />
+              <strong style="color:#7E22CE; font-size:1.05rem;">${ch.unitLabel || ""}</strong>
             </div>
           </div>
         </div>
@@ -1309,16 +1405,25 @@
         feedbackMsg = `🔍 ${userVal} no és la quantitat exacta. Prem el botó '🪄 Reparteix els ${ch.totalQuantity} dins de les parts' per veure quant val cada part!`;
       }
     } else if (ch.type === "general_problem") {
-      const userVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
+      let userVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
+      const calcVal = computeStepResult(state.step1);
+      if (isNaN(userVal) && calcVal !== null) {
+        userVal = calcVal;
+        const ansEl = document.getElementById("ansProblemNumInput");
+        if (ansEl) ansEl.value = userVal;
+      }
       if (isNaN(userVal)) {
-        showFeedbackBanner(false, "✍️ Escriu el resultat a la casella de 'Resposta final' abans de comprovar!");
+        showFeedbackBanner(false, "✍️ Completa l'operació o escriu el resultat a la casella abans de comprovar!");
         return;
       }
       if (Math.abs(userVal - ch.targetNumber) < 0.01) {
         isCorrect = true;
-        feedbackMsg = `🌟 Problema resolt magistralment! El resultat és ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+        const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
+        const opSymDisplay = ch.expectedOp === "*" ? "×" : ch.expectedOp === "/" ? ":" : ch.expectedOp;
+        feedbackMsg = `🌟 Problema resolt amb l'esquema de ${modelInfo.title}! ${ch.num1} ${opSymDisplay} ${ch.num2} = ${ch.targetNumber} ${ch.unitLabel || ""}.`;
       } else {
-        feedbackMsg = `🔍 ${userVal} no és el resultat final correcte. Revisa el Model de Barres, posa els blocs de dades al tauler o consulta les 3 pistes graduades!`;
+        const modelInfo = ORGANIZER_MODELS_INFO[ch.organizerType] || { title: "TOT - PART" };
+        feedbackMsg = `🔍 ${userVal} no és el resultat exacte. Fixa't que és un problema de ${modelInfo.title}: prem "🪄 Col·loca les dades als cercles" o consulta les pistes graduades!`;
       }
     }
 
@@ -1956,134 +2061,69 @@
         return;
       }
 
-      // 8. Controls del Tauler Manipulatiu de Resolució de Problemes (fora de fraccions)
-      const addBlockBtn = e.target.closest("[data-add-block]");
-      if (addBlockBtn) {
+      // 8. Controls de l'Organitzador Gràfic TOT - PART (Mòdul 6: Resolució de Problemes)
+      const orgModelBtn = e.target.closest("[data-org-model]");
+      if (orgModelBtn) {
         playMagicSound("click");
-        const val = Number(addBlockBtn.dataset.addBlock);
-        if (!isNaN(val)) {
-          state.solverBlocks.push(val);
-          refreshCurrentActiveView();
+        const modelKey = orgModelBtn.dataset.orgModel;
+        state.selectedOrganizerType = modelKey;
+        if (ORGANIZER_MODELS_INFO[modelKey]) {
+          state.step1.op = ORGANIZER_MODELS_INFO[modelKey].opSymbol;
         }
-        return;
-      }
-
-      const rmBlockBtn = e.target.closest("[data-remove-block]");
-      if (rmBlockBtn) {
-        playMagicSound("click");
-        const idx = Number(rmBlockBtn.dataset.removeBlock);
-        state.solverBlocks.splice(idx, 1);
         refreshCurrentActiveView();
         return;
       }
 
-      if (e.target.closest("#btnAddCustomBlocks")) {
-        playMagicSound("click");
-        const val = parseFloat(document.getElementById("customBlockValInput")?.value || "0");
-        const times = Math.min(24, Math.max(1, parseInt(document.getElementById("customBlockTimesInput")?.value || "1", 10)));
-        if (!isNaN(val) && val !== 0) {
-          for (let i = 0; i < times; i++) {
-            state.solverBlocks.push(val);
-          }
-          refreshCurrentActiveView();
-        }
-        return;
-      }
-
-      if (e.target.closest("#btnLoadSuggestedBlocks")) {
+      if (e.target.closest("#btnAutoFillOrganizer")) {
         playMagicSound("spell");
         const ch = getCurrentChallenge();
-        if (ch && Array.isArray(ch.suggestedBlocks)) {
-          state.solverBlocks = [...ch.suggestedBlocks];
+        if (ch && ch.organizerData) {
+          state.selectedOrganizerType = ch.organizerType || "suma";
+          const od = ch.organizerData;
+          state.orgInputs = {
+            tot: od.totVal !== "?" && od.totVal !== undefined ? String(od.totVal) : "",
+            part1: od.part1Val !== "?" && od.part1Val !== undefined ? String(od.part1Val) : "",
+            part2: od.part2Val !== "?" && od.part2Val !== undefined ? String(od.part2Val) : "",
+            part: od.partVal !== "?" && od.partVal !== undefined ? String(od.partVal) : "",
+            brace: od.braceVal !== "?" && od.braceVal !== undefined ? String(od.braceVal) : ""
+          };
+          state.step1 = {
+            a: String(ch.num1 ?? ""),
+            op: ch.expectedOp || "+",
+            b: String(ch.num2 ?? "")
+          };
           refreshCurrentActiveView();
+          const ansEl = document.getElementById("ansProblemNumInput");
+          const r1 = computeStepResult(state.step1);
+          if (ansEl && r1 !== null) ansEl.value = r1;
         }
-        return;
-      }
-
-      if (e.target.closest("#btnClearSolverBlocks")) {
-        playMagicSound("click");
-        state.solverBlocks = [];
-        state.solverDivGroups = 1;
-        refreshCurrentActiveView();
-        return;
-      }
-
-      if (e.target.closest("#btnDivGroupsMinus")) {
-        playMagicSound("click");
-        state.solverDivGroups = Math.max(1, state.solverDivGroups - 1);
-        refreshCurrentActiveView();
-        return;
-      }
-
-      if (e.target.closest("#btnDivGroupsPlus")) {
-        playMagicSound("click");
-        state.solverDivGroups = Math.min(30, state.solverDivGroups + 1);
-        refreshCurrentActiveView();
-        return;
-      }
-
-      if (e.target.closest("#btnToggleBarModelGuide")) {
-        playMagicSound("click");
-        state.showBarModelGuide = !state.showBarModelGuide;
-        refreshCurrentActiveView();
-        return;
-      }
-
-      if (e.target.closest("#btnUseStep1InStep2")) {
-        playMagicSound("spell");
-        const r1 = computeStepResult(state.step1);
-        if (r1 !== null) {
-          state.step2.a = String(r1);
-          refreshCurrentActiveView();
-        }
-        return;
-      }
-
-      if (e.target.closest("#btnCopyBlocksToFinal")) {
-        playMagicSound("spell");
-        const blocksTotal = state.solverBlocks.reduce((acc, v) => acc + v, 0);
-        const valToCopy = state.solverDivGroups > 1
-          ? Math.round((blocksTotal / state.solverDivGroups) * 100) / 100
-          : blocksTotal;
-        const ansEl = document.getElementById("ansProblemNumInput");
-        if (ansEl) ansEl.value = valToCopy;
-        return;
-      }
-
-      if (e.target.closest("#btnCopyStep1ToFinal")) {
-        playMagicSound("spell");
-        const r1 = computeStepResult(state.step1);
-        const ansEl = document.getElementById("ansProblemNumInput");
-        if (ansEl && r1 !== null) ansEl.value = r1;
-        return;
-      }
-
-      if (e.target.closest("#btnCopyStep2ToFinal")) {
-        playMagicSound("spell");
-        const r2 = computeStepResult(state.step2);
-        const ansEl = document.getElementById("ansProblemNumInput");
-        if (ansEl && r2 !== null) ansEl.value = r2;
         return;
       }
     });
 
-    // Actualització en temps real del Quadern d'Operacions Pas a Pas (Pas 1 i Pas 2)
+    // Actualització en temps real dels cercles de l'Organitzador TOT-PART i de la Caixa d'Operació
     function handleStepCalcChange(e) {
       const id = e.target.id;
+      if (["orgTotInput", "orgPart1Input", "orgPart2Input", "orgPartInput", "orgBraceInput"].includes(id)) {
+        if (!state.orgInputs) state.orgInputs = { tot: "", part1: "", part2: "", part: "", brace: "" };
+        if (id === "orgTotInput") state.orgInputs.tot = e.target.value;
+        if (id === "orgPart1Input") state.orgInputs.part1 = e.target.value;
+        if (id === "orgPart2Input") state.orgInputs.part2 = e.target.value;
+        if (id === "orgPartInput") state.orgInputs.part = e.target.value;
+        if (id === "orgBraceInput") state.orgInputs.brace = e.target.value;
+        return;
+      }
+
       if (["step1A", "step1Op", "step1B", "step2A", "step2Op", "step2B"].includes(id)) {
         state.step1.a = document.getElementById("step1A")?.value ?? state.step1.a;
         state.step1.op = document.getElementById("step1Op")?.value ?? state.step1.op;
         state.step1.b = document.getElementById("step1B")?.value ?? state.step1.b;
-        state.step2.a = document.getElementById("step2A")?.value ?? state.step2.a;
-        state.step2.op = document.getElementById("step2Op")?.value ?? state.step2.op;
-        state.step2.b = document.getElementById("step2B")?.value ?? state.step2.b;
 
         const r1 = computeStepResult(state.step1);
-        const r2 = computeStepResult(state.step2);
-        const b1 = document.getElementById("step1ResBadge");
-        const b2 = document.getElementById("step2ResBadge");
-        if (b1) b1.textContent = r1 !== null ? r1 : "?";
-        if (b2) b2.textContent = r2 !== null ? r2 : "?";
+        const ansEl = document.getElementById("ansProblemNumInput");
+        if (ansEl && r1 !== null) {
+          ansEl.value = r1;
+        }
       }
     }
     document.querySelector(".app-container").addEventListener("input", handleStepCalcChange);

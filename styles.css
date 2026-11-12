@@ -1566,6 +1566,213 @@ body.colorblind-mode .wall-brick.active {
 }
 
 /* ==========================================================================
+   ORGANITZADOR GRÀFIC TOT - PART (MODEL DEL PDF: SUMA, RESTA, MULT, DIVISIÓ)
+   ========================================================================== */
+.organizer-selector-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+}
+
+.organizer-type-btn {
+  flex: 1 1 auto;
+  min-width: 125px;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.organizer-type-btn:hover {
+  border-color: #7C3AED;
+  transform: translateY(-1px);
+}
+
+.organizer-type-btn.active {
+  background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+  color: #FFFFFF;
+  border-color: #4C1D95;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.25);
+}
+
+.yellow-rule-sticky {
+  background: #FFF9C4;
+  border: 2px solid #FBC02D;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  color: #1E293B;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  font-size: 0.92rem;
+}
+
+.yellow-rule-sticky ul {
+  margin: 0.3rem 0 0 1.2rem;
+  padding: 0;
+}
+
+.yellow-rule-sticky li {
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.tot-part-sheet {
+  background: #FFFFFF;
+  color: #1E293B;
+  border: 2px solid #CBD5E1;
+  border-radius: 16px;
+  padding: 1.15rem;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.tot-part-header-banner {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.tot-part-header-banner h4 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  color: #0F172A;
+  margin: 0;
+}
+
+.tot-part-header-banner p {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #475569;
+  margin: 0.1rem 0 0 0;
+}
+
+.tot-part-purple-title {
+  color: #7E22CE;
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.tot-part-purple-sub {
+  color: #7E22CE;
+  font-weight: 700;
+  font-size: 0.84rem;
+  text-align: center;
+  line-height: 1.15;
+  max-width: 135px;
+}
+
+.tot-part-circle {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  border: 3px solid #1E293B;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+  margin: 0 auto;
+}
+
+.tot-part-circle.small-circle {
+  width: 68px;
+  height: 68px;
+}
+
+.tot-part-circle.unknown-circle {
+  border-color: #DC2626;
+  background: #FEF2F2;
+}
+
+.tot-part-circle.known-circle {
+  border-color: #15803D;
+  background: #F0FDF4;
+}
+
+.tot-part-qmark {
+  color: #DC2626;
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tot-part-check {
+  color: #16A34A;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tot-part-circle-input {
+  width: 64px;
+  height: 38px;
+  border: 2px solid #7E22CE;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #0F172A;
+  background: #FFFFFF;
+}
+
+.tot-part-circle-input:focus {
+  outline: 3px solid rgba(126, 34, 206, 0.3);
+}
+
+.tot-part-ellipsis {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1E293B;
+  letter-spacing: 3px;
+  padding: 0 0.25rem;
+  align-self: center;
+}
+
+.tot-part-operation-card {
+  background: #F8FAFC;
+  border: 2px solid #94A3B8;
+  border-radius: 12px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tot-part-op-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.tot-part-result-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFF7ED;
+  border: 2px solid #EA580C;
+  color: #C2410C;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 0.92rem;
+}
+
+/* ==========================================================================
    IMPRESSIÓ DE FITXA / PERGAMÍ EN PAPER O PDF
    ========================================================================== */
 .print-worksheet-container {
