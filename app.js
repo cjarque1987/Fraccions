@@ -35,6 +35,13 @@
     selectedSymbol: null,           // "<" | "=" | ">"
     showQuantityDistribution: false,
 
+    // Estat del Tauler Manipulatiu de Resolució de Problemes (fora de fraccions)
+    solverBlocks: [],               // Array de números (positius = afegir, negatius = restar/gastar)
+    solverDivGroups: 1,             // Nombre de parts iguals per repartir el total dels blocs
+    showBarModelGuide: true,        // Mostra o amaga el Model de Barres Part-Tot
+    step1: { a: "", op: "+", b: "" },
+    step2: { a: "", op: "+", b: "" },
+
     // Estat de la Forja Lliure
     freeLeft: { num: 1, den: 2, maxUnits: 1 },
     freeRight: { num: 2, den: 4, maxUnits: 1 },
@@ -667,6 +674,11 @@
     state.attemptsLeft = 2;
     state.selectedSymbol = null;
     state.showQuantityDistribution = false;
+    state.solverBlocks = [];
+    state.solverDivGroups = 1;
+    state.showBarModelGuide = true;
+    state.step1 = { a: "", op: "+", b: "" };
+    state.step2 = { a: "", op: "+", b: "" };
     if (ch.defaultShape) {
       state.currentShape = ch.defaultShape;
     }
@@ -770,12 +782,229 @@
     document.getElementById("challengeLore").textContent = ch.lore ? `🛒 Situació quotidiana: ${ch.lore}` : "";
     document.getElementById("challengeInstruction").innerHTML = ch.instruction;
 
-    // Botons de forma activa
+    // Botons de forma activa (s'amaguen si estem a Resolució de Problemes fora de fraccions)
+    const shapeSelectorGroup = document.querySelector(".shape-selector-group");
+    if (shapeSelectorGroup) {
+      shapeSelectorGroup.style.display = ch.type === "general_problem" ? "none" : "flex";
+    }
     document.querySelectorAll(".shape-btn").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.shape === state.currentShape);
     });
 
     renderInteractiveStageOnly();
+  }
+
+  function computeStepResult(stepObj) {
+    const a = parseFloat(stepObj.a);
+    const b = parseFloat(stepObj.b);
+    if (isNaN(a) || isNaN(b)) return null;
+    if (stepObj.op === "+") return Math.round((a + b) * 100) / 100;
+    if (stepObj.op === "-") return Math.round((a - b) * 100) / 100;
+    if (stepObj.op === "*") return Math.round((a * b) * 100) / 100;
+    if (stepObj.op === "/") return b !== 0 ? Math.round((a / b) * 100) / 100 : null;
+    return null;
+  }
+
+  function renderGeneralProblemStageHTML(ch, prevProbInput) {
+    // 1. Model de Barres Part-Tot
+    let barModelHTML = "";
+    if (ch.barModel && state.showBarModelGuide) {
+      const totalSum = ch.barModel.parts.reduce((acc, p) => acc + (p.value || 10), 0);
+      const partsHTML = ch.barModel.parts.map(p => {
+        const widthPct = Math.max(18, Math.round(((p.value || 10) / totalSum) * 100));
+        return `
+          <div class="bar-model-part ${p.isUnknown ? "unknown-part" : ""}"
+               style="flex: ${widthPct}; background: ${p.color};">
+            ${p.label}
+          </div>
+        `;
+      }).join("");
+
+      barModelHTML = `
+        <div class="bar-model-box">
+          <div style="font-size:0.82rem; font-weight:800; color:var(--text-muted); margin-bottom:0.35rem;">
+            📊 Esquema Visual del Model de Barres (Relació Part - Tot):
+          </div>
+          <div class="bar-model-total-bar">${ch.barModel.totalLabel}</div>
+          <div class="bar-model-parts-row">${partsHTML}</div>
+        </div>
+      `;
+    }
+
+    // 2. Safata de Blocs i Bitllets Manipulatius
+    const blocksTotal = state.solverBlocks.reduce((acc, v) => acc + v, 0);
+    const dividedVal = state.solverDivGroups > 1
+      ? Math.round((blocksTotal / state.solverDivGroups) * 100) / 100
+      : null;
+
+    const blocksChipsHTML = state.solverBlocks.length === 0
+      ? `<span style="color:var(--text-muted); font-size:0.9rem; font-style:italic;">Fes clic als botons de sota o a "🪄 Carrega les dades" per posar blocs i bitllets al tauler (fes clic a un bloc per treure'l).</span>`
+      : state.solverBlocks.map((val, idx) => `
+          <button type="button" class="math-block-chip ${val < 0 ? "negative-block" : ""}"
+                  data-remove-block="${idx}" title="Fes clic per eliminar aquest bloc">
+            ${val >= 0 ? `+${val}` : val} ✖
+          </button>
+        `).join("");
+
+    // 3. Resultats dels passos 1 i 2
+    const res1 = computeStepResult(state.step1);
+    const res2 = computeStepResult(state.step2);
+
+    return `
+      <div class="problem-solver-grid">
+        <!-- ESQUERRA: MODEL DE BARRES + BLOCS I BITLLETS MANIPULATIUS -->
+        <div class="solver-panel-card">
+          <div class="panel-header-bar">
+            <span class="panel-title">🧱 1. Representació Manipulativa (Model de Barres i Blocs)</span>
+            <button type="button" class="tool-btn" id="btnToggleBarModelGuide" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
+              📊 ${state.showBarModelGuide ? "Amaga esquema" : "Mostra esquema"}
+            </button>
+          </div>
+
+          ${barModelHTML}
+
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.4rem;">
+              <strong style="font-size:0.9rem;">🧰 Tauler de Blocs i Bitllets:</strong>
+              <div style="display:flex; gap:0.4rem;">
+                <button type="button" class="tool-btn" id="btnLoadSuggestedBlocks" style="font-size:0.8rem; padding:0.28rem 0.6rem;">
+                  🪄 Carrega les dades del problema
+                </button>
+                <button type="button" class="tool-btn" id="btnClearSolverBlocks" style="font-size:0.8rem; padding:0.28rem 0.6rem;">
+                  🗑️ Buida blocs
+                </button>
+              </div>
+            </div>
+
+            <div class="manipulative-blocks-tray">
+              ${blocksChipsHTML}
+            </div>
+          </div>
+
+          <!-- Botons ràpids per afegir bitllets/blocs i repetir/repartir -->
+          <div class="manipulative-controls-row" style="justify-content:flex-start;">
+            <span class="control-pill-label">➕ Afegeix ràpid:</span>
+            <button type="button" class="spell-chip-btn" data-add-block="50">+50</button>
+            <button type="button" class="spell-chip-btn" data-add-block="20">+20</button>
+            <button type="button" class="spell-chip-btn" data-add-block="10">+10</button>
+            <button type="button" class="spell-chip-btn" data-add-block="5">+5</button>
+            <button type="button" class="spell-chip-btn" data-add-block="1">+1</button>
+            <button type="button" class="spell-chip-btn" style="border-color:var(--ruby); color:var(--ruby);" data-add-block="-10">−10</button>
+            <button type="button" class="spell-chip-btn" style="border-color:var(--ruby); color:var(--ruby);" data-add-block="-5">−5</button>
+            <button type="button" class="spell-chip-btn" style="border-color:var(--ruby); color:var(--ruby);" data-add-block="-1">−1</button>
+          </div>
+
+          <!-- Afegir bloc personalitzat o repetir (Multiplicació) i repartir (Divisió) -->
+          <div class="manipulative-controls-row" style="justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:0.35rem; flex-wrap:wrap;">
+              <input type="number" id="customBlockValInput" class="step-calc-input" style="width:66px;" placeholder="Valor" value="12" />
+              <span style="font-weight:800;">×</span>
+              <input type="number" id="customBlockTimesInput" class="step-calc-input" style="width:54px;" placeholder="Cops" value="1" min="1" max="20" />
+              <button type="button" class="tool-btn" id="btnAddCustomBlocks" style="padding:0.35rem 0.65rem;">
+                ➕ Posa bloc(s)
+              </button>
+            </div>
+
+            <div class="control-pill-group">
+              <span class="control-pill-label">➗ Reparteix en grups:</span>
+              <button type="button" class="step-btn" id="btnDivGroupsMinus" ${state.solverDivGroups <= 1 ? "disabled" : ""}>−</button>
+              <span class="control-val-display">${state.solverDivGroups}</span>
+              <button type="button" class="step-btn" id="btnDivGroupsPlus">+</button>
+            </div>
+          </div>
+
+          <!-- Resum automàtic del tauler de blocs -->
+          <div class="area-meter-wrap" style="background:var(--primary-light); border-color:var(--primary);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; font-weight:800;">
+              <span>🧮 Total dels blocs al tauler: <strong style="font-size:1.15rem; color:var(--primary);">${blocksTotal}</strong></span>
+              ${dividedVal !== null ? `
+                <span style="background:var(--gold-light); color:#92400E; padding:0.2rem 0.65rem; border-radius:999px; border:1px solid var(--gold);">
+                  ➗ Repartit en ${state.solverDivGroups} parts iguals = <strong>${dividedVal}</strong> cadascuna
+                </span>
+              ` : ""}
+            </div>
+          </div>
+        </div>
+
+        <!-- DRETA: QUADERN DE PASSOS D'OPERACIÓ (MÈTODE DUA PAS A PAS) -->
+        <div class="solver-panel-card">
+          <div class="panel-header-bar">
+            <span class="panel-title">📝 2. Quadern d'Operacions Pas a Pas</span>
+          </div>
+
+          <p style="font-size:0.88rem; color:var(--text-muted);">
+            Pots provar les operacions del problema pas a pas aquí abans d'escriure la resposta final:
+          </p>
+
+          <!-- PAS 1 -->
+          <div>
+            <label style="font-size:0.84rem; font-weight:800; color:var(--primary); display:block; margin-bottom:0.25rem;">
+              1️⃣ Primera operació:
+            </label>
+            <div class="step-calc-row">
+              <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" />
+              <select id="step1Op" class="step-calc-select" aria-label="Operació pas 1">
+                <option value="+" ${state.step1.op === "+" ? "selected" : ""}>➕</option>
+                <option value="-" ${state.step1.op === "-" ? "selected" : ""}>➖</option>
+                <option value="*" ${state.step1.op === "*" ? "selected" : ""}>✖️</option>
+                <option value="/" ${state.step1.op === "/" ? "selected" : ""}>➗</option>
+              </select>
+              <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" />
+              <span style="font-weight:900;">=</span>
+              <span class="step-calc-result" id="step1ResBadge">${res1 !== null ? res1 : "?"}</span>
+              ${res1 !== null ? `
+                <button type="button" class="tool-btn" id="btnUseStep1InStep2" style="font-size:0.78rem; padding:0.25rem 0.5rem;" title="Baixa aquest resultat al Pas 2">
+                  ⤵️ Baixa al Pas 2
+                </button>
+              ` : ""}
+            </div>
+          </div>
+
+          <!-- PAS 2 -->
+          <div>
+            <label style="font-size:0.84rem; font-weight:800; color:var(--primary); display:block; margin-bottom:0.25rem;">
+              2️⃣ Segona operació (si el problema té més d'un pas):
+            </label>
+            <div class="step-calc-row">
+              <input type="number" id="step2A" class="step-calc-input" placeholder="Núm 1" value="${state.step2.a}" />
+              <select id="step2Op" class="step-calc-select" aria-label="Operació pas 2">
+                <option value="+" ${state.step2.op === "+" ? "selected" : ""}>➕</option>
+                <option value="-" ${state.step2.op === "-" ? "selected" : ""}>➖</option>
+                <option value="*" ${state.step2.op === "*" ? "selected" : ""}>✖️</option>
+                <option value="/" ${state.step2.op === "/" ? "selected" : ""}>➗</option>
+              </select>
+              <input type="number" id="step2B" class="step-calc-input" placeholder="Núm 2" value="${state.step2.b}" />
+              <span style="font-weight:900;">=</span>
+              <span class="step-calc-result" id="step2ResBadge">${res2 !== null ? res2 : "?"}</span>
+            </div>
+          </div>
+
+          <!-- RESPOSTA FINAL DEL PROBLEMA -->
+          <div class="symbolic-answer-zone" style="margin-top:auto; flex-direction:column; align-items:stretch; gap:0.65rem;">
+            <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0.6rem;">
+              <label for="ansProblemNumInput" class="answer-zone-prompt">🎯 Resposta final:</label>
+              <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:110px;" placeholder="?" value="${prevProbInput}" />
+              <strong style="color:var(--primary);">${ch.unitLabel || ""}</strong>
+            </div>
+
+            <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:0.45rem;">
+              <button type="button" class="tool-btn" id="btnCopyBlocksToFinal" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
+                🪄 Passa del tauler de blocs (${dividedVal !== null ? dividedVal : blocksTotal})
+              </button>
+              ${res2 !== null ? `
+                <button type="button" class="tool-btn" id="btnCopyStep2ToFinal" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
+                  🪄 Passa el resultat del Pas 2 (${res2})
+                </button>
+              ` : res1 !== null ? `
+                <button type="button" class="tool-btn" id="btnCopyStep1ToFinal" style="font-size:0.8rem; padding:0.3rem 0.65rem;">
+                  🪄 Passa el resultat del Pas 1 (${res1})
+                </button>
+              ` : ""}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   function renderInteractiveStageOnly() {
@@ -933,6 +1162,8 @@
           </div>
         </div>
       `;
+    } else if (ch.type === "general_problem") {
+      stage.innerHTML = renderGeneralProblemStageHTML(ch, prevProbInput);
     }
   }
 
@@ -1076,6 +1307,18 @@
         feedbackMsg = `🌟 Fantàstic! El resultat exacte és ${ch.targetNumber} ${ch.unitLabel || ""}.`;
       } else {
         feedbackMsg = `🔍 ${userVal} no és la quantitat exacta. Prem el botó '🪄 Reparteix els ${ch.totalQuantity} dins de les parts' per veure quant val cada part!`;
+      }
+    } else if (ch.type === "general_problem") {
+      const userVal = parseFloat(document.getElementById("ansProblemNumInput")?.value);
+      if (isNaN(userVal)) {
+        showFeedbackBanner(false, "✍️ Escriu el resultat a la casella de 'Resposta final' abans de comprovar!");
+        return;
+      }
+      if (Math.abs(userVal - ch.targetNumber) < 0.01) {
+        isCorrect = true;
+        feedbackMsg = `🌟 Problema resolt magistralment! El resultat és ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+      } else {
+        feedbackMsg = `🔍 ${userVal} no és el resultat final correcte. Revisa el Model de Barres, posa els blocs de dades al tauler o consulta les 3 pistes graduades!`;
       }
     }
 
@@ -1342,7 +1585,7 @@
   }
 
   function updateNavProgressBadges() {
-    ["identificacio", "comparacio", "equivalencia", "transformacio", "problemes"].forEach(modKey => {
+    ["identificacio", "comparacio", "equivalencia", "transformacio", "problemes", "resolucio_problemes"].forEach(modKey => {
       const badge = document.getElementById(`prog-${modKey}`);
       if (badge) {
         badge.textContent = `${getCompletedCountForModule(modKey)}/15`;
@@ -1376,7 +1619,7 @@
     const lvlSel = document.getElementById("printLevelSelect").value;
 
     const modulesToPrint = modSel === "all"
-      ? ["identificacio", "comparacio", "equivalencia", "transformacio", "problemes"]
+      ? ["identificacio", "comparacio", "equivalencia", "transformacio", "problemes", "resolucio_problemes"]
       : [modSel === "current" ? (CHALLENGES_DATA[state.currentModule] ? state.currentModule : "identificacio") : modSel];
 
     const levelsToPrint = lvlSel === "all"
@@ -1388,7 +1631,8 @@
       comparacio: "2. Comparació de Fraccions",
       equivalencia: "3. Fraccions Equivalents",
       transformacio: "4. Transformació: Amplificació, Simplificació i Nombres Mixtos",
-      problemes: "5. Problemes Quotidians i al Supermercat"
+      problemes: "5. Problemes de Fraccions al Supermercat",
+      resolucio_problemes: "6. Resolució de Problemes (Operacions fora de fraccions)"
     };
 
     let itemsHTML = "";
@@ -1709,8 +1953,141 @@
           state.wallActive[den] = [...arr, idx].sort((a, b) => a - b);
         }
         renderFractionWall();
+        return;
+      }
+
+      // 8. Controls del Tauler Manipulatiu de Resolució de Problemes (fora de fraccions)
+      const addBlockBtn = e.target.closest("[data-add-block]");
+      if (addBlockBtn) {
+        playMagicSound("click");
+        const val = Number(addBlockBtn.dataset.addBlock);
+        if (!isNaN(val)) {
+          state.solverBlocks.push(val);
+          refreshCurrentActiveView();
+        }
+        return;
+      }
+
+      const rmBlockBtn = e.target.closest("[data-remove-block]");
+      if (rmBlockBtn) {
+        playMagicSound("click");
+        const idx = Number(rmBlockBtn.dataset.removeBlock);
+        state.solverBlocks.splice(idx, 1);
+        refreshCurrentActiveView();
+        return;
+      }
+
+      if (e.target.closest("#btnAddCustomBlocks")) {
+        playMagicSound("click");
+        const val = parseFloat(document.getElementById("customBlockValInput")?.value || "0");
+        const times = Math.min(24, Math.max(1, parseInt(document.getElementById("customBlockTimesInput")?.value || "1", 10)));
+        if (!isNaN(val) && val !== 0) {
+          for (let i = 0; i < times; i++) {
+            state.solverBlocks.push(val);
+          }
+          refreshCurrentActiveView();
+        }
+        return;
+      }
+
+      if (e.target.closest("#btnLoadSuggestedBlocks")) {
+        playMagicSound("spell");
+        const ch = getCurrentChallenge();
+        if (ch && Array.isArray(ch.suggestedBlocks)) {
+          state.solverBlocks = [...ch.suggestedBlocks];
+          refreshCurrentActiveView();
+        }
+        return;
+      }
+
+      if (e.target.closest("#btnClearSolverBlocks")) {
+        playMagicSound("click");
+        state.solverBlocks = [];
+        state.solverDivGroups = 1;
+        refreshCurrentActiveView();
+        return;
+      }
+
+      if (e.target.closest("#btnDivGroupsMinus")) {
+        playMagicSound("click");
+        state.solverDivGroups = Math.max(1, state.solverDivGroups - 1);
+        refreshCurrentActiveView();
+        return;
+      }
+
+      if (e.target.closest("#btnDivGroupsPlus")) {
+        playMagicSound("click");
+        state.solverDivGroups = Math.min(30, state.solverDivGroups + 1);
+        refreshCurrentActiveView();
+        return;
+      }
+
+      if (e.target.closest("#btnToggleBarModelGuide")) {
+        playMagicSound("click");
+        state.showBarModelGuide = !state.showBarModelGuide;
+        refreshCurrentActiveView();
+        return;
+      }
+
+      if (e.target.closest("#btnUseStep1InStep2")) {
+        playMagicSound("spell");
+        const r1 = computeStepResult(state.step1);
+        if (r1 !== null) {
+          state.step2.a = String(r1);
+          refreshCurrentActiveView();
+        }
+        return;
+      }
+
+      if (e.target.closest("#btnCopyBlocksToFinal")) {
+        playMagicSound("spell");
+        const blocksTotal = state.solverBlocks.reduce((acc, v) => acc + v, 0);
+        const valToCopy = state.solverDivGroups > 1
+          ? Math.round((blocksTotal / state.solverDivGroups) * 100) / 100
+          : blocksTotal;
+        const ansEl = document.getElementById("ansProblemNumInput");
+        if (ansEl) ansEl.value = valToCopy;
+        return;
+      }
+
+      if (e.target.closest("#btnCopyStep1ToFinal")) {
+        playMagicSound("spell");
+        const r1 = computeStepResult(state.step1);
+        const ansEl = document.getElementById("ansProblemNumInput");
+        if (ansEl && r1 !== null) ansEl.value = r1;
+        return;
+      }
+
+      if (e.target.closest("#btnCopyStep2ToFinal")) {
+        playMagicSound("spell");
+        const r2 = computeStepResult(state.step2);
+        const ansEl = document.getElementById("ansProblemNumInput");
+        if (ansEl && r2 !== null) ansEl.value = r2;
+        return;
       }
     });
+
+    // Actualització en temps real del Quadern d'Operacions Pas a Pas (Pas 1 i Pas 2)
+    function handleStepCalcChange(e) {
+      const id = e.target.id;
+      if (["step1A", "step1Op", "step1B", "step2A", "step2Op", "step2B"].includes(id)) {
+        state.step1.a = document.getElementById("step1A")?.value ?? state.step1.a;
+        state.step1.op = document.getElementById("step1Op")?.value ?? state.step1.op;
+        state.step1.b = document.getElementById("step1B")?.value ?? state.step1.b;
+        state.step2.a = document.getElementById("step2A")?.value ?? state.step2.a;
+        state.step2.op = document.getElementById("step2Op")?.value ?? state.step2.op;
+        state.step2.b = document.getElementById("step2B")?.value ?? state.step2.b;
+
+        const r1 = computeStepResult(state.step1);
+        const r2 = computeStepResult(state.step2);
+        const b1 = document.getElementById("step1ResBadge");
+        const b2 = document.getElementById("step2ResBadge");
+        if (b1) b1.textContent = r1 !== null ? r1 : "?";
+        if (b2) b2.textContent = r2 !== null ? r2 : "?";
+      }
+    }
+    document.querySelector(".app-container").addEventListener("input", handleStepCalcChange);
+    document.querySelector(".app-container").addEventListener("change", handleStepCalcChange);
 
     // Netejar el Mur de Fraccions
     document.getElementById("btnClearFractionWall").addEventListener("click", () => {

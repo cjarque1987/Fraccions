@@ -50,12 +50,20 @@ const KINGDOM_RELICS = [
     name: "Carretó d'Or del Supermercat",
     icon: "🛒",
     module: "problemes",
-    reqText: "Resoldre 5 Problemes del Supermercat i Dia a Dia",
+    reqText: "Resoldre 5 Problemes de Fraccions al Supermercat",
+    minCompleted: 5
+  },
+  {
+    id: "relic_solver",
+    name: "Estratega de Problemes",
+    icon: "🧠",
+    module: "resolucio_problemes",
+    reqText: "Resoldre 5 Problemes d'Operacions (fora de fraccions)",
     minCompleted: 5
   },
   {
     id: "relic_crown",
-    name: "Trofeu de les Fraccions Quotidianes",
+    name: "Trofeu de les Matemàtiques Quotidianes",
     icon: "🏆",
     module: "all",
     reqText: "Aconsegueix almenys 45 estrelles",
@@ -1529,6 +1537,353 @@ const CHALLENGES_DATA = {
           "Al matí: 3/8 de 48 = (48 ÷ 8) × 3 = 6 × 3 = 18 magdalenes.",
           "A la tarda: 1/4 de 48 = 48 ÷ 4 = 12 magdalenes (o bé suma 3/8 + 2/8 = 5/8 de 48).",
           "En total s'han venut 18 + 12 = 30 magdalenes!"
+        ]
+      }
+    ]
+  },
+
+  /* ------------------------------------------------------------------------
+     MÒDUL 6 (FORA DE LES FRACCIONS): RESOLUCIÓ DE PROBLEMES D'OPERACIONS
+     (Sumes, restes, multiplicacions, divisions i operacions combinades)
+     ------------------------------------------------------------------------ */
+  resolucio_problemes: {
+    1: [
+      {
+        id: "rp_1_1",
+        title: "El Canvi a la Caixa del Supermercat",
+        lore: "Vas a comprar amb un bitllet de 50 € i pagues dos productes.",
+        instruction: "Al supermercat compres un sac de pinso per al gos que val <strong>18 €</strong> i una capsa de detergent que val <strong>14 €</strong>. Si pagues amb un bitllet de <strong>50 €</strong>, <strong>quants euros et tornaran de canvi?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) de canvi",
+        targetNumber: 18,
+        barModel: {
+          totalLabel: "Bitllet entregat: 50 €",
+          parts: [
+            { label: "Pinso: 18 €", value: 18, color: "#4F46E5" },
+            { label: "Detergent: 14 €", value: 14, color: "#0D9488" },
+            { label: "Canvi: ? €", value: 18, color: "#F59E0B", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [18, 14],
+        hints: [
+          "1r pas (Dades): Gastes 18 € en pinso i 14 € en detergent, i pagues amb 50 €.",
+          "2n pas (Operació 1 - Suma la despesa): 18 + 14 = 32 € gastats en total.",
+          "3r pas (Operació 2 - Resta per trobar el canvi): 50 - 32 = 18 € de canvi!"
+        ]
+      },
+      {
+        id: "rp_1_2",
+        title: "Els Packs d'Ampolles d'Aigua",
+        lore: "Comprem aigua per a la festa esportiva de l'escola.",
+        instruction: "Al carretó del supermercat poses <strong>6 packs</strong> d'aigua amb <strong>6 ampolles a cada pack</strong>, i a més agafes <strong>5 ampolles soltes</strong>. <strong>Quantes ampolles d'aigua portes en total?</strong>",
+        type: "general_problem",
+        unitLabel: "ampolles en total",
+        targetNumber: 41,
+        barModel: {
+          totalLabel: "Total d'ampolles: ? ampolles",
+          parts: [
+            { label: "6 packs × 6 = 36", value: 36, color: "#2563EB" },
+            { label: "5 soltes", value: 5, color: "#10B981" }
+          ]
+        },
+        suggestedBlocks: [6, 6, 6, 6, 6, 6, 5],
+        hints: [
+          "1r pas (Dades): Tens 6 packs iguals de 6 ampolles cadascun, més 5 ampolles soltes.",
+          "2n pas (Multiplicació): Calcula les ampolles dels packs: 6 × 6 = 36 ampolles.",
+          "3r pas (Suma): Afegeix les 5 ampolles soltes: 36 + 5 = 41 ampolles en total!"
+        ]
+      },
+      {
+        id: "rp_1_3",
+        title: "Entrades per al Cinema del Barri",
+        lore: "Un grup d'amics va al cinema dissabte a la tarda.",
+        instruction: "Una colla de <strong>8 amics</strong> compra les entrades del cinema. En total paguen <strong>72 €</strong> per totes les entrades, que tenen el mateix preu. <strong>Quants euros costa cada entrada?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) cada entrada",
+        targetNumber: 9,
+        barModel: {
+          totalLabel: "Preu total: 72 € repartits en 8 entrades iguals",
+          parts: [
+            { label: "? €", value: 9, color: "#7C3AED", isUnknown: true },
+            { label: "× 8 entrades iguals", value: 63, color: "#CBD5E1" }
+          ]
+        },
+        suggestedBlocks: [9, 9, 9, 9, 9, 9, 9, 9],
+        hints: [
+          "1r pas (Dades): El total és 72 € i s'ha de repartir en 8 parts iguals.",
+          "2n pas (Estratègia): Quan repartim un total en parts iguals, fem una divisió.",
+          "3r pas (Divisió): 72 ÷ 8 = 9 € costa cada entrada!"
+        ]
+      },
+      {
+        id: "rp_1_4",
+        title: "Places Lliures a l'Autocar de 6è",
+        lore: "Sortida escolar al Museu de la Ciència.",
+        instruction: "Un autocar té <strong>60 seients</strong>. Hi pugen <strong>23 alumnes</strong> de 6è A, <strong>25 alumnes</strong> de 6è B i <strong>3 mestres</strong>. <strong>Quants seients queden buits a l'autocar?</strong>",
+        type: "general_problem",
+        unitLabel: "seients buits",
+        targetNumber: 9,
+        barModel: {
+          totalLabel: "Total autocar: 60 seients",
+          parts: [
+            { label: "6è A: 23", value: 23, color: "#4F46E5" },
+            { label: "6è B: 25", value: 25, color: "#0D9488" },
+            { label: "Mestres: 3", value: 3, color: "#D97706" },
+            { label: "Buits: ?", value: 9, color: "#F59E0B", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [23, 25, 3],
+        hints: [
+          "1r pas: Calcula primer quantes persones han pujat en total a l'autocar.",
+          "2n pas (Suma): 23 + 25 + 3 = 51 persones ocupen seient.",
+          "3r pas (Resta): 60 seients totals - 51 ocupats = 9 seients buits!"
+        ]
+      },
+      {
+        id: "rp_1_5",
+        title: "Envasant Galetes al Forn",
+        lore: "Al forn del carrer major acaben de treure una fornada de galetes d'avena.",
+        instruction: "El forner ha fet <strong>96 galetes</strong> i les vol guardar en caixes de <strong>8 galetes</strong> cadascuna. <strong>Quantes caixes podrà omplir completament?</strong>",
+        type: "general_problem",
+        unitLabel: "caixes de galetes",
+        targetNumber: 12,
+        barModel: {
+          totalLabel: "Total: 96 galetes agrupades de 8 en 8",
+          parts: [
+            { label: "1 caixa = 8 galetes", value: 8, color: "#059669" },
+            { label: "Quantes caixes de 8 fan 96?", value: 88, color: "#A7F3D0", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+        hints: [
+          "1r pas: Tenim 96 galetes i fem grups iguals de 8 galetes.",
+          "2n pas: Per saber quants grups de 8 caben en 96, dividim 96 entre 8.",
+          "3r pas (Divisió): 96 ÷ 8 = 12 caixes completes!"
+        ]
+      }
+    ],
+    2: [
+      {
+        id: "rp_2_1",
+        title: "El Tiquet de la Xarcuteria i la Fruiteria",
+        lore: "Problema d'operacions combinades amb multiplicacions i suma.",
+        instruction: "Al mercat compres <strong>4 paquets de formatge</strong> a <strong>5 € cada paquet</strong> i <strong>3 safates de maduixes</strong> a <strong>6 € cada safata</strong>. <strong>Quants euros pagues en total per tota la compra?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) en total",
+        targetNumber: 38,
+        barModel: {
+          totalLabel: "Import total del tiquet: ? €",
+          parts: [
+            { label: "Formatge: 4 × 5 € = 20 €", value: 20, color: "#4F46E5" },
+            { label: "Maduixes: 3 × 6 € = 18 €", value: 18, color: "#E11D48" }
+          ]
+        },
+        suggestedBlocks: [5, 5, 5, 5, 6, 6, 6],
+        hints: [
+          "1r pas: Calcula el cost dels 4 paquets de formatge: 4 × 5 € = 20 €.",
+          "2n pas: Calcula el cost de les 3 safates de maduixes: 3 × 6 € = 18 €.",
+          "3r pas: Suma els dos imports: 20 + 18 = 38 € en total!"
+        ]
+      },
+      {
+        id: "rp_2_2",
+        title: "Estalviant per a la Bicicleta Nova",
+        lore: "Planifiques el teu estalvi setmanal per comprar una bicicleta d'esport.",
+        instruction: "Una bicicleta val <strong>180 €</strong>. Ja tens <strong>60 €</strong> estalviats a la guardiola, i la resta la vols aconseguir estalviant la mateixa quantitat durant <strong>6 setmanes</strong>. <strong>Quants euros has d'estalviar cada setmana?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) per setmana",
+        targetNumber: 20,
+        barModel: {
+          totalLabel: "Preu bicicleta: 180 €",
+          parts: [
+            { label: "Ja tinc: 60 €", value: 60, color: "#10B981" },
+            { label: "Falten 120 € en 6 setmanes (? €/setmana)", value: 120, color: "#F59E0B", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [60, 20, 20, 20, 20, 20, 20],
+        hints: [
+          "1r pas (Resta): Calcula quants diners et falten encara: 180 € - 60 € = 120 €.",
+          "2n pas (Divisió): Reparteix els 120 € que et falten entre les 6 setmanes.",
+          "3r pas: 120 ÷ 6 = 20 € cada setmana! En operació combinada: (180 - 60) ÷ 6 = 20."
+        ]
+      },
+      {
+        id: "rp_2_3",
+        title: "Les Taules del Menjador Escolar",
+        lore: "Comptem la fruita necessària per al dinar de l'escola.",
+        instruction: "Al menjador hi ha <strong>7 taules</strong>. A cada taula hi seuen <strong>5 nens i 3 nenes</strong>. Si cada alumne menja <strong>2 mandarines</strong> per postres, <strong>quantes mandarines es reparteixen en total?</strong>",
+        type: "general_problem",
+        unitLabel: "mandarines",
+        targetNumber: 112,
+        barModel: {
+          totalLabel: "7 taules × (5 + 3 alumnes) × 2 mandarines",
+          parts: [
+            { label: "8 alumnes/taula × 7 taules = 56 alumnes", value: 56, color: "#2563EB" },
+            { label: "× 2 mandarines cadascú = ?", value: 56, color: "#F59E0B", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [16, 16, 16, 16, 16, 16, 16],
+        hints: [
+          "1r pas: A cada taula hi ha 5 + 3 = 8 alumnes.",
+          "2n pas: En les 7 taules hi ha 7 × 8 = 56 alumnes en total.",
+          "3r pas: Com que cadascú menja 2 mandarines, 56 × 2 = 112 mandarines!"
+        ]
+      },
+      {
+        id: "rp_2_4",
+        title: "Comanda de Llibres per a la Biblioteca",
+        lore: "Gestionem el pressupost de lectura de la classe de 6è.",
+        instruction: "Tenim un val de <strong>100 €</strong> per a la llibreria del barri. Comprem <strong>4 còmics</strong> que costen <strong>16 € cadascun</strong>. <strong>Quants euros ens queden encara al val?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) restants",
+        targetNumber: 36,
+        barModel: {
+          totalLabel: "Val de la llibreria: 100 €",
+          parts: [
+            { label: "4 còmics × 16 € = 64 €", value: 64, color: "#7C3AED" },
+            { label: "Sobra al val: ? €", value: 36, color: "#10B981", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [16, 16, 16, 16, 36],
+        hints: [
+          "1r pas (Multiplicació): Calcula quant costen els 4 còmics: 4 × 16 € = 64 €.",
+          "2n pas (Resta): Resta la despesa dels 100 € inicials.",
+          "3r pas: 100 - 64 = 36 € queden disponibles al val!"
+        ]
+      },
+      {
+        id: "rp_2_5",
+        title: "Collita de Tomàquets a la Cooperativa",
+        lore: "Agrupem i repartim la collita del matí i de la tarda en caixes iguals.",
+        instruction: "Un hortolà recull <strong>45 kg</strong> de tomàquets al matí i <strong>39 kg</strong> a la tarda. Els reparteix en <strong>7 caixes</strong> amb el mateix pes a cadascuna. <strong>Quants quilos de tomàquets posa a cada caixa?</strong>",
+        type: "general_problem",
+        unitLabel: "kg per caixa",
+        targetNumber: 12,
+        barModel: {
+          totalLabel: "Total: 45 kg + 39 kg = 84 kg repartits en 7 caixes",
+          parts: [
+            { label: "Matí: 45 kg", value: 45, color: "#E11D48" },
+            { label: "Tarda: 39 kg", value: 39, color: "#F97316" }
+          ]
+        },
+        suggestedBlocks: [12, 12, 12, 12, 12, 12, 12],
+        hints: [
+          "1r pas (Suma): Calcula el total de quilos recollits: 45 + 39 = 84 kg.",
+          "2n pas (Divisió): Reparteix els 84 kg en 7 caixes iguals.",
+          "3r pas: (45 + 39) ÷ 7 = 84 ÷ 7 = 12 kg a cada caixa!"
+        ]
+      }
+    ],
+    3: [
+      {
+        id: "rp_3_1",
+        title: "La Parada de Pastissos de la Fira Escolar",
+        lore: "Problema multipas d'ingressos, despeses i repartiment del benefici.",
+        instruction: "A la fira de l'escola heu venut <strong>15 pastissos</strong> a <strong>12 € cadascun</strong>. Si comprar els ingredients al supermercat us va costar <strong>40 €</strong> en total, i el guany net el repartiu a parts iguals entre <strong>2 associacions solidàries</strong>, <strong>quants euros rep cada associació?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) per associació",
+        targetNumber: 70,
+        barModel: {
+          totalLabel: "Ingressos: 15 × 12 € = 180 €",
+          parts: [
+            { label: "Despesa ingredients: 40 €", value: 40, color: "#EF4444" },
+            { label: "Associació 1: ? €", value: 70, color: "#10B981", isUnknown: true },
+            { label: "Associació 2: ? €", value: 70, color: "#0D9488", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [40, 70, 70],
+        hints: [
+          "1r pas (Multiplicació - Ingressos): 15 pastissos × 12 € = 180 € recaptats.",
+          "2n pas (Resta - Benefici net): Descomptem els 40 € dels ingredients: 180 - 40 = 140 € de guany.",
+          "3r pas (Divisió): Repartim 140 € entre les 2 associacions: 140 ÷ 2 = 70 € cadascuna!"
+        ]
+      },
+      {
+        id: "rp_3_2",
+        title: "Equipació per a l'Equip d'Atletisme",
+        lore: "Operació combinada amb descompte a la botiga d'esports.",
+        instruction: "El club compra <strong>12 samarretes</strong> a <strong>15 € cadascuna</strong> i <strong>12 pantalons</strong> a <strong>10 € cadascun</strong>. Al final, la botiga els descompten <strong>30 €</strong> per compra en grup. <strong>Quants euros paguen finalment?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) finals",
+        targetNumber: 270,
+        barModel: {
+          totalLabel: "12 × (15 € + 10 €) = 300 € menys 30 € de descompte",
+          parts: [
+            { label: "Preu final a pagar: ? €", value: 270, color: "#4F46E5", isUnknown: true },
+            { label: "Descompte: 30 €", value: 30, color: "#F59E0B" }
+          ]
+        },
+        suggestedBlocks: [180, 120],
+        hints: [
+          "1r pas: Cada equipació completa (samarreta + pantaló) val 15 + 10 = 25 €.",
+          "2n pas: Les 12 equipacions costen 12 × 25 € = 300 € (o bé 180 € + 120 € = 300 €).",
+          "3r pas: Apliquem el descompte de 30 €: 300 - 30 = 270 €!"
+        ]
+      },
+      {
+        id: "rp_3_3",
+        title: "Les Safates d'Ous del Mercat Municipal",
+        lore: "Càlcul en 3 passos: multiplicació, resta i divisió.",
+        instruction: "A la parada del mercat arriben <strong>10 caixes</strong> amb <strong>24 ous a cada caixa</strong>. En descarregar-les es trenquen <strong>12 ous</strong>. Els ous que estan bé s'envasen en safates de <strong>6 ous</strong>. <strong>Quantes safates de 6 ous s'omplen?</strong>",
+        type: "general_problem",
+        unitLabel: "safates de 6 ous",
+        targetNumber: 38,
+        barModel: {
+          totalLabel: "Total inicial: 10 × 24 = 240 ous",
+          parts: [
+            { label: "Trencats: 12", value: 12, color: "#EF4444" },
+            { label: "228 ous bons ÷ 6 per safata = ? safates", value: 228, color: "#059669", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [24, 24, 24, 24, 24, 24, 24, 24, 24, 24],
+        hints: [
+          "1r pas (Multiplicació): Ous totals que arriben = 10 × 24 = 240 ous.",
+          "2n pas (Resta): Ous que queden sencers = 240 - 12 = 228 ous.",
+          "3r pas (Divisió): Safates de 6 ous = 228 ÷ 6 = 38 safates!"
+        ]
+      },
+      {
+        id: "rp_3_4",
+        title: "Les Colònies de 6è de Primària",
+        lore: "Repartiment de despeses d'un autobús entre l'alumnat.",
+        instruction: "Llogar l'autocar per a les colònies costa <strong>450 €</strong> en total. L'associació de famílies (AFA) subvenciona <strong>90 €</strong>, i la resta es paga a parts iguals entre els <strong>18 alumnes</strong> que hi van. <strong>Quants euros ha de pagar cada alumne?</strong>",
+        type: "general_problem",
+        unitLabel: "euros (€) per alumne",
+        targetNumber: 20,
+        barModel: {
+          totalLabel: "Cost total autocar: 450 €",
+          parts: [
+            { label: "Subvenció AFA: 90 €", value: 90, color: "#10B981" },
+            { label: "360 € entre 18 alumnes (? €/alumne)", value: 360, color: "#2563EB", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [90, 360],
+        hints: [
+          "1r pas (Resta): Descomptem l'ajuda de l'AFA: 450 € - 90 € = 360 €.",
+          "2n pas (Divisió): Repartim els 360 € entre els 18 alumnes.",
+          "3r pas: 360 ÷ 18 = 20 € ha de pagar cada alumne!"
+        ]
+      },
+      {
+        id: "rp_3_5",
+        title: "Inventari de Begudes al Rebost",
+        lore: "Últim repte expert d'operacions combinades al supermercat!",
+        instruction: "Compres <strong>4 packs de sucs</strong> de <strong>6 unitats cadascun</strong> i <strong>3 packs de batuts</strong> de <strong>8 unitats cadascun</strong>. Si durant la setmana a casa us beveu <strong>18 envasos</strong> en total, <strong>quants envasos queden encara al rebost?</strong>",
+        type: "general_problem",
+        unitLabel: "envasos al rebost",
+        targetNumber: 30,
+        barModel: {
+          totalLabel: "Comprats: (4 × 6) + (3 × 8) = 48 envasos",
+          parts: [
+            { label: "Beguts: 18", value: 18, color: "#EF4444" },
+            { label: "Queden al rebost: ?", value: 30, color: "#0D9488", isUnknown: true }
+          ]
+        },
+        suggestedBlocks: [24, 24],
+        hints: [
+          "1r pas (Multiplicacions): Sucs = 4 × 6 = 24. Batuts = 3 × 8 = 24.",
+          "2n pas (Suma): En total has comprat 24 + 24 = 48 envasos.",
+          "3r pas (Resta): Si se n'han begut 18, en queden 48 - 18 = 30 envasos!"
         ]
       }
     ]

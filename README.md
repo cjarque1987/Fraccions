@@ -31,7 +31,10 @@ Aplicació web interactiva en **català** dissenyada per a l'alumnat de **6è de
    - Construcció manipulativa de fraccions equivalents que representen la mateixa quantitat amb diferent nombre de porcions.
 5. **🔄 4. Transformació (15 exercicis en 3 nivells)**:
    - Ús dels botons interactius **⚡ Amplifica ($\times 2, \times 3, \times 4$)** i **🗡️ Simplifica ($\div 2, \div 3, \div 4, \div 5$)** fins a la fracció irreductible, i conversió entre fraccions impròpies i nombres mixtos.
-6. **🛒 5. Problemes al Supermercat i Dia a Dia (15 exercicis en 3 nivells)**:
+6. **🛒 5. Problemes de Fraccions al Supermercat (15 exercicis en 3 nivells)**:
    - Problemes contextualitzats en compres al supermercat, preus en euros, pesos en quilos i **fracció d'una quantitat** (amb repartidor visual dins de cada peça del tauler).
-7. **🧪 Laboratori Lliure i Mur de Fraccions**:
+7. **🧠 6. Resolució de Problemes · Operacions fora de les fraccions (15 exercicis en 3 nivells)**:
+   - Banc de 15 problemes quotidians d'**operacions bàsiques i combinades** (sumes, restes, multiplicacions i divisions d'un, dos i tres passos).
+   - Inclou el **Tauler Manipulatiu de Problemes** amb **📊 Esquema visual del Model de Barres (Part-Tot)**, **🧰 Safata interactiva de Blocs i Bitllets** (amb repetició per a multiplicacions i repartiment en grups iguals per a divisions) i **📝 Quadern d'Operacions Pas a Pas (1a i 2a operació)**.
+8. **🧪 Laboratori Lliure i Mur de Fraccions**:
    - Espai lliure amb comparador doble en temps real i **Mur Interactiu de Tires de Fraccions** ($1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \frac{1}{5}, \frac{1}{6}, \frac{1}{8}, \frac{1}{10}, \frac{1}{12}$).

@@ -1400,6 +1400,172 @@ body.colorblind-mode .wall-brick.active {
 }
 
 /* ==========================================================================
+   MÒDUL 6: TAULER MANIPULATIU DE RESOLUCIÓ DE PROBLEMES (FORA DE FRACCIONS)
+   ========================================================================== */
+.nav-tab.special-problem-tab {
+  border-color: var(--gold);
+  background: var(--gold-light);
+}
+
+.nav-tab.special-problem-tab.active {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+  border-color: #92400E;
+  color: #FFFFFF;
+}
+
+.problem-solver-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.15rem;
+}
+
+@media (max-width: 960px) {
+  .problem-solver-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.solver-panel-card {
+  background: var(--bg-stage);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Model de Barres Visual (Part - Tot) */
+.bar-model-box {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.9rem;
+}
+
+.bar-model-total-bar {
+  background: var(--primary-light);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-weight: 900;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 0.45rem;
+  font-size: 0.96rem;
+}
+
+.bar-model-parts-row {
+  display: flex;
+  width: 100%;
+  gap: 4px;
+  min-height: 48px;
+}
+
+.bar-model-part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.4rem 0.35rem;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.86rem;
+  border: 2px solid rgba(0, 0, 0, 0.18);
+  transition: all 0.2s ease;
+}
+
+.bar-model-part.unknown-part {
+  border: 2px dashed #1E1B4B;
+  color: #1E1B4B;
+  font-weight: 900;
+}
+
+/* Safata de Blocs / Bitllets Manipulatius */
+.manipulative-blocks-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  min-height: 76px;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 2px dashed var(--border-color);
+  border-radius: 10px;
+  align-items: center;
+}
+
+.math-block-chip {
+  background: linear-gradient(135deg, #4F46E5, #3730A3);
+  color: #FFFFFF;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+  border: 2px solid rgba(255,255,255,0.25);
+  transition: transform 0.12s ease;
+}
+
+.math-block-chip:hover {
+  transform: scale(1.05);
+}
+
+.math-block-chip.negative-block {
+  background: linear-gradient(135deg, #DC2626, #991B1B);
+}
+
+/* Quadern de Passos d'Operacions (Pas 1 i Pas 2) */
+.step-calc-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.step-calc-input {
+  width: 72px;
+  height: 38px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-stage);
+  color: var(--text-main);
+}
+
+.step-calc-select {
+  height: 38px;
+  padding: 0 0.4rem;
+  font-weight: 900;
+  font-size: 1.05rem;
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.step-calc-result {
+  min-width: 58px;
+  padding: 0.3rem 0.6rem;
+  background: var(--emerald-light);
+  color: var(--emerald);
+  border: 1px solid var(--emerald);
+  border-radius: 6px;
+  font-weight: 900;
+  text-align: center;
+}
+
+/* ==========================================================================
    IMPRESSIÓ DE FITXA / PERGAMÍ EN PAPER O PDF
    ========================================================================== */
 .print-worksheet-container {
