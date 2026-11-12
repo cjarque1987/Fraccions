@@ -432,7 +432,7 @@
         cellsHTML += `
           <text x="${cx.toFixed(1)}" y="${(cy + 4).toFixed(1)}" text-anchor="middle"
             fill="${isActive ? "#FFFFFF" : "var(--text-main)"}" font-weight="900" font-size="12" pointer-events="none">
-            💎${perPieceQuantity}
+            📦${perPieceQuantity}
           </text>
         `;
       } else if (isActive && state.colorblindMode) {
@@ -446,7 +446,7 @@
     }
 
     return `
-      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Quadrícula de ${den} cristalls">
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Safata de ${den} unitats">
         ${buildSVGDefs(prefix, activeColor)}
         ${cellsHTML}
       </svg>
@@ -638,7 +638,7 @@
 
         <div class="area-meter-wrap">
           <div class="area-meter-header">
-            <span>📏 Nivell d'energia respecte a 1 unitat:</span>
+            <span>📏 Proporció respecte a 1 unitat sencera:</span>
             <strong>${percentage}% (${ (num / den).toFixed(2).replace(".", ",") } u.)</strong>
           </div>
           <div class="area-meter-track">
@@ -650,7 +650,7 @@
   }
 
   /* ==========================================================================
-     5. GESTIÓ DE LES MISSIONS I RENDERITZACIÓ DEL TAULER
+     5. GESTIÓ DELS REPTES I RENDERITZACIÓ DEL TAULER
      ========================================================================== */
   function getCurrentChallenge() {
     const modData = CHALLENGES_DATA[state.currentModule];
@@ -756,18 +756,18 @@
       const isCurr = idx === state.currentIndex;
       return `
         <button type="button" class="quest-dot ${isCurr ? "current" : ""} ${isDone ? "completed" : ""}"
-          data-quest-idx="${idx}" title="Missió ${idx + 1}: ${item.title}">
+          data-quest-idx="${idx}" title="Exercici ${idx + 1}: ${item.title}">
           ${isDone ? "✓" : idx + 1}
         </button>
       `;
     }).join("");
 
-    // Targeta de la missió
-    const levelNames = { 1: "⭐ Escuder", 2: "⭐⭐ Cavaller", 3: "⭐⭐⭐ Arximag" };
-    document.getElementById("challengeBadge").textContent = `${levelNames[state.currentLevel]} · Missió ${state.currentIndex + 1}/5`;
-    document.getElementById("attemptsBadge").textContent = `🛡️ Escut: ${state.attemptsLeft}/2`;
+    // Targeta del repte
+    const levelNames = { 1: "⭐ Principiant", 2: "⭐⭐ Mitjà", 3: "⭐⭐⭐ Expert" };
+    document.getElementById("challengeBadge").textContent = `${levelNames[state.currentLevel]} · Repte ${state.currentIndex + 1}/5`;
+    document.getElementById("attemptsBadge").textContent = `🎯 Oportunitats: ${state.attemptsLeft}/2`;
     document.getElementById("challengeTitle").textContent = ch.title;
-    document.getElementById("challengeLore").textContent = ch.lore ? `« ${ch.lore} »` : "";
+    document.getElementById("challengeLore").textContent = ch.lore ? `🛒 Situació quotidiana: ${ch.lore}` : "";
     document.getElementById("challengeInstruction").innerHTML = ch.instruction;
 
     // Botons de forma activa
@@ -793,7 +793,7 @@
       const hideBadge = ch.type === "identify_locked";
       stage.innerHTML = `
         <div class="stage-panels-grid">
-          ${renderWorkbenchPanelHTML("left", "🛠️ Tauler Rònic Manipulatiu", state.leftPanel, {
+          ${renderWorkbenchPanelHTML("left", "🛠️ Tauler Manipulatiu de Fraccions", state.leftPanel, {
             allowAddUnit: (ch.maxUnits || 1) > 1,
             hideSymbolicOnLocked: hideBadge
           })}
@@ -818,7 +818,7 @@
     } else if (ch.type === "compare_two") {
       stage.innerHTML = `
         <div class="stage-panels-grid" style="grid-template-columns: 1fr auto 1fr; align-items: center;">
-          ${renderWorkbenchPanelHTML("left", "🛡️ Fracció Esquerra", state.leftPanel, { allowAddUnit: (ch.maxUnits || 1) > 1 })}
+          ${renderWorkbenchPanelHTML("left", "🅰️ Producte Esquerre", state.leftPanel, { allowAddUnit: (ch.maxUnits || 1) > 1 })}
 
           <div class="comparison-center-column" role="group" aria-label="Tria el símbol de comparació">
             <span style="font-weight:800; font-size:0.85rem; color:var(--text-muted);">Compara</span>
@@ -827,14 +827,14 @@
             <button type="button" class="comp-symbol-btn ${state.selectedSymbol === ">" ? "selected" : ""}" data-comp-sym=">">&gt;</button>
           </div>
 
-          ${renderWorkbenchPanelHTML("right", "⚔️ Fracció Dreta", state.rightPanel, { allowAddUnit: (ch.maxUnits || 1) > 1 })}
+          ${renderWorkbenchPanelHTML("right", "🅱️ Producte Dret", state.rightPanel, { allowAddUnit: (ch.maxUnits || 1) > 1 })}
         </div>
       `;
     } else if (ch.type === "equivalence_mirror" || ch.type === "alchemy_transform") {
       const isEqualNow = areEquivalent(state.leftPanel.num, state.leftPanel.den, state.rightPanel.num, state.rightPanel.den);
       const eqStatusHTML = isEqualNow
-        ? `<span style="color:var(--emerald); font-weight:900;">✨ Les dues superfícies són EQUIVALENTS!</span>`
-        : `<span style="color:var(--text-muted); font-weight:700;">⚖️ Ajusta la figura de la dreta fins que ocupi la mateixa superfície</span>`;
+        ? `<span style="color:var(--emerald); font-weight:900;">✨ Les dues quantitats són EQUIVALENTS!</span>`
+        : `<span style="color:var(--text-muted); font-weight:700;">⚖️ Ajusta la figura de la dreta fins que ocupi exactament la mateixa quantitat</span>`;
 
       stage.innerHTML = `
         <div style="text-align:center; margin-bottom:0.75rem; padding:0.45rem; background:var(--bg-parchment); border-radius:8px; border:1px solid var(--border-color);">
@@ -842,8 +842,8 @@
         </div>
 
         <div class="stage-panels-grid">
-          ${renderWorkbenchPanelHTML("left", "🔮 Fracció Original (Model)", state.leftPanel)}
-          ${renderWorkbenchPanelHTML("right", "✨ Fracció Transformada (Manipulable)", state.rightPanel, {
+          ${renderWorkbenchPanelHTML("left", "📌 Fracció Inicial (Mostra)", state.leftPanel)}
+          ${renderWorkbenchPanelHTML("right", "🔄 Fracció Equivalent (Manipulable)", state.rightPanel, {
             allowAddUnit: (ch.maxUnits || 1) > 1,
             showAlchemySpells: ch.type === "alchemy_transform"
           })}
@@ -866,7 +866,7 @@
     } else if (ch.type === "mixed_conversion") {
       stage.innerHTML = `
         <div class="stage-panels-grid">
-          ${renderWorkbenchPanelHTML("left", "🔥 Fracció Impròpia al Tauler", state.leftPanel, { allowAddUnit: true })}
+          ${renderWorkbenchPanelHTML("left", "🍕 Fracció Impròpia al Tauler", state.leftPanel, { allowAddUnit: true })}
         </div>
 
         <div class="symbolic-answer-zone">
@@ -884,7 +884,7 @@
     } else if (ch.type === "problem_fraction") {
       stage.innerHTML = `
         <div class="stage-panels-grid">
-          ${renderWorkbenchPanelHTML("left", "📜 Tauler de Resolució del Problema", state.leftPanel, { allowAddUnit: (ch.maxUnits || 1) > 1 })}
+          ${renderWorkbenchPanelHTML("left", "🛒 Tauler de Resolució del Problema", state.leftPanel, { allowAddUnit: (ch.maxUnits || 1) > 1 })}
         </div>
 
         <div class="symbolic-answer-zone">
@@ -909,7 +909,7 @@
 
       stage.innerHTML = `
         <div class="stage-panels-grid">
-          ${renderWorkbenchPanelHTML("left", `📜 Model Visual (Total = ${ch.totalQuantity} ${ch.unitLabel || ""})`, state.leftPanel, {
+          ${renderWorkbenchPanelHTML("left", `🛒 Model Visual (Total = ${ch.totalQuantity} ${ch.unitLabel || ""})`, state.leftPanel, {
             allowAddUnit: (ch.maxUnits || 1) > 1,
             perPieceQuantity: perPiece
           })}
@@ -922,7 +922,7 @@
 
           ${activeTotalQty !== null ? `
             <span style="background:var(--gold-light); border:1px solid var(--gold); padding:0.35rem 0.7rem; border-radius:8px; font-weight:800;">
-              🧮 Suma de les ${state.leftPanel.num} parts activades: <strong>${activeTotalQty}</strong>
+              🧮 Suma de les ${state.leftPanel.num} parts seleccionades: <strong>${activeTotalQty}</strong>
             </span>
           ` : ""}
 
@@ -937,7 +937,7 @@
   }
 
   /* ==========================================================================
-     6. VERIFICACIÓ DE MISSIONS I RETROALIMENTACIÓ FORMATIVA DUA
+     6. VERIFICACIÓ DE REPTES I RETROALIMENTACIÓ FORMATIVA DUA
      ========================================================================== */
   function verifyCurrentChallenge() {
     const ch = getCurrentChallenge();
@@ -967,9 +967,9 @@
 
       if (boardMatchesExact && inputMatchesExact) {
         isCorrect = true;
-        feedbackMsg = `🌟 Excel·lent encanteri! Has dividit la unitat en ${ch.targetDen} parts iguals i n'has activat ${ch.targetNum} (${ch.targetNum}/${ch.targetDen}).`;
+        feedbackMsg = `🌟 Molt bé! Has dividit la unitat en ${ch.targetDen} parts iguals i n'has seleccionat ${ch.targetNum} (${ch.targetNum}/${ch.targetDen}).`;
       } else if (!boardMatchesExact) {
-        feedbackMsg = `🔍 Revisa les peces del tauler: ara mateix hi tens representat ${state.leftPanel.num}/${state.leftPanel.den}, però la missió demana ${ch.targetNum}/${ch.targetDen}.`;
+        feedbackMsg = `🔍 Revisa les peces del tauler: ara mateix hi tens representat ${state.leftPanel.num}/${state.leftPanel.den}, però l'exercici demana ${ch.targetNum}/${ch.targetDen}.`;
       } else {
         feedbackMsg = `🔍 La figura del tauler és perfecta (${ch.targetNum}/${ch.targetDen}), però revisa els números que has escrit a la casella!`;
       }
@@ -984,24 +984,24 @@
 
       if (userNum === ch.targetNum && userDen === ch.targetDen) {
         isCorrect = true;
-        feedbackMsg = `🌟 Lectura rúnica impecable! La figura mostra exactament ${ch.targetNum}/${ch.targetDen}.`;
+        feedbackMsg = `🌟 Identificació perfecta! La figura mostra exactament ${ch.targetNum}/${ch.targetDen}.`;
       } else if (userDen !== ch.targetDen) {
         feedbackMsg = `🔍 Fixa't en el denominador (número de sota): compta en quantes parts iguals està dividida UNA unitat sencera (${ch.targetDen} parts).`;
       } else {
-        feedbackMsg = `🔍 El denominador (${ch.targetDen}) és correcte, però torna a comptar quantes parts estan activades al numerador!`;
+        feedbackMsg = `🔍 El denominador (${ch.targetDen}) és correcte, però torna a comptar quantes parts estan seleccionades al numerador!`;
       }
     } else if (ch.type === "compare_two") {
       if (!state.selectedSymbol) {
-        showFeedbackBanner(false, "⚖️ Selecciona un dels tres símbols màgics (<, = o >) al centre del tauler!");
+        showFeedbackBanner(false, "⚖️ Selecciona un dels tres símbols de comparació (<, = o >) al centre del tauler!");
         return;
       }
       if (state.selectedSymbol === ch.correctSymbol) {
         isCorrect = true;
-        feedbackMsg = `🌟 Balança equilibrada amb saviesa! ${ch.leftNum}/${ch.leftDen} ${ch.correctSymbol} ${ch.rightNum}/${ch.rightDen}.`;
+        feedbackMsg = `🌟 Comparació correcta! ${ch.leftNum}/${ch.leftDen} ${ch.correctSymbol} ${ch.rightNum}/${ch.rightDen}.`;
       } else {
         const leftPct = Math.round((ch.leftNum / ch.leftDen) * 100);
         const rightPct = Math.round((ch.rightNum / ch.rightDen) * 100);
-        feedbackMsg = `🔍 Observa les barres d'energia: ${ch.leftNum}/${ch.leftDen} ocupa un ${leftPct}% de la unitat i ${ch.rightNum}/${ch.rightDen} n'ocupa un ${rightPct}%.`;
+        feedbackMsg = `🔍 Observa les barres de proporció: ${ch.leftNum}/${ch.leftDen} ocupa un ${leftPct}% de la unitat i ${ch.rightNum}/${ch.rightDen} n'ocupa un ${rightPct}%.`;
       }
     } else if (ch.type === "equivalence_mirror" || ch.type === "alchemy_transform") {
       let userNum = parseInt(document.getElementById("ansNumInput")?.value, 10);
@@ -1023,11 +1023,11 @@
 
       if (rightMatchesTarget && inputMatchesTarget) {
         isCorrect = true;
-        feedbackMsg = `🌟 Transformació magistral! ${ch.baseNum}/${ch.baseDen} i ${ch.targetNum}/${ch.targetDen} són fraccions equivalents i ocupen exactament la mateixa superfície.`;
+        feedbackMsg = `🌟 Molt ben fet! ${ch.baseNum}/${ch.baseDen} i ${ch.targetNum}/${ch.targetDen} són fraccions equivalents i representen exactament la mateixa quantitat.`;
       } else if (!areEquivalent(ch.baseNum, ch.baseDen, state.rightPanel.num, state.rightPanel.den)) {
-        feedbackMsg = `🔍 La figura de la dreta (${state.rightPanel.num}/${state.rightPanel.den}) encara no ocupa la mateixa superfície que ${ch.baseNum}/${ch.baseDen}. Ajusta les parts!`;
+        feedbackMsg = `🔍 La figura de la dreta (${state.rightPanel.num}/${state.rightPanel.den}) encara no ocupa la mateixa quantitat que ${ch.baseNum}/${ch.baseDen}. Ajusta les parts!`;
       } else {
-        feedbackMsg = `🔍 Molt a prop! Aquesta missió demana específicament la fracció equivalent amb denominador ${ch.targetDen} (${ch.targetNum}/${ch.targetDen}) tant al tauler dret com a la casella.`;
+        feedbackMsg = `🔍 Molt a prop! Aquest exercici demana específicament la fracció equivalent amb denominador ${ch.targetDen} (${ch.targetNum}/${ch.targetDen}) tant al tauler dret com a la casella.`;
       }
     } else if (ch.type === "mixed_conversion") {
       const userWhole = parseInt(document.getElementById("ansWholeInput")?.value, 10);
@@ -1073,7 +1073,7 @@
       }
       if (userVal === ch.targetNumber) {
         isCorrect = true;
-        feedbackMsg = `🌟 Victòria èpica! El resultat exacte és ${ch.targetNumber} ${ch.unitLabel || ""}.`;
+        feedbackMsg = `🌟 Fantàstic! El resultat exacte és ${ch.targetNumber} ${ch.unitLabel || ""}.`;
       } else {
         feedbackMsg = `🔍 ${userVal} no és la quantitat exacta. Prem el botó '🪄 Reparteix els ${ch.totalQuantity} dins de les parts' per veure quant val cada part!`;
       }
@@ -1109,7 +1109,7 @@
     updateNavProgressBadges();
     showFeedbackBanner(true, msg);
 
-    // Actualitza els puntets de missió completada
+    // Actualitza els puntets d'exercici completat
     const lvlList = CHALLENGES_DATA[state.currentModule][state.currentLevel];
     document.querySelectorAll(".quest-dot").forEach((dot, idx) => {
       if (lvlList[idx] && state.completedChallenges[lvlList[idx].id]) {
@@ -1127,14 +1127,14 @@
     if (state.attemptsLeft <= 0) {
       state.lives = Math.max(0, state.lives - 1);
       state.attemptsLeft = 2;
-      msg += " 💔 S'ha trencat l'escut d'aquest intent (-1 vida). Continua provant-ho!";
+      msg += " 💔 Has esgotat les 2 oportunitats d'aquest intent (-1 vida). Continua provant-ho!";
     } else {
-      msg += " 🛡️ Et queda 1 oportunitat amb l'escut abans de perdre un cor.";
+      msg += " 🎯 Et queda 1 oportunitat abans de perdre un cor.";
     }
 
     saveState();
     updateTopHUD();
-    document.getElementById("attemptsBadge").textContent = `🛡️ Escut: ${state.attemptsLeft}/2`;
+    document.getElementById("attemptsBadge").textContent = `🎯 Oportunitats: ${state.attemptsLeft}/2`;
     showFeedbackBanner(false, msg);
 
     if (state.lives <= 0) {
@@ -1162,7 +1162,7 @@
   }
 
   /* ==========================================================================
-     7. GRIMORI DEL SABER (SIMULADOR INTERACTIU EN VIU)
+     7. GUIA I CONCEPTES (SIMULADOR INTERACTIU EN VIU)
      ========================================================================== */
   function renderGrimoriView() {
     const chapter = GRIMORI_CHAPTERS[state.grimoriChapter] || GRIMORI_CHAPTERS.concepte;
@@ -1173,7 +1173,7 @@
     const card = document.getElementById("grimoriLessonCard");
     card.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-        <span class="challenge-badge">📖 Capítol del Grimori</span>
+        <span class="challenge-badge">📖 Apartat de la Guia</span>
         <button type="button" class="tts-btn" id="btnSpeakGrimoriChapter">🔊 Escolta l'explicació</button>
       </div>
       ${chapter.html}
@@ -1219,13 +1219,13 @@
         </div>
       </div>
       <div style="margin-top:0.75rem; text-align:center; font-weight:800; color:var(--primary); background:var(--primary-light); padding:0.5rem; border-radius:8px;">
-        ✨ ${num}/${den} = ${eqNum}/${eqDen} · Mateixa superfície (${Math.round((num / den) * 100)}%)!
+        ✨ ${num}/${den} = ${eqNum}/${eqDen} · Mateixa quantitat (${Math.round((num / den) * 100)}%)!
       </div>
     `;
   }
 
   /* ==========================================================================
-     8. FORJA LLIURE (COMPARADOR LLIURE + MUR DE TIRES DE FRACCIONS)
+     8. LABORATORI LLIURE (COMPARADOR LLIURE + MUR DE TIRES DE FRACCIONS)
      ========================================================================== */
   function renderForjaView() {
     const compContainer = document.getElementById("freeLabComparator");
@@ -1237,13 +1237,13 @@
     compContainer.innerHTML = `
       <div style="text-align:center; margin-bottom:0.85rem;">
         <span style="display:inline-block; background:var(--gold-light); border:2px solid var(--gold); padding:0.4rem 1rem; border-radius:999px; font-weight:900; font-size:1.1rem;">
-          🔮 Relació en temps real: ${state.freeLeft.num}/${state.freeLeft.den} ${sym} ${state.freeRight.num}/${state.freeRight.den}
+          ⚖️ Comparació en temps real: ${state.freeLeft.num}/${state.freeLeft.den} ${sym} ${state.freeRight.num}/${state.freeRight.den}
           ${isEq ? " (Són Fraccions Equivalents!)" : ""}
         </span>
       </div>
       <div class="stage-panels-grid">
-        ${renderWorkbenchPanelHTML("freeLeft", "🧪 Banc Esquerre", state.freeLeft, { allowAddUnit: true, showAlchemySpells: true })}
-        ${renderWorkbenchPanelHTML("freeRight", "🧪 Banc Dret", state.freeRight, { allowAddUnit: true, showAlchemySpells: true })}
+        ${renderWorkbenchPanelHTML("freeLeft", "🧪 Tauler Esquerre", state.freeLeft, { allowAddUnit: true, showAlchemySpells: true })}
+        ${renderWorkbenchPanelHTML("freeRight", "🧪 Tauler Dret", state.freeRight, { allowAddUnit: true, showAlchemySpells: true })}
       </div>
     `;
 
@@ -1290,15 +1290,15 @@
     }).join("");
 
     if (activeFractionsList.length === 0) {
-      summaryBar.innerHTML = `✨ Maons seleccionats al mur: <em>Fes clic a qualsevol maó per il·luminar-lo i comparar amplades!</em>`;
+      summaryBar.innerHTML = `✨ Peces seleccionades al mur: <em>Fes clic a qualsevol peça per pintar-la i comparar amplades!</em>`;
     } else {
       const tags = activeFractionsList.map(f => `<strong>${f.num}/${f.den}</strong> (${Math.round((f.num / f.den) * 100)}%)`).join(" · ");
-      summaryBar.innerHTML = `🧱 Files amb maons actius: ${tags}`;
+      summaryBar.innerHTML = `🧱 Files amb peces actives: ${tags}`;
     }
   }
 
   /* ==========================================================================
-     9. HUD SUPERIOR, RELÍQUIES I IMPRESSIÓ DE PERGAMÍ D'EXERCICIS
+     9. HUD SUPERIOR, INSÍGNIES I IMPRESSIÓ DE FITXA D'EXERCICIS
      ========================================================================== */
   function getCurrentHeroRank() {
     let current = HERO_RANKS[0];
@@ -1358,7 +1358,7 @@
         <div class="relic-item ${unlocked ? "unlocked" : ""}">
           <div class="relic-icon">${relic.icon}</div>
           <div class="relic-name">${relic.name}</div>
-          <div class="relic-req">${unlocked ? "✅ Desbloquejada!" : relic.reqText}</div>
+          <div class="relic-req">${unlocked ? "✅ Aconseguida!" : relic.reqText}</div>
         </div>
       `;
     }).join("");
@@ -1388,7 +1388,7 @@
       comparacio: "2. Comparació de Fraccions",
       equivalencia: "3. Fraccions Equivalents",
       transformacio: "4. Transformació: Amplificació, Simplificació i Nombres Mixtos",
-      problemes: "5. Problemes Èpics de Fraccions"
+      problemes: "5. Problemes Quotidians i al Supermercat"
     };
 
     let itemsHTML = "";
@@ -1416,8 +1416,8 @@
     container.innerHTML = `
       <div class="print-sheet-header">
         <div>
-          <h1 style="font-size:16pt;">🏰 El Regne de Fractària · Fitxa de Fraccions (6è de Primària)</h1>
-          <p style="font-size:10pt;">Identificació, Comparació, Equivalències, Transformació i Problemes</p>
+          <h1 style="font-size:16pt;">🛒 Fraccions al Dia a Dia · Fitxa d'Exercicis (6è de Primària)</h1>
+          <p style="font-size:10pt;">Identificació, Comparació, Equivalències, Transformació i Problemes Quotidians</p>
         </div>
         <div style="text-align:right; font-size:10pt;">
           <div>Nom i cognoms: _______________________________</div>
@@ -1567,7 +1567,7 @@
     });
 
     document.getElementById("btnSpeakGrimoriIntro").addEventListener("click", () => {
-      speakCatalan("Benvingut al Grimori de les Fraccions i les Equivalències. Tria un dels quatre capítols i experimenta amb el Cristall de Prova en Viu!");
+      speakCatalan("Benvingut a la Guia de les Fraccions i les Equivalències en el dia a dia. Tria un dels quatre apartats i experimenta amb el Simulador en Viu!");
     });
 
     // Delegació d'esdeveniments d'interacció manipulativa a l'escenari i a la Forja Lliure
@@ -1766,12 +1766,12 @@
     document.getElementById("btnToggleSound").addEventListener("click", (e) => {
       state.soundEnabled = !state.soundEnabled;
       e.currentTarget.classList.toggle("active", state.soundEnabled);
-      e.currentTarget.textContent = state.soundEnabled ? "🔔 Sons Màgics: Activats" : "🔇 Sons Màgics: Silenciats";
+      e.currentTarget.textContent = state.soundEnabled ? "🔔 Sons d'Encert: Activats" : "🔇 Sons d'Encert: Silenciats";
       saveState();
     });
 
     document.getElementById("btnResetProgress").addEventListener("click", () => {
-      if (confirm("Vols reiniciar els cristalls, les vides i les missions completades a zero?")) {
+      if (confirm("Vols reiniciar les estrelles, les vides i els exercicis completats a zero?")) {
         state.stars = 0;
         state.lives = 10;
         state.streak = 0;
@@ -1831,7 +1831,7 @@
     const soundBtn = document.getElementById("btnToggleSound");
     if (soundBtn) {
       soundBtn.classList.toggle("active", state.soundEnabled);
-      soundBtn.textContent = state.soundEnabled ? "🔔 Sons Màgics: Activats" : "🔇 Sons Màgics: Silenciats";
+      soundBtn.textContent = state.soundEnabled ? "🔔 Sons d'Encert: Activats" : "🔇 Sons d'Encert: Silenciats";
     }
 
     setupEventListeners();

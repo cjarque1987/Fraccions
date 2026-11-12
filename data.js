@@ -1,124 +1,125 @@
 /* ==========================================================================
-   EL REGNE DE FRACTÀRIA · DADES CURRICULARS 6è DE PRIMÀRIA (CATALÀ)
+   FRACCIONS AL DIA A DIA · DADES CURRICULARS 6è DE PRIMÀRIA (CATALÀ)
+   Temàtica: Situacions quotidianes (Supermercat, Cuina, Compres i Barri)
    ========================================================================== */
 
 const HERO_RANKS = [
-  { minStars: 0,   name: "🌱 Escuder Novell",         badge: "🌱" },
-  { minStars: 10,  name: "🛡️ Guardià de les Parts",    badge: "🛡️" },
-  { minStars: 25,  name: "⚔️ Cavaller d'Equivalia",    badge: "⚔️" },
-  { minStars: 45,  name: "🧙‍♂️ Mag de l'Alquímia",       badge: "🧙‍♂️" },
-  { minStars: 70,  name: "🐉 Mestre de les Runes",     badge: "🐉" },
-  { minStars: 100, name: "👑 Gran Arximag de Fractària", badge: "👑" }
+  { minStars: 0,   name: "🌱 Comprador/a Novell",          badge: "🌱" },
+  { minStars: 10,  name: "🥖 Ajudant de Forn",             badge: "🥖" },
+  { minStars: 25,  name: "🛒 Expert/a del Supermercat",    badge: "🛒" },
+  { minStars: 45,  name: "👩‍🍳 Xef de les Proporcions",      badge: "👩‍🍳" },
+  { minStars: 70,  name: "📊 Encarregat/da del Mercat",    badge: "📊" },
+  { minStars: 100, name: "🏆 Mestre/a de les Fraccions",   badge: "🏆" }
 ];
 
 const KINGDOM_RELICS = [
   {
     id: "relic_shield",
-    name: "Escut de les Mil Parts",
-    icon: "🛡️",
+    name: "Insígnia de la Pizzeria",
+    icon: "🍕",
     module: "identificacio",
-    reqText: "Completa 5 missions d'Identificació i Representació",
+    reqText: "Completa 5 exercicis d'Identificació i Representació",
     minCompleted: 5
   },
   {
     id: "relic_scales",
-    name: "Balança d'Or del Drac",
+    name: "Bàscula d'Or del Mercat",
     icon: "⚖️",
     module: "comparacio",
-    reqText: "Completa 5 missions de Comparació de Fraccions",
+    reqText: "Completa 5 exercicis de Comparació de Fraccions",
     minCompleted: 5
   },
   {
     id: "relic_mirror",
-    name: "Mirall Geminat d'Equivalia",
-    icon: "✨",
+    name: "Rajola de les Equivalències",
+    icon: "🍫",
     module: "equivalencia",
-    reqText: "Completa 5 missions d'Equivalències Visuals",
+    reqText: "Completa 5 exercicis d'Equivalències Visuals",
     minCompleted: 5
   },
   {
     id: "relic_orb",
-    name: "Orbe de Transformació",
-    icon: "🔮",
+    name: "Mestre/a del Tall Exacte",
+    icon: "🔪",
     module: "transformacio",
-    reqText: "Completa 5 missions de Transformació Alquímica",
+    reqText: "Completa 5 exercicis de Transformació (Amplificar i Simplificar)",
     minCompleted: 5
   },
   {
     id: "relic_scroll",
-    name: "Pergamí dels Savis",
-    icon: "📜",
+    name: "Carretó d'Or del Supermercat",
+    icon: "🛒",
     module: "problemes",
-    reqText: "Resoldre 5 Problemes Èpics del Regne",
+    reqText: "Resoldre 5 Problemes del Supermercat i Dia a Dia",
     minCompleted: 5
   },
   {
     id: "relic_crown",
-    name: "Corona de l'Arximag",
-    icon: "👑",
+    name: "Trofeu de les Fraccions Quotidianes",
+    icon: "🏆",
     module: "all",
-    reqText: "Aconsegueix almenys 45 cristalls estel·lars",
+    reqText: "Aconsegueix almenys 45 estrelles",
     minStars: 45
   }
 ];
 
 /* ==========================================================================
-   CAPÍTOLS DEL GRIMORI DEL SABER (TEORIA INTERACTIVA I CONCEPTES CLAU)
+   CAPÍTOLS DE LA GUIA DEL SABER (TEORIA INTERACTIVA AMB EXEMPLES QUOTIDIANS)
    ========================================================================== */
 const GRIMORI_CHAPTERS = {
   concepte: {
-    title: "1️⃣ Què és una Fracció? Les Parts de la Magia",
-    ttsText: "Una fracció representa una o més parts iguals d'una unitat sencera. El denominador, el número de sota, indica en quantes parts iguals hem dividit l'escut o la poció. El numerador, el número de dalt, indica quantes d'aquestes parts hem activat o agafat.",
+    title: "1️⃣ Què és una Fracció? Les Parts del Dia a Dia",
+    ttsText: "Una fracció representa una o més parts iguals d'una unitat sencera, com quan tallem una pizza, repartim una rajola de xocolata o comprem mig quilo de fruita al supermercat. El denominador, el número de sota, indica en quantes parts iguals hem dividit la unitat. El numerador, el número de dalt, indica quantes parts agafem o comprem.",
     html: `
       <h3>1️⃣ Què és una Fracció?</h3>
-      <p>Al Regne de Fractària, quan repartim una poció màgica o dividim un escut rònic en <strong>parts exactament iguals</strong>, utilitzem una <strong>fracció</strong>.</p>
+      <p>En la nostra vida quotidiana fem servir <strong>fraccions</strong> constantment: quan comprem <em>mig quilo</em> de maduixes al supermercat, quan repartim una pizza en <em>talls iguals</em> o quan agafem trossos d'una rajola de xocolata.</p>
       
       <div class="grimori-concept-box">
-        <p>🔺 <strong>Numerador (número de dalt):</strong> Indica quantes parts <strong>activem, pintem o agafem</strong>.</p>
-        <p style="margin-top:0.4rem;">🔻 <strong>Denominador (número de sota):</strong> Indica en quantes <strong>parts iguals</strong> s'ha dividit la unitat sencera.</p>
+        <p>🔺 <strong>Numerador (número de dalt):</strong> Indica quantes parts <strong>agafem, comprem o pintem</strong>.</p>
+        <p style="margin-top:0.4rem;">🔻 <strong>Denominador (número de sota):</strong> Indica en quantes <strong>parts exactament iguals</strong> s'ha dividit la unitat sencera (la pizza, la capsa o el quilo).</p>
       </div>
 
-      <p><strong>Exemple màgic:</strong> Si dividim una barra de mana en <strong>4 parts iguals</strong> i n'activem <strong>3</strong>, tenim la fracció <strong>tres quarts (3/4)</strong>.</p>
+      <p><strong>Exemple quotidià:</strong> Si una rajola de xocolata està dividida en <strong>4 trossos iguals</strong> i ens en mengem <strong>3</strong>, hem menjat <strong>tres quarts (3/4)</strong> de la rajola.</p>
       
       <div class="grimori-concept-box">
-        <p>💡 <strong>Recorda la Llei de l'Equilibri:</strong> Si les parts no són de la mateixa mida, no és una fracció vàlida! Prova de moure els controls del <em>Cristall de Prova en Viu</em> de la dreta per veure com canvien el numerador i el denominador.</p>
+        <p>💡 <strong>Molt important:</strong> Perquè sigui una fracció, totes les parts han de tenir <strong>exactament la mateixa mida</strong>! Mou els controls del <em>Simulador en Viu</em> de la dreta per comprovar-ho.</p>
       </div>
     `
   },
   tipus: {
     title: "2️⃣ Fraccions Pròpies, Impròpies i Nombres Mixtos",
-    ttsText: "Segons si una fracció és més petita, igual o més gran que una unitat sencera, pot ser pròpia, igual a la unitat o impròpia. Les fraccions impròpies passen d'una unitat i es poden escriure com a nombre mixt.",
+    ttsText: "Segons si comprem menys d'una unitat, exactament una unitat o més d'una unitat sencera, les fraccions poden ser pròpies, iguals a la unitat o impròpies. Les fraccions impròpies es poden expressar com a nombre mixt, per exemple una pizza sencera i tres quarts.",
     html: `
       <h3>2️⃣ Pròpies, Impròpies i Nombres Mixtos</h3>
-      <p>Quan comparem el <strong>numerador</strong> amb el <strong>denominador</strong>, descobrim tres tipus d'encanteris:</p>
+      <p>Quan anem al forn o al supermercat, podem comprar menys d'una unitat, una unitat sencera o més d'una unitat:</p>
 
       <div class="grimori-concept-box">
-        <p>🛡️ <strong>Fracció Pròpia (menor que 1 unitat):</strong> El numerador és més petit que el denominador (ex: <strong>3/5</strong>). No arriba a omplir una ampolla sencera.</p>
+        <p>🍕 <strong>Fracció Pròpia (menor que 1 unitat):</strong> El numerador és més petit que el denominador (ex: <strong>3/5</strong> d'un pastís). No arriba a ser una unitat sencera.</p>
       </div>
 
       <div class="grimori-concept-box">
-        <p>⚖️ <strong>Fracció Igual a la Unitat (= 1):</strong> El numerador i el denominador són iguals (ex: <strong>4/4 = 1</strong>). És una unitat completa!</p>
+        <p>📦 <strong>Fracció Igual a la Unitat (= 1):</strong> El numerador i el denominador són iguals (ex: <strong>6/6 = 1</strong> safata de 6 iogurts sencera).</p>
       </div>
 
       <div class="grimori-concept-box">
-        <p>🔥 <strong>Fracció Impròpia (major que 1 unitat) i Nombre Mixt:</strong> El numerador és més gran que el denominador (ex: <strong>7/4</strong>). Necessitem més d'una unitat! Com que <strong>4/4</strong> fan <strong>1 unitat sencera</strong> i encara sobren <strong>3/4</strong>, ho podem escriure com el <strong>nombre mixt 1 i 3/4</strong>.</p>
+        <p>🛒 <strong>Fracció Impròpia (major que 1 unitat) i Nombre Mixt:</strong> El numerador és més gran que el denominador (ex: <strong>7/4</strong> de pizza). Necessitem més d'una pizza! Com que <strong>4/4</strong> fan <strong>1 pizza sencera</strong> i sobren <strong>3/4</strong>, ho escrivim com el <strong>nombre mixt 1 i 3/4</strong>.</p>
       </div>
     `
   },
   equivalents: {
-    title: "3️⃣ El Secret de les Fraccions Equivalents",
-    ttsText: "Dues fraccions són equivalents quan representen exactament la mateixa quantitat o superfície, encara que s'escriguin amb números diferents. Per exemple, un mig és equivalent a dos quarts i a quatre vuitens.",
+    title: "3️⃣ Què són les Fraccions Equivalents?",
+    ttsText: "Dues fraccions són equivalents quan representen exactament la mateixa quantitat, encara que s'escriguin amb números diferents. Per exemple, comprar mig quilo de formatge és exactament el mateix que comprar dos paquets d'un quart de quilo.",
     html: `
-      <h3>3️⃣ El Secret de les Fraccions Equivalents</h3>
-      <p>Dues o més fraccions són <strong>equivalents</strong> quan representen <strong>exactament la mateixa porció</strong> d'escut o la mateixa quantitat de poció, encara que tinguin números diferents!</p>
+      <h3>3️⃣ Què són les Fraccions Equivalents?</h3>
+      <p>Dues o més fraccions són <strong>equivalents</strong> quan representen <strong>exactament la mateixa quantitat</strong> de producte, encara que tinguin números diferents!</p>
 
       <div class="grimori-concept-box">
-        <p>✨ <strong>Mira l'exemple:</strong> <strong>1/2 = 2/4 = 3/6 = 4/8</strong></p>
-        <p style="margin-top:0.35rem;">Si parteixes un escut en 2 meitats i n'agafes 1 (<strong>1/2</strong>), tens exactament la mateixa superfície que si el parteixes en 4 quarts i n'agafes 2 (<strong>2/4</strong>)!</p>
+        <p>🧀 <strong>Exemple a la xarcuteria:</strong> <strong>1/2 = 2/4 = 3/6 = 4/8</strong></p>
+        <p style="margin-top:0.35rem;">Comprar <strong>1/2 formatge</strong> (1 meitat) és exactament la mateixa quantitat que comprar <strong>2/4 de formatge</strong> (2 quarts) o <strong>4/8 de formatge</strong> (4 vuitens)!</p>
       </div>
 
       <div class="grimori-concept-box">
-        <p>🔍 <strong>Truc dels Cavallers (Producte Creuat):</strong> Dues fraccions són equivalents si en multiplicar en creu donen el mateix resultat: a <strong>2/3</strong> i <strong>4/6</strong>, es compleix que <strong>2 × 6 = 12</strong> i <strong>3 × 4 = 12</strong>.</p>
+        <p>🔍 <strong>Truc del producte en creu:</strong> Dues fraccions són equivalents si en multiplicar en creu donen el mateix resultat: a <strong>2/3</strong> i <strong>4/6</strong>, es compleix que <strong>2 × 6 = 12</strong> i <strong>3 × 4 = 12</strong>.</p>
       </div>
     `
   },
@@ -127,15 +128,15 @@ const GRIMORI_CHAPTERS = {
     ttsText: "Podem transformar una fracció en una altra d'equivalent de dues maneres: amplificant, que és multiplicar numerador i denominador pel mateix nombre, o simplificant, que és dividir numerador i denominador pel mateix divisor fins a obtenir la fracció irreductible.",
     html: `
       <h3>4️⃣ Transformació: Amplificar i Simplificar</h3>
-      <p>A la Forja d'Alquímia podem transformar qualsevol fracció en una altra d'equivalent amb dos encanteris:</p>
+      <p>Podem transformar qualsevol fracció en una altra d'equivalent amb dues operacions:</p>
 
       <div class="grimori-concept-box">
-        <p>⚡ <strong>Amplificar (Raig Multiplicador):</strong> Multipliquem el numerador i el denominador pel <strong>mateix nombre</strong> (× 2, × 3, × 4...). Visualment, cada peça es parteix en trossos més petits!</p>
+        <p>🔪 <strong>Amplificar (Partir en trossos més petits):</strong> Multipliquem el numerador i el denominador pel <strong>mateix nombre</strong> (× 2, × 3, × 4...). Si cada tall de pastís el partim per la meitat (× 2), tindrem el doble de talls però ocuparan el mateix!</p>
         <p style="margin-top:0.4rem;">Exemple: <strong>2/3</strong> &rarr; <em>(multipliquem dalt i baix × 2)</em> &rarr; <strong>4/6</strong></p>
       </div>
 
       <div class="grimori-concept-box">
-        <p>🗡️ <strong>Simplificar (Espasa Divisora):</strong> Dividim el numerador i el denominador pel <strong>mateix divisor comú</strong> (÷ 2, ÷ 3, ÷ 5...). Visualment, agrupem peces petites en peces més grans!</p>
+        <p>📦 <strong>Simplificar (Agrupar en paquets més grans):</strong> Dividim el numerador i el denominador pel <strong>mateix divisor comú</strong> (÷ 2, ÷ 3, ÷ 5...).</p>
         <p style="margin-top:0.4rem;">Exemple: <strong>6/8</strong> &rarr; <em>(dividim dalt i baix ÷ 2)</em> &rarr; <strong>3/4</strong>. Com que 3 i 4 ja no es poden dividir més pel mateix nombre, <strong>3/4</strong> és la <strong>fracció irreductible</strong>!</p>
       </div>
     `
@@ -143,7 +144,7 @@ const GRIMORI_CHAPTERS = {
 };
 
 /* ==========================================================================
-   75 MISSIONS INTERACTIVES (5 MÒDULS × 3 NIVELLS × 5 REPTES)
+   75 EXERCICIS INTERACTIUS QUOTIDIANS (5 MÒDULS × 3 NIVELLS × 5 REPTES)
    ========================================================================== */
 const CHALLENGES_DATA = {
 
@@ -154,9 +155,9 @@ const CHALLENGES_DATA = {
     1: [
       {
         id: "id_1_1",
-        title: "L'Escut de les Quatre Torres",
-        lore: "El mestre ferrer necessita activar l'energia rúnica de l'escut.",
-        instruction: "Representa al tauler la fracció <strong>3/4</strong> (tres quarts): assegura't que la figura tingui <strong>4 parts iguals</strong> i fes clic per activar-ne <strong>3</strong>. Després escriu la fracció a sota.",
+        title: "El Formatge del Mercat",
+        lore: "A la parada de formatges venen un formatge rodó tallat en 4 parts iguals.",
+        instruction: "Representa al tauler la fracció <strong>3/4</strong> de formatge: assegura't que estigui dividit en <strong>4 parts iguals</strong> i fes clic per seleccionar-ne <strong>3</strong>. Després escriu la fracció a sota.",
         type: "build_and_write",
         defaultShape: "circle",
         initNum: 0,
@@ -166,16 +167,16 @@ const CHALLENGES_DATA = {
         targetDen: 4,
         requireExactParts: true,
         hints: [
-          "El número de sota (denominador = 4) indica que l'escut ha d'estar dividit en 4 parts iguals.",
-          "Fes clic directament sobre 3 sectors de l'escut circular perquè s'il·luminin.",
+          "El número de sota (denominador = 4) indica que el formatge està tallat en 4 trossos iguals.",
+          "Fes clic directament sobre 3 porcions del formatge rodó per seleccionar-les.",
           "Escriu 3 al numerador (dalt) i 4 al denominador (sota) i prem Comprova!"
         ]
       },
       {
         id: "id_1_2",
-        title: "La Poció dels Cinc Elements",
-        lore: "L'alquimista Elara prepara un elixir de resistència per al viatge.",
-        instruction: "Divideix la barra de poció en <strong>5 parts iguals</strong> i omple'n <strong>2 parts</strong> per representar <strong>2/5</strong> (dos cinquens). Escriu també els números a la casella de fracció.",
+        title: "La Barra de Cereals",
+        lore: "Per esmorzar tens una barreta energètica de cereals.",
+        instruction: "Divideix la barra en <strong>5 parts iguals</strong> i selecciona'n <strong>2 parts</strong> per representar que t'has menjat <strong>2/5</strong> (dos cinquens). Escriu també els números a la casella de fracció.",
         type: "build_and_write",
         defaultShape: "bar",
         initNum: 0,
@@ -186,15 +187,15 @@ const CHALLENGES_DATA = {
         requireExactParts: true,
         hints: [
           "La fracció 2/5 té denominador 5 i numerador 2.",
-          "Prem el botó '+' de 'Parts per unitat' fins a tenir 5 divisions, i fes clic a 2 trossos de la barra.",
+          "Prem el botó '+' de 'Parts/unitat' fins a tenir 5 divisions, i fes clic a 2 trossos de la barra.",
           "A la casella simbòlica, escriu 2 a dalt i 5 a sota."
         ]
       },
       {
         id: "id_1_3",
-        title: "Lectura del Cristall Ancestral",
-        lore: "Has trobat una tauleta de cristall ja activada a les ruïnes d'Equivalia.",
-        instruction: "Observa la figura del tauler (no cal modificar-ne les peces) i <strong>identifica quina fracció representa</strong> escrivint el numerador i el denominador correctes.",
+        title: "La Capsa de 8 Formatgets",
+        lore: "Obres la nevera per mirar quants formatgets queden a la capsa.",
+        instruction: "Observa la capsa del tauler (no cal modificar-ne les peces) i <strong>identifica quina fracció de la capsa està plena</strong> escrivint el numerador i el denominador correctes.",
         type: "identify_locked",
         defaultShape: "grid",
         initNum: 5,
@@ -205,16 +206,16 @@ const CHALLENGES_DATA = {
         targetDen: 8,
         requireExactParts: true,
         hints: [
-          "Compta primer en quantes caselles iguals en total està dividida la tauleta (denominador).",
-          "Ara compta quantes caselles estan il·luminades amb màgia (numerador).",
-          "Hi ha 5 caselles activades d'un total de 8: escriu 5 a dalt i 8 a sota (5/8)."
+          "Compta primer quants espais iguals en total té la capsa (denominador).",
+          "Ara compta quantes porcions estan marcades (numerador).",
+          "Hi ha 5 porcions d'un total de 8: escriu 5 a dalt i 8 a sota (5/8)."
         ]
       },
       {
         id: "id_1_4",
-        title: "Les Sis Runes del Portal",
-        lore: "El portal del bosc s'obre quan s'activen quatre sisenes parts del seu anell.",
-        instruction: "Configura l'escut en <strong>6 parts iguals</strong> i activa'n <strong>4</strong> per formar la fracció <strong>4/6</strong>. Escriu-la a la casella simbòlica.",
+        title: "La Pizza Familiar de 6 Talls",
+        lore: "Per sopar heu demanat una pizza tallada en 6 porcions iguals.",
+        instruction: "Configura la pizza en <strong>6 parts iguals</strong> i selecciona'n <strong>4</strong> per representar els <strong>4/6</strong> que us heu menjat. Escriu la fracció a sota.",
         type: "build_and_write",
         defaultShape: "circle",
         initNum: 1,
@@ -225,15 +226,15 @@ const CHALLENGES_DATA = {
         requireExactParts: true,
         hints: [
           "Quatre sisens s'escriu amb un 4 al numerador i un 6 al denominador.",
-          "Fes servir el botó '+' de 'Parts (Denominador)' per passar de 3 a 6 parts, i pinta'n 4.",
+          "Fes servir el botó '+' de 'Parts/unitat (Denominador)' per passar de 3 a 6 talls, i pinta'n 4.",
           "Escriu 4 a dalt i 6 a sota (4/6)."
         ]
       },
       {
         id: "id_1_5",
-        title: "El Sender de les Deu Llambordes",
-        lore: "Un explorador ha recorregut set desenes parts del pont penjant.",
-        instruction: "A la recta numèrica o barra, representa la fracció <strong>7/10</strong> (set desens): divideix la unitat en <strong>10 parts</strong> i activa'n <strong>7</strong>.",
+        title: "Cinta de Regal a la Papereria",
+        lore: "A la papereria del barri compres set desenes parts d'un metre de cinta.",
+        instruction: "A la cinta mètrica, representa la fracció <strong>7/10 de metre</strong> (set desens): divideix el metre en <strong>10 parts</strong> i marca'n <strong>7</strong>.",
         type: "build_and_write",
         defaultShape: "line",
         initNum: 0,
@@ -243,8 +244,8 @@ const CHALLENGES_DATA = {
         targetDen: 10,
         requireExactParts: true,
         hints: [
-          "La recta ja està dividida en 10 trams iguals entre el 0 i l'1.",
-          "Fes clic a 7 trams (o prem '+' a Parts activades fins a 7) perquè l'heroi avanci fins a 7/10.",
+          "La cinta mètrica ja està dividida en 10 trams iguals entre el 0 i l'1.",
+          "Fes clic al tram 7 (o prem '+' a Peces fins a 7) per marcar 7/10 de metre.",
           "Escriu 7 al numerador i 10 al denominador."
         ]
       }
@@ -252,9 +253,9 @@ const CHALLENGES_DATA = {
     2: [
       {
         id: "id_2_1",
-        title: "El Còdex de l'Arquera",
-        lore: "L'arquera Lyra ha encertat gairebé totes les dianes de l'entrenament.",
-        instruction: "Observa la figura bloquejada del tauler i escriu quina fracció representa. Fixa't bé en el total de parts!",
+        title: "El Pastís de Poma del Forn",
+        lore: "Al taulell del forn queda una part d'un pastís de poma artesanal.",
+        instruction: "Observa la figura bloquejada del tauler i escriu quina fracció del pastís queda disponible.",
         type: "identify_locked",
         defaultShape: "circle",
         initNum: 5,
@@ -265,16 +266,16 @@ const CHALLENGES_DATA = {
         targetDen: 6,
         requireExactParts: true,
         hints: [
-          "Compta tots els sectors de l'escut circular, tant els pintats com els buits.",
-          "En total hi ha 6 sectors iguals i 5 estan activats.",
+          "Compta tots els talls en què està dividit el pastís, tant els pintats com el buit.",
+          "En total hi ha 6 talls iguals i en queden 5.",
           "Escriu 5 al numerador i 6 al denominador (5/6)."
         ]
       },
       {
         id: "id_2_2",
-        title: "La Unitat Completa de Mana",
-        lore: "Per invocar el drac guardià cal una ampolla de mana plena fins a dalt.",
-        instruction: "Divideix la figura en <strong>8 parts iguals</strong> i activa totes les parts necessàries per obtenir <strong>1 unitat sencera (8/8)</strong>.",
+        title: "ElBrics de Suc Sencer",
+        lore: "Compres una ampolla de suc d'un litre completament plena.",
+        instruction: "Divideix l'envàs en <strong>8 gots iguals</strong> i selecciona totes les parts per obtenir <strong>1 envàs sencer ple (8/8)</strong>.",
         type: "build_and_write",
         defaultShape: "bar",
         initNum: 3,
@@ -285,15 +286,15 @@ const CHALLENGES_DATA = {
         requireExactParts: true,
         hints: [
           "Quan una fracció és igual a 1 unitat sencera, el numerador i el denominador són iguals.",
-          "Activa les 8 parts de la barra de 8 divisions.",
+          "Selecciona les 8 parts de l'envàs de 8 divisions.",
           "Escriu 8/8 a la casella de resposta."
         ]
       },
       {
         id: "id_2_3",
-        title: "Els Dotze Cristalls de Llum",
-        lore: "La cambra subterrània s'il·lumina amb set dotzenes parts d'energia solar.",
-        instruction: "Construeix al tauler la fracció <strong>7/12</strong> (set dotzens): ajusta el denominador a <strong>12 parts</strong> i activa'n <strong>7</strong>.",
+        title: "La Dotzena d'Ous del Supermercat",
+        lore: "Després de fer una truita, mires quants ous queden a la safata d'una dotzena.",
+        instruction: "Construeix al tauler la fracció <strong>7/12</strong> d'una dotzena d'ous: ajusta el denominador a <strong>12 parts</strong> i marca <strong>7 ous</strong>.",
         type: "build_and_write",
         defaultShape: "grid",
         initNum: 0,
@@ -303,16 +304,16 @@ const CHALLENGES_DATA = {
         targetDen: 12,
         requireExactParts: true,
         hints: [
-          "Augmenta el nombre de parts per unitat fins a 12.",
-          "Fes clic sobre 7 cristalls de la tauleta de 12.",
+          "Augmenta el nombre de parts per unitat fins a 12 (una dotzena).",
+          "Fes clic sobre 7 caselles de la safata de 12.",
           "Escriu 7 al numerador i 12 al denominador."
         ]
       },
       {
         id: "id_2_4",
-        title: "El Rellotge de les Nou Llunes",
-        lore: "Falten cinc novenes parts de la nit perquè surti el sol a Fractària. Quantes novenes parts ja han passat?",
-        instruction: "Si la nit té <strong>9 parts iguals</strong> i en falten 5 per acabar, representa i escriu la fracció de nit que <strong>ja ha passat (4/9)</strong>.",
+        title: "La Coca de Forner en 9 Trossos",
+        lore: "Una coca s'ha tallat en 9 trossos iguals i encara en queden 5 a la safata. Quina fracció s'ha venut ja?",
+        instruction: "Si la coca té <strong>9 trossos iguals</strong> i en queden 5 per vendre, representa i escriu la fracció de coca que <strong>ja s'ha venut (4/9)</strong>.",
         type: "build_and_write",
         defaultShape: "circle",
         initNum: 0,
@@ -322,16 +323,16 @@ const CHALLENGES_DATA = {
         targetDen: 9,
         requireExactParts: true,
         hints: [
-          "Si el total és 9/9 i falten 5/9, ja han passat 9 - 5 = 4 parts.",
-          "Pinta 4 sectors de l'escut de 9 parts.",
+          "Si el total és 9/9 i queden 5/9, ja s'han venut 9 - 5 = 4 trossos.",
+          "Pinta 4 porcions de la figura de 9 parts.",
           "Escriu la fracció 4/9."
         ]
       },
       {
         id: "id_2_5",
-        title: "Fita a la Recta del Bosc",
-        lore: "Un senyal màgic brilla en un punt exacte entre el 0 i l'1.",
-        instruction: "Observa la recta numèrica bloquejada i escriu quina fracció assenyala el marcador lluminós.",
+        title: "Pesant Fruita a la Bàscula",
+        lore: "L'agulla de la bàscula lineal del supermercat marca menys d'un quilo.",
+        instruction: "Observa la recta numèrica bloquejada (dividida en vuitens de quilo) i escriu quina fracció de quilo marca.",
         type: "identify_locked",
         defaultShape: "line",
         initNum: 3,
@@ -342,8 +343,8 @@ const CHALLENGES_DATA = {
         targetDen: 8,
         requireExactParts: true,
         hints: [
-          "Compta en quants trams iguals està dividit el camí entre el 0 i l'1.",
-          "Hi ha 8 trams en total i hi ha 3 trams il·luminats des del 0.",
+          "Compta en quants trams iguals està dividit l'espai entre 0 kg i 1 kg.",
+          "Hi ha 8 trams en total i hi ha 3 trams marcats des del 0.",
           "La fracció és 3/8."
         ]
       }
@@ -351,9 +352,9 @@ const CHALLENGES_DATA = {
     3: [
       {
         id: "id_3_1",
-        title: "Més d'un Escut: Fracció Impròpia (5/4)",
-        lore: "En el rang d'Arximag, l'energia supera una unitat sencera!",
-        instruction: "Representa la fracció impròpia <strong>5/4</strong> (cinc quarts), que equival al nombre mixt <strong>1 i 1/4</strong>. Tens <strong>2 unitats</strong> dividides en 4 parts cadascuna: activa <strong>5 parts en total</strong> i escriu la fracció impròpia <strong>5/4</strong>.",
+        title: "Més d'una Pizza: Fracció Impròpia (5/4)",
+        lore: "En un berenar d'amics heu menjat més d'una pizza sencera!",
+        instruction: "Representa la fracció impròpia <strong>5/4 de pizza</strong> (cinc quarts), que equival a <strong>1 pizza sencera i 1/4</strong>. Tens <strong>2 pizzes</strong> tallades en 4 parts cadascuna: selecciona <strong>5 parts en total</strong> i escriu la fracció impròpia <strong>5/4</strong>.",
         type: "build_and_write",
         defaultShape: "circle",
         initNum: 0,
@@ -363,16 +364,16 @@ const CHALLENGES_DATA = {
         targetDen: 4,
         requireExactParts: true,
         hints: [
-          "Com que el numerador (5) és més gran que el denominador (4), necessitem més d'un escut sencer!",
-          "Omple les 4 parts del primer escut (4/4 = 1 unitat) i 1 part del segon escut (en total 5 parts pintades).",
+          "Com que el numerador (5) és més gran que el denominador (4), necessitem més d'una pizza sencera!",
+          "Selecciona els 4 quarts de la primera pizza (4/4 = 1 pizza) i 1 quart de la segona pizza (5 quarts en total).",
           "Escriu 5 al numerador i 4 al denominador (5/4)."
         ]
       },
       {
         id: "id_3_2",
-        title: "Les Dues Ampolles i Mitja (5/2)",
-        lore: "El drac de foc necessita dues ampolles senceres i mitja de poció refrigerant.",
-        instruction: "Representa el nombre mixt <strong>2 i 1/2</strong> com a fracció impròpia: divideix cada unitat en <strong>2 parts (meitats)</strong>, activa <strong>5 meitats en total</strong> i escriu la fracció impròpia <strong>5/2</strong>.",
+        title: "Dues Barres de Pa i Mitja (5/2)",
+        lore: "Per fer els entrepans de l'excursió heu comprat dues barres de pa senceres i mitja.",
+        instruction: "Representa el nombre mixt <strong>2 i 1/2</strong> com a fracció impròpia: divideix cada barra en <strong>2 parts (meitats)</strong>, selecciona <strong>5 meitats en total</strong> i escriu la fracció impròpia <strong>5/2</strong>.",
         type: "build_and_write",
         defaultShape: "bar",
         initNum: 0,
@@ -382,16 +383,16 @@ const CHALLENGES_DATA = {
         targetDen: 2,
         requireExactParts: true,
         hints: [
-          "Cada unitat sencera té 2 meitats (2/2). Dues unitats senceres són 4 meitats (4/2).",
+          "Cada barra sencera té 2 meitats (2/2). Dues barres senceres són 4 meitats (4/2).",
           "Si hi afegim 1 meitat més, tenim 5 meitats en total!",
-          "Activa 5 peces de mida 1/2 i escriu 5/2."
+          "Selecciona 5 peces de mida 1/2 i escriu 5/2."
         ]
       },
       {
         id: "id_3_3",
-        title: "Identifica la Reserva de Cristalls",
-        lore: "Al magatzem reial hi ha més d'una caixa plena de cristalls de terços.",
-        instruction: "Observa les 3 unitats del tauler (dividides en terços) i escriu la <strong>fracció impròpia</strong> total de parts activades.",
+        title: "Els Packs de 3 Briks de Llet",
+        lore: "Al rebost de casa hi ha diversos packs de 3 briks de llet.",
+        instruction: "Observa els 3 packs del tauler (cada pack complet té 3 briks) i escriu la <strong>fracció impròpia</strong> total de briks seleccionats.",
         type: "identify_locked",
         defaultShape: "grid",
         initNum: 7,
@@ -402,16 +403,16 @@ const CHALLENGES_DATA = {
         targetDen: 3,
         requireExactParts: true,
         hints: [
-          "El denominador és el nombre de parts d'UNA sola unitat (cada caixa té 3 parts, per tant el denominador és 3, no 9!).",
-          "Compta quantes parts estan activades en total sumant les 3 caixes: 3 + 3 + 1 = 7 terços.",
+          "El denominador és el nombre de parts d'UN sol pack (cada pack té 3 unitats, per tant el denominador és 3, no 9!).",
+          "Compta quants briks estan marcats en total sumant els 3 packs: 3 + 3 + 1 = 7 terços.",
           "Escriu 7 al numerador i 3 al denominador (7/3)."
         ]
       },
       {
         id: "id_3_4",
-        title: "Un Escut i Cinc Sisens (11/6)",
-        lore: "Transforma visualment el nombre mixt 1 i 5/6 en una fracció impròpia.",
-        instruction: "Divideix les unitats en <strong>6 parts (sisens)</strong> i pinta <strong>1 unitat sencera més 5 sisens</strong> per obtenir <strong>11/6</strong>.",
+        title: "Una Empanada Sencera i Cinc Sisens (11/6)",
+        lore: "A la fleca han venut 1 empanada sencera i 5/6 d'una altra.",
+        instruction: "Amb les unitats dividides en <strong>6 parts (sisens)</strong>, pinta <strong>1 unitat sencera més 5 sisens</strong> per obtenir <strong>11/6</strong>.",
         type: "build_and_write",
         defaultShape: "circle",
         initNum: 6,
@@ -421,16 +422,16 @@ const CHALLENGES_DATA = {
         targetDen: 6,
         requireExactParts: true,
         hints: [
-          "1 unitat sencera dividida en sisens són 6/6.",
+          "1 empanada sencera dividida en sisens són 6/6.",
           "Si a 6/6 hi afegim 5/6 més, tenim 6 + 5 = 11 sisens.",
-          "Activa 11 sectors en total i escriu 11/6."
+          "Selecciona 11 porcions en total i escriu 11/6."
         ]
       },
       {
         id: "id_3_5",
-        title: "Nou Quarts a la Forja (9/4)",
-        lore: "Representa el poder de 2 escuts sencers i 1 quart addicional.",
-        instruction: "Amb les unitats dividides en <strong>4 parts (quarts)</strong>, activa <strong>9 quarts (9/4)</strong> en total i escriu la fracció impròpia.",
+        title: "Nou Quarts de Rajola de Xocolata (9/4)",
+        lore: "Per fer una fondue de xocolata calen 2 rajoles senceres i 1 quart.",
+        instruction: "Amb les rajoles dividides en <strong>4 parts (quarts)</strong>, selecciona <strong>9 quarts (9/4)</strong> en total i escriu la fracció impròpia.",
         type: "build_and_write",
         defaultShape: "bar",
         initNum: 0,
@@ -440,8 +441,8 @@ const CHALLENGES_DATA = {
         targetDen: 4,
         requireExactParts: true,
         hints: [
-          "2 unitats senceres de 4 quarts són 8 quarts (4 + 4 = 8).",
-          "Activa 1 quart més a la tercera unitat per arribar a 9 quarts.",
+          "2 rajoles senceres de 4 quarts són 8 quarts (4 + 4 = 8).",
+          "Selecciona 1 quart més a la tercera rajola per arribar a 9 quarts.",
           "Escriu 9 al numerador i 4 al denominador (9/4)."
         ]
       }
@@ -455,8 +456,8 @@ const CHALLENGES_DATA = {
     1: [
       {
         id: "comp_1_1",
-        title: "Duel de Cinquens",
-        lore: "Dos escuders comparen la càrrega de les seves barres de mana.",
+        title: "Comparant Ampolles d'Aigua (3/5 vs 4/5)",
+        lore: "Després de la classe d'Educació Física compareu quanta aigua queda a dues cantimplores iguals.",
         instruction: "Representa <strong>3/5</strong> a l'esquerra i <strong>4/5</strong> a la dreta, i tria el símbol correcte (<strong>&lt;</strong>, <strong>=</strong> o <strong>&gt;</strong>).",
         type: "compare_two",
         defaultShape: "bar",
@@ -465,16 +466,16 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: "<",
         hints: [
-          "Totes dues fraccions tenen el mateix denominador (5 parts iguals).",
-          "Quan el denominador és igual, és més gran la fracció que té més parts activades (numerador més gran).",
+          "Totes dues cantimplores estan dividides en 5 parts iguals (mateix denominador).",
+          "Quan el denominador és igual, té més quantitat la que té més parts plenes (numerador més gran).",
           "3/5 és més petit que 4/5: selecciona el símbol '<'."
         ]
       },
       {
         id: "comp_1_2",
-        title: "Els Escuts dels Vuitens",
-        lore: "Compara l'escut del Cavaller Blau (5/8) amb el del Cavaller Verd (3/8).",
-        instruction: "Observa o construeix <strong>5/8</strong> a l'esquerra i <strong>3/8</strong> a la dreta, i selecciona quin símbol les relaciona (<strong>&lt;</strong>, <strong>=</strong> o <strong>&gt;</strong>).",
+        title: "Dues Pizzes de 8 Talls (5/8 vs 3/8)",
+        lore: "A la taula 1 han menjat 5/8 de pizza i a la taula 2 n'han menjat 3/8.",
+        instruction: "Observa <strong>5/8</strong> a l'esquerra i <strong>3/8</strong> a la dreta, i selecciona quin símbol les relaciona (<strong>&lt;</strong>, <strong>=</strong> o <strong>&gt;</strong>).",
         type: "compare_two",
         defaultShape: "circle",
         leftNum: 5, leftDen: 8,
@@ -482,15 +483,15 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: ">",
         hints: [
-          "Tots dos escuts estan dividits en 8 sectors iguals.",
-          "5 sectors pintats ocupen més superfície que 3 sectors.",
+          "Totes dues pizzes estan tallades en 8 porcions iguals.",
+          "5 porcions és més quantitat que 3 porcions.",
           "Per tant, 5/8 > 3/8 (selecciona '>')."
         ]
       },
       {
         id: "comp_1_3",
-        title: "Igualtat al Santuari",
-        lore: "Dues esteles rúniques brillen amb la mateixa proporció.",
+        title: "Dues Safates de 6 Iogurts",
+        lore: "Revises dos packs de iogurts a la llista de la compra.",
         instruction: "Compara <strong>4/6</strong> a l'esquerra i <strong>4/6</strong> a la dreta. Quin símbol correspon?",
         type: "compare_two",
         defaultShape: "grid",
@@ -499,16 +500,16 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: "=",
         hints: [
-          "Mira la barra d'ompliment de tots dos panells.",
+          "Mira la barra de percentatge de tots dos panells.",
           "Tenen exactament el mateix numerador i denominador.",
           "Selecciona el símbol '='."
         ]
       },
       {
         id: "comp_1_4",
-        title: "Cursa als Desens",
-        lore: "Qui ha arribat més lluny pel Sender dels Cristalls?",
-        instruction: "Compara <strong>7/10</strong> a l'esquerra amb <strong>9/10</strong> a la dreta i tria el símbol correcte.",
+        title: "Pesant Ametlles a Granel (7/10 kg vs 9/10 kg)",
+        lore: "Al supermercat peses dues bosses d'ametlles en desenes parts de quilo.",
+        instruction: "Compara <strong>7/10 de kg</strong> a l'esquerra amb <strong>9/10 de kg</strong> a la dreta i tria el símbol correcte.",
         type: "compare_two",
         defaultShape: "line",
         leftNum: 7, leftDen: 10,
@@ -516,15 +517,15 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: "<",
         hints: [
-          "A la recta numèrica, 9/10 està més a prop de l'1 que 7/10.",
+          "A la bàscula lineal, 9/10 kg (900 g) està més a prop d'1 kg que 7/10 kg (700 g).",
           "7 desenes parts és menys que 9 desenes parts.",
           "Tria el símbol '<' (7/10 < 9/10)."
         ]
       },
       {
         id: "comp_1_5",
-        title: "L'Ampolla Sencera contra Cinc Sisens",
-        lore: "Una poció té 6/6 i l'altra té 5/6.",
+        title: "El Brik Sencer contra Cinc Sisens",
+        lore: "Un envàs de brou té 6/6 de litre i un altre en té 5/6.",
         instruction: "Compara <strong>6/6</strong> (esquerra) amb <strong>5/6</strong> (dreta) i selecciona el símbol adequat.",
         type: "compare_two",
         defaultShape: "bar",
@@ -533,7 +534,7 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: ">",
         hints: [
-          "6/6 és la unitat sencera (100% plena), mentre que a 5/6 li falta un sisè.",
+          "6/6 és l'envàs sencer (100% ple), mentre que a 5/6 li falta un sisè.",
           "6/6 és més gran que 5/6.",
           "Selecciona el símbol '>'."
         ]
@@ -542,9 +543,9 @@ const CHALLENGES_DATA = {
     2: [
       {
         id: "comp_2_1",
-        title: "El Parany del Mateix Numerador (1/3 vs 1/5)",
-        lore: "Si repartim el mateix pastís màgic entre més convidats, cada tros serà més gran o més petit?",
-        instruction: "Compara <strong>1/3</strong> (esquerra) amb <strong>1/5</strong> (dreta). Fixa't en la mida de cada peça al tauler i tria <strong>&lt;</strong>, <strong>=</strong> o <strong>&gt;</strong>!",
+        title: "Mateix Numerador: Qui menja un tall més gran? (1/3 vs 1/5)",
+        lore: "Si repartim una truita de patates entre 3 persones o entre 5 persones, quan toca un tros més gran?",
+        instruction: "Compara <strong>1/3</strong> (esquerra) amb <strong>1/5</strong> (dreta). Fixa't en la mida de cada porció al tauler i tria <strong>&lt;</strong>, <strong>=</strong> o <strong>&gt;</strong>!",
         type: "compare_two",
         defaultShape: "bar",
         leftNum: 1, leftDen: 3,
@@ -552,15 +553,15 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: ">",
         hints: [
-          "Atenció! Quan el numerador és igual (1 peça a cada banda), ens hem de fixar en la mida de les peces.",
-          "Dividir en 3 parts dóna trossos MÉS GRANS que dividir en 5 parts.",
+          "Atenció! Quan el numerador és igual (1 tros a cada banda), ens hem de fixar en la mida dels trossos.",
+          "Partir en 3 parts dóna trossos MÉS GRANS que partir en 5 parts.",
           "Per tant, 1/3 és més gran que 1/5 (tria '>')."
         ]
       },
       {
         id: "comp_2_2",
-        title: "Tres Quarts contra Tres Vuitens",
-        lore: "Compara dues fraccions que tenen el mateix numerador (3).",
+        title: "Tres Quarts de Formatge contra Tres Vuitens",
+        lore: "Compara dues compres de formatge amb el mateix numerador (3).",
         instruction: "Observa al tauler <strong>3/4</strong> (esquerra) i <strong>3/8</strong> (dreta) i selecciona el símbol de comparació correcte.",
         type: "compare_two",
         defaultShape: "circle",
@@ -569,16 +570,16 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: ">",
         hints: [
-          "En tots dos escuts hem agafat 3 peces, però els quarts són el doble de grans que els vuitens!",
-          "Mira com 3/4 passa de la meitat de l'escut i 3/8 no arriba a la meitat.",
+          "En tots dos casos agafem 3 talls, però els quarts són el doble de grans que els vuitens!",
+          "Mira com 3/4 passa de la meitat del formatge (75%) i 3/8 no arriba a la meitat (37,5%).",
           "Selecciona '>' perquè 3/4 > 3/8."
         ]
       },
       {
         id: "comp_2_3",
-        title: "Dos Sisens contra Dos Terços",
-        lore: "No et deixis enganyar pel 6!",
-        instruction: "Compara <strong>2/6</strong> (esquerra) amb <strong>2/3</strong> (dreta) mirant les barres del tauler.",
+        title: "Dues Rajoles de Xocolata (2/6 vs 2/3)",
+        lore: "No et deixis enganyar pel 6 del denominador!",
+        instruction: "Compara <strong>2/6</strong> de rajola (esquerra) amb <strong>2/3</strong> de rajola (dreta) mirant les barres del tauler.",
         type: "compare_two",
         defaultShape: "bar",
         leftNum: 2, leftDen: 6,
@@ -586,16 +587,16 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: "<",
         hints: [
-          "Totes dues tenen numerador 2, però els sisens són parts més petites que els terços.",
-          "Visualment, 2/6 és només 1/3, que és menor que 2/3.",
+          "Totes dues tenen numerador 2, però els sisens són trossos més petits que els terços.",
+          "Visualment, 2/6 equival només a 1/3, que és menor que 2/3.",
           "Selecciona '<' (2/6 < 2/3)."
         ]
       },
       {
         id: "comp_2_4",
-        title: "Quatre Cinquens contra Quatre Desens",
-        lore: "Compara l'energia dels cristalls del nord i del sud.",
-        instruction: "Compara <strong>4/5</strong> (esquerra) amb <strong>4/10</strong> (dreta) i tria el símbol màgic.",
+        title: "Safates de Fruita al Súper (4/5 vs 4/10)",
+        lore: "Compara dues safates de kiwi del supermercat.",
+        instruction: "Compara <strong>4/5</strong> (esquerra) amb <strong>4/10</strong> (dreta) i tria el símbol correcte.",
         type: "compare_two",
         defaultShape: "grid",
         leftNum: 4, leftDen: 5,
@@ -603,15 +604,15 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: ">",
         hints: [
-          "Com que el numerador és 4 a totes dues, la que té el denominador més petit (5) té peces el doble de grans.",
-          "4/5 equival a 8/10, que és el doble que 4/10.",
+          "Com que el numerador és 4 a totes dues, la que té el denominador més petit (5) té porcions el doble de grans.",
+          "4/5 equival a 8/10 (80%), que és el doble que 4/10 (40%).",
           "Selecciona '>' (4/5 > 4/10)."
         ]
       },
       {
         id: "comp_2_5",
-        title: "Cinc Vuitens contra Cinc Sisens",
-        lore: "Dues pocions tenen 5 parts activades, però d'ampolles dividides diferent.",
+        title: "Pastissos d'Aniversari (5/8 vs 5/6)",
+        lore: "En quin dels dos pastissos s'ha menjat una fracció més gran?",
         instruction: "Compara <strong>5/8</strong> (esquerra) amb <strong>5/6</strong> (dreta).",
         type: "compare_two",
         defaultShape: "circle",
@@ -621,7 +622,7 @@ const CHALLENGES_DATA = {
         correctSymbol: "<",
         hints: [
           "Els vuitens són més petits que els sisens.",
-          "A 5/6 només li falta un sisè per omplir l'escut, mentre que a 5/8 li falten tres vuitens.",
+          "A 5/6 només li falta un sisè per completar el pastís, mentre que a 5/8 li falten tres vuitens.",
           "Selecciona '<' (5/8 < 5/6)."
         ]
       }
@@ -629,9 +630,9 @@ const CHALLENGES_DATA = {
     3: [
       {
         id: "comp_3_1",
-        title: "El Truc de la Meitat (3/5 vs 3/8)",
-        lore: "Els Arximags utilitzen la meitat (1/2) com a punt de referència!",
-        instruction: "Compara <strong>3/5</strong> (esquerra) amb <strong>2/6</strong> (dreta) observant quina supera la meitat de la barra.",
+        title: "El Truc de la Meitat a la Compra (3/5 vs 2/6)",
+        lore: "Quan comprem, comparar amb la meitat (1/2 = 50%) ens ajuda moltíssim!",
+        instruction: "Compara <strong>3/5 de quilo</strong> (esquerra) amb <strong>2/6 de quilo</strong> (dreta) observant quina supera el mig quilo.",
         type: "compare_two",
         defaultShape: "bar",
         leftNum: 3, leftDen: 5,
@@ -639,15 +640,15 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: ">",
         hints: [
-          "Pensa en la meitat: la meitat de 5 és 2,5, així que 3/5 és MÉS gran que la meitat (60%).",
-          "En canvi, la meitat de 6 és 3, així que 2/6 és MENYS de la meitat.",
+          "Pensa en la meitat: la meitat de 5 és 2,5, així que 3/5 és MÉS de mig quilo (60%).",
+          "En canvi, la meitat de 6 és 3, així que 2/6 és MENYS de mig quilo (33,3%).",
           "Per tant, 3/5 > 2/6 (selecciona '>')."
         ]
       },
       {
         id: "comp_3_2",
-        title: "Equivalència Oculta en el Duel (2/4 vs 4/8)",
-        lore: "Mira amb atenció l'àrea pintada dels dos escuts!",
+        title: "Envàs de Formatge en Quarts o en Vuitens (2/4 vs 4/8)",
+        lore: "Mira amb atenció la quantitat de formatge dels dos envasos!",
         instruction: "Compara <strong>2/4</strong> (esquerra) amb <strong>4/8</strong> (dreta) i tria el símbol que les relaciona.",
         type: "compare_two",
         defaultShape: "circle",
@@ -656,16 +657,16 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: "=",
         hints: [
-          "2 de 4 parts és exactament la meitat de l'escut (50%).",
-          "4 de 8 parts també és exactament la meitat de l'escut (50%)!",
+          "2 de 4 parts és exactament la meitat del formatge (50%).",
+          "4 de 8 parts també és exactament la meitat del formatge (50%)!",
           "Són fraccions equivalents! Selecciona '='."
         ]
       },
       {
         id: "comp_3_3",
-        title: "Dos Terços contra Tres Quarts",
-        lore: "Un clàssic repte de 6è de Primària amb diferent numerador i denominador.",
-        instruction: "Compara visualment <strong>2/3</strong> (esquerra) i <strong>3/4</strong> (dreta). Pots fins i tot transformar-les mentalment a dotzens (8/12 i 9/12)!",
+        title: "Dos Terços contra Tres Quarts de Litre",
+        lore: "Compara dues gerres de llet amb diferent numerador i denominador.",
+        instruction: "Compara visualment <strong>2/3 de litre</strong> (esquerra) i <strong>3/4 de litre</strong> (dreta). Pots passar-les mentalment a dotzens (8/12 i 9/12)!",
         type: "compare_two",
         defaultShape: "bar",
         leftNum: 2, leftDen: 3,
@@ -680,8 +681,8 @@ const CHALLENGES_DATA = {
       },
       {
         id: "comp_3_4",
-        title: "Cinc Sisens contra Set Dotzens",
-        lore: "Transforma els sisens en dotzens per comparar-los amb precisió!",
+        title: "Ous de Mitja Dotzena vs Dotzena (5/6 vs 7/12)",
+        lore: "Transforma els sisens en dotzens per comparar les dues safates d'ous!",
         instruction: "Compara <strong>5/6</strong> (esquerra) amb <strong>7/12</strong> (dreta).",
         type: "compare_two",
         defaultShape: "grid",
@@ -697,9 +698,9 @@ const CHALLENGES_DATA = {
       },
       {
         id: "comp_3_5",
-        title: "Duel de Titans: Fracció Pròpia vs Impròpia (7/8 vs 5/4)",
-        lore: "Una fracció no arriba a la unitat i l'altra la supera!",
-        instruction: "Compara <strong>7/8</strong> (esquerra) amb <strong>5/4</strong> (dreta).",
+        title: "Menys d'un Quilo vs Més d'un Quilo (7/8 vs 5/4)",
+        lore: "Una bossa de taronges no arriba a 1 kg i l'altra supera 1 kg!",
+        instruction: "Compara <strong>7/8 de kg</strong> (esquerra) amb <strong>5/4 de kg</strong> (dreta).",
         type: "compare_two",
         defaultShape: "bar",
         leftNum: 7, leftDen: 8,
@@ -708,8 +709,8 @@ const CHALLENGES_DATA = {
         lockFractions: false,
         correctSymbol: "<",
         hints: [
-          "7/8 és una fracció pròpia (menor que 1 unitat sencera).",
-          "5/4 és una fracció impròpia (major que 1 unitat sencera: 1 i 1/4).",
+          "7/8 és una fracció pròpia (menys d'1 quilo sencer).",
+          "5/4 és una fracció impròpia (més d'1 quilo sencer: 1 kg i quart).",
           "Qualsevol fracció menor que 1 és més petita que una fracció major que 1! Tria '<'."
         ]
       }
@@ -717,15 +718,15 @@ const CHALLENGES_DATA = {
   },
 
   /* ------------------------------------------------------------------------
-     MÒDUL 3: EQUIVALÈNCIES VISUALS (MIRALL GEMINAT)
+     MÒDUL 3: EQUIVALÈNCIES VISUALS
      ------------------------------------------------------------------------ */
   equivalencia: {
     1: [
       {
         id: "eq_1_1",
-        title: "El Mirall de la Meitat (1/2 = ?/4)",
-        lore: "Al Mirall d'Equivalia, les dues figures han de tenir exactament la mateixa superfície il·luminada.",
-        instruction: "A l'esquerra tens <strong>1/2</strong>. A la figura de la dreta (dividida en <strong>4 parts</strong>), fes clic als sectors necessaris i escriu la fracció equivalent amb denominador <strong>4</strong>.",
+        title: "Mitja Pizza en Quarts (1/2 = ?/4)",
+        lore: "Dues pizzes tenen la mateixa mida, però una s'ha tallat en 2 meitats i l'altra en 4 quarts.",
+        instruction: "A l'esquerra tens <strong>1/2 pizza</strong>. A la pizza de la dreta (tallada en <strong>4 parts</strong>), fes clic als talls necessaris per tenir la mateixa quantitat i escriu la fracció equivalent amb denominador <strong>4</strong>.",
         type: "equivalence_mirror",
         defaultShape: "circle",
         baseNum: 1, baseDen: 2,
@@ -733,16 +734,16 @@ const CHALLENGES_DATA = {
         targetDen: 4,
         targetNum: 2,
         hints: [
-          "Mira la meitat pintada a l'escut de l'esquerra (1/2).",
-          "Quants quarts (de l'escut de 4 parts de la dreta) necessites pintar per cobrir exactament la mateixa meitat?",
-          "Pinta 2 quarts i escriu 2/4 a la casella de resposta!"
+          "Mira la meitat seleccionada a la pizza de l'esquerra (1/2).",
+          "Quants quarts (de la pizza de 4 talls de la dreta) necessites agafar per tenir exactament mitja pizza?",
+          "Selecciona 2 quarts i escriu 2/4 a la casella de resposta!"
         ]
       },
       {
         id: "eq_1_2",
-        title: "L'Eco dels Terços (1/3 = ?/6)",
-        lore: "Cada terç es divideix en dos sisens dins del mirall màgic.",
-        instruction: "A l'esquerra tens <strong>1/3</strong>. A la barra de la dreta (dividida en <strong>6 parts</strong>), activa les peces necessàries perquè ocupin el mateix que <strong>1/3</strong> i escriu la fracció equivalent.",
+        title: "La Rajola de Xocolata (1/3 = ?/6)",
+        lore: "Cada terç de la rajola està dividit en dues preses més petites.",
+        instruction: "A l'esquerra tens <strong>1/3 de rajola</strong>. A la barra de la dreta (dividida en <strong>6 parts</strong>), selecciona les peces necessàries perquè ocupin el mateix que <strong>1/3</strong> i escriu la fracció equivalent.",
         type: "equivalence_mirror",
         defaultShape: "bar",
         baseNum: 1, baseDen: 3,
@@ -750,15 +751,15 @@ const CHALLENGES_DATA = {
         targetDen: 6,
         targetNum: 2,
         hints: [
-          "Si la barra té 6 parts en lloc de 3 (el doble de parts), necessitaràs activar el doble de peces.",
-          "Activa 2 peces de la barra de 6 parts i veuràs que totes dues barres tenen un 33,3%.",
+          "Si la rajola té 6 trossos en lloc de 3 (el doble de parts), necessitaràs agafar el doble de trossos.",
+          "Selecciona 2 peces de la barra de 6 parts i veuràs que totes dues barres tenen un 33,3%.",
           "Escriu 2/6 a la casella simbòlica."
         ]
       },
       {
         id: "eq_1_3",
-        title: "Dos Terços en Sisens (2/3 = ?/6)",
-        lore: "Iguala el poder de les dues barres rúniques.",
+        title: "Dos Terços de Pa de Pessic en Sisens (2/3 = ?/6)",
+        lore: "Reparteix la mateixa quantitat de pa de pessic en talls més petits.",
         instruction: "Troba i representa a la dreta la fracció equivalent a <strong>2/3</strong> que tingui denominador <strong>6</strong>.",
         type: "equivalence_mirror",
         defaultShape: "bar",
@@ -768,14 +769,14 @@ const CHALLENGES_DATA = {
         targetNum: 4,
         hints: [
           "Per passar de denominador 3 a denominador 6 hem multiplicat per 2.",
-          "Pinta 4 sisens a la dreta per igualar l'amplada de 2/3.",
+          "Selecciona 4 sisens a la dreta per igualar l'amplada de 2/3.",
           "Escriu la fracció 4/6."
         ]
       },
       {
         id: "eq_1_4",
-        title: "Tres Quarts en Vuitens (3/4 = ?/8)",
-        lore: "L'escut d'or es reflecteix en vuit sectors iguals.",
+        title: "Tres Quarts d'Empanada en Vuitens (3/4 = ?/8)",
+        lore: "Al forn tallen cada quart d'empanada per la meitat.",
         instruction: "Representa a la dreta i escriu la fracció equivalent a <strong>3/4</strong> amb denominador <strong>8</strong>.",
         type: "equivalence_mirror",
         defaultShape: "circle",
@@ -786,14 +787,14 @@ const CHALLENGES_DATA = {
         hints: [
           "Cada quart equival a 2 vuitens.",
           "Per tant, 3 quarts equivalen a 3 × 2 = 6 vuitens.",
-          "Activa 6 sectors a l'escut de la dreta i escriu 6/8."
+          "Selecciona 6 porcions a la figura de la dreta i escriu 6/8."
         ]
       },
       {
         id: "eq_1_5",
-        title: "Cristalls Cinquens i Desens (2/5 = ?/10)",
-        lore: "Duplica les divisions de la tauleta de cristall.",
-        instruction: "Troba la fracció equivalent a <strong>2/5</strong> amb denominador <strong>10</strong> activant els cristalls del panell dret.",
+        title: "Packs de 5 i de 10 Iogurts (2/5 = ?/10)",
+        lore: "Compara el pack petit de 5 unitats amb el pack familiar de 10 unitats.",
+        instruction: "Troba la fracció equivalent a <strong>2/5</strong> amb denominador <strong>10</strong> seleccionant les unitats del panell dret.",
         type: "equivalence_mirror",
         defaultShape: "grid",
         baseNum: 2, baseDen: 5,
@@ -801,18 +802,18 @@ const CHALLENGES_DATA = {
         targetDen: 10,
         targetNum: 4,
         hints: [
-          "2 cinquens són el 40% de la tauleta.",
-          "En una tauleta de 10 cristalls, el 40% són 4 cristalls.",
-          "Activa 4 cristalls i escriu 4/10."
+          "2 cinquens són el 40% del pack.",
+          "En un pack de 10 unitats, el 40% són 4 unitats.",
+          "Selecciona 4 caselles i escriu 4/10."
         ]
       }
     ],
     2: [
       {
         id: "eq_2_1",
-        title: "La Triple Partició (2/3 = ?/9)",
-        lore: "Aquesta vegada tu també has d'ajustar el nombre de parts de la figura dreta!",
-        instruction: "A l'esquerra tens <strong>2/3</strong>. A la figura de la dreta, ajusta el denominador a <strong>9 parts</strong>, activa els sectors equivalents i escriu la fracció resultant.",
+        title: "Pastís Tallat en 9 Porcions (2/3 = ?/9)",
+        lore: "Aquesta vegada tu també has d'ajustar el nombre de talls de la figura dreta!",
+        instruction: "A l'esquerra tens <strong>2/3 de pastís</strong>. A la figura de la dreta, ajusta el denominador a <strong>9 parts</strong>, selecciona les porcions equivalents i escriu la fracció resultant.",
         type: "equivalence_mirror",
         defaultShape: "circle",
         baseNum: 2, baseDen: 3,
@@ -820,16 +821,16 @@ const CHALLENGES_DATA = {
         targetDen: 9,
         targetNum: 6,
         hints: [
-          "Primer puja les 'Parts (Denominador)' del panell dret fins a 9.",
+          "Primer puja les 'Parts/unitat (Denominador)' del panell dret fins a 9.",
           "Com que 9 és el triple de 3 (3 × 3 = 9), el numerador també serà el triple: 2 × 3 = 6.",
-          "Activa 6 novens i escriu 6/9."
+          "Selecciona 6 novens i escriu 6/9."
         ]
       },
       {
         id: "eq_2_2",
-        title: "De Quarts a Dotzens (3/4 = ?/12)",
-        lore: "Transforma els quarts en dotzens dins del laboratori.",
-        instruction: "Divideix la figura de la dreta en <strong>12 parts</strong> i pinta la fracció equivalent a <strong>3/4</strong>.",
+        title: "De 4 Caixes a la Dotzena (3/4 = ?/12)",
+        lore: "Al supermercat agrupen els productes en caixes de 12 unitats.",
+        instruction: "Divideix la safata de la dreta en <strong>12 parts</strong> i selecciona la fracció equivalent a <strong>3/4</strong>.",
         type: "equivalence_mirror",
         defaultShape: "grid",
         baseNum: 3, baseDen: 4,
@@ -839,14 +840,14 @@ const CHALLENGES_DATA = {
         hints: [
           "Ajusta les parts per unitat de la dreta a 12.",
           "Per passar de 4 a 12 multipliquem per 3. Multiplica també el numerador: 3 × 3 = 9.",
-          "Pinta 9 cristalls de 12 i escriu 9/12."
+          "Selecciona 9 caselles de 12 i escriu 9/12."
         ]
       },
       {
         id: "eq_2_3",
-        title: "Agrupant Peces: De Sisens a Terços (4/6 = ?/3)",
-        lore: "També podem fer el camí invers: fer menys parts però més grans!",
-        instruction: "A l'esquerra tens <strong>4/6</strong>. Ajusta la figura de la dreta a <strong>3 parts (terços)</strong> i pinta la fracció equivalent.",
+        title: "Agrupant Porcions: De Sisens a Terços (4/6 = ?/3)",
+        lore: "També podem fer el camí invers: menys paquets però més grans!",
+        instruction: "A l'esquerra tens <strong>4/6 de barra</strong>. Ajusta la figura de la dreta a <strong>3 parts (terços)</strong> i selecciona la fracció equivalent.",
         type: "equivalence_mirror",
         defaultShape: "bar",
         baseNum: 4, baseDen: 6,
@@ -856,13 +857,13 @@ const CHALLENGES_DATA = {
         hints: [
           "Redueix el denominador de la figura dreta a 3 parts.",
           "Si dividim el nombre de parts entre 2 (6 ÷ 2 = 3), agrupem les peces de dues en dues: 4 ÷ 2 = 2.",
-          "Activa 2 terços i escriu 2/3."
+          "Selecciona 2 terços i escriu 2/3."
         ]
       },
       {
         id: "eq_2_4",
-        title: "De Desens a Cinquens (6/10 = ?/5)",
-        lore: "Simplifica visualment l'energia del sender.",
+        title: "De Grams a Cinquens de Quilo (6/10 = ?/5)",
+        lore: "600 grams són 6/10 de quilo. Quants cinquens de quilo són?",
         instruction: "Troba i representa al panell dret la fracció amb denominador <strong>5</strong> que és equivalent a <strong>6/10</strong>.",
         type: "equivalence_mirror",
         defaultShape: "line",
@@ -872,34 +873,34 @@ const CHALLENGES_DATA = {
         targetNum: 3,
         hints: [
           "Canvia les divisions de la dreta de 10 a 5.",
-          "6/10 ocupa el 60% del camí. En quants cinquens tens també el 60%?",
-          "En 3 cinquens! Activa 3/5 i escriu-ho."
+          "6/10 ocupa el 60% del quilo. En quants cinquens tens també el 60%?",
+          "En 3 cinquens! Selecciona 3/5 i escriu-ho."
         ]
       },
       {
         id: "eq_2_5",
-        title: "La Meitat en Dotzens (1/2 = ?/12)",
-        lore: "El rellotge solar de Fractària té 12 hores.",
+        title: "Mitja Dotzena d'Ous (1/2 = ?/12)",
+        lore: "Quan demanem mitja dotzena d'ous al mercat, quants ous d'una caixa de 12 són?",
         instruction: "Representa a la dreta quants dotzens (denominador <strong>12</strong>) equivalen a <strong>1/2</strong>.",
         type: "equivalence_mirror",
-        defaultShape: "circle",
+        defaultShape: "grid",
         baseNum: 1, baseDen: 2,
         initRightNum: 0, initRightDen: 6,
         targetDen: 12,
         targetNum: 6,
         hints: [
           "Posa 12 parts al panell dret.",
-          "La meitat de 12 és 6.",
-          "Pinta 6 sectors de 12 i escriu 6/12."
+          "La meitat de 12 és 6 (mitja dotzena són 6 ous).",
+          "Selecciona 6 ous de 12 i escriu 6/12."
         ]
       }
     ],
     3: [
       {
         id: "eq_3_1",
-        title: "L'Enigma dels Vuitens i Dotzens (6/8 = ?/12)",
-        lore: "Un repte d'Arximag: passa per la fracció irreductible (3/4) per descobrir quants dotzens són 6/8!",
-        instruction: "A l'esquerra tens <strong>6/8</strong> (que és el 75%). Troba i representa a la dreta la fracció equivalent que té denominador <strong>12</strong>!",
+        title: "Equivalència al Supermercat (6/8 = ?/12)",
+        lore: "Passa per la fracció irreductible (3/4) per descobrir quants dotzens equivalen a 6/8!",
+        instruction: "A l'esquerra tens <strong>6/8</strong> (el 75%). Troba i representa a la dreta la fracció equivalent que té denominador <strong>12</strong>!",
         type: "equivalence_mirror",
         defaultShape: "bar",
         baseNum: 6, baseDen: 8,
@@ -907,15 +908,15 @@ const CHALLENGES_DATA = {
         targetDen: 12,
         targetNum: 9,
         hints: [
-          "Observa que 6/8 simplificat entre 2 és 3/4 (el 75% de la barra).",
+          "Observa que 6/8 simplificat entre 2 és 3/4 (el 75% de l'envàs).",
           "Ara transforma 3/4 a dotzens multiplicant per 3: 3 × 3 = 9 i 4 × 3 = 12.",
-          "Activa 9 peces de 12 i escriu 9/12!"
+          "Selecciona 9 peces de 12 i escriu 9/12!"
         ]
       },
       {
         id: "eq_3_2",
-        title: "Harmonia entre Sisens i Novens (4/6 = ?/9)",
-        lore: "Fes que totes dues figures brillin amb el mateix percentatge d'energia.",
+        title: "Repartiment Equitatiu de Pastís (4/6 = ?/9)",
+        lore: "Fes que tots dos pastissos tinguin exactament la mateixa porció seleccionada.",
         instruction: "A l'esquerra hi ha <strong>4/6</strong>. Representa i escriu la fracció equivalent amb denominador <strong>9</strong>.",
         type: "equivalence_mirror",
         defaultShape: "circle",
@@ -926,14 +927,14 @@ const CHALLENGES_DATA = {
         hints: [
           "4/6 és equivalent a 2/3.",
           "Si transformem 2/3 a novens (multiplicant per 3), obtenim 6/9.",
-          "Pinta 6 sectors de 9 i escriu 6/9."
+          "Selecciona 6 talls de 9 i escriu 6/9."
         ]
       },
       {
         id: "eq_3_3",
-        title: "Equivalència d'una Fracció Impròpia (3/2 = ?/4)",
-        lore: "Les fraccions majors que 1 també tenen equivalents!",
-        instruction: "A l'esquerra tens <strong>3/2</strong> (1 unitat i mitja). A la dreta, amb les unitats dividides en <strong>4 parts (quarts)</strong>, activa els quarts equivalents i escriu la fracció amb denominador <strong>4</strong>.",
+        title: "Un Litre i Mig en Quarts de Litre (3/2 = ?/4)",
+        lore: "Les ampolles d'1 litre i mig (3/2 L) també es poden mesurar en gots d'1/4 de litre!",
+        instruction: "A l'esquerra tens <strong>3/2</strong> (1 unitat i mitja). A la dreta, amb les unitats dividides en <strong>4 parts (quarts)</strong>, selecciona els quarts equivalents i escriu la fracció amb denominador <strong>4</strong>.",
         type: "equivalence_mirror",
         defaultShape: "bar",
         baseNum: 3, baseDen: 2,
@@ -942,15 +943,15 @@ const CHALLENGES_DATA = {
         targetDen: 4,
         targetNum: 6,
         hints: [
-          "Cada meitat (1/2) equival a 2 quarts (2/4).",
+          "Cada mig litre (1/2) equival a 2 quarts de litre (2/4).",
           "Com que tenim 3 meitats, en quarts seran 3 × 2 = 6 quarts.",
-          "Activa 6 quarts (1 unitat sencera de 4/4 + 2/4 més) i escriu 6/4."
+          "Selecciona 6 quarts (1 unitat sencera de 4/4 + 2/4 més) i escriu 6/4."
         ]
       },
       {
         id: "eq_3_4",
-        title: "De Dotzens a Quarts (8/12 = ?/3)",
-        lore: "Troba la fracció irreductible amb denominador 3.",
+        title: "De Caixa de 12 a Pack de 3 (8/12 = ?/3)",
+        lore: "Agrupa les 12 unitats de 4 en 4 per obtenir terços.",
         instruction: "A l'esquerra tens <strong>8/12</strong>. Ajusta la dreta a <strong>3 parts</strong> i representa la fracció equivalent.",
         type: "equivalence_mirror",
         defaultShape: "grid",
@@ -961,13 +962,13 @@ const CHALLENGES_DATA = {
         hints: [
           "Ajusta el denominador de la dreta a 3.",
           "8 i 12 es poden dividir entre 4: 8 ÷ 4 = 2 i 12 ÷ 4 = 3.",
-          "Activa 2 terços i escriu 2/3."
+          "Selecciona 2 terços i escriu 2/3."
         ]
       },
       {
         id: "eq_3_5",
-        title: "El Cristall de Cinc Sisens (5/6 = ?/12)",
-        lore: "Última prova del Mirall d'Equivalia!",
+        title: "De Mitja Dotzena a Dotzena Sencera (5/6 = ?/12)",
+        lore: "Últim repte d'equivalències visuals al supermercat!",
         instruction: "Construeix a la dreta la fracció amb denominador <strong>12</strong> equivalent a <strong>5/6</strong>.",
         type: "equivalence_mirror",
         defaultShape: "grid",
@@ -978,22 +979,22 @@ const CHALLENGES_DATA = {
         hints: [
           "Passa el denominador del panell dret de 6 a 12 (el doble).",
           "Multiplica també el numerador per 2: 5 × 2 = 10.",
-          "Activa 10 cristalls de 12 i escriu 10/12."
+          "Selecciona 10 unitats de 12 i escriu 10/12."
         ]
       }
     ]
   },
 
   /* ------------------------------------------------------------------------
-     MÒDUL 4: TRANSFORMACIÓ ALQUÍMICA (AMPLIFICAR, SIMPLIFICAR I NOMBRES MIXTOS)
+     MÒDUL 4: TRANSFORMACIÓ (AMPLIFICAR, SIMPLIFICAR I NOMBRES MIXTOS)
      ------------------------------------------------------------------------ */
   transformacio: {
     1: [
       {
         id: "tr_1_1",
-        title: "El Raig Multiplicador (× 2)",
-        lore: "Aplica l'encanteri d'amplificació per partir cada terç en dues parts iguals!",
-        instruction: "Amplifica la fracció <strong>2/3 multiplicant per 2</strong> (prem el botó màgic <strong>⚡ Amplifica ×2</strong> al tauler per veure com es transforma la figura) i escriu la fracció resultant.",
+        title: "Partir Porcions per la Meitat (Amplificar × 2)",
+        lore: "Al forn parteixen cada terç d'empanada en 2 trossos iguals per fer porcions més petites.",
+        instruction: "Amplifica la fracció <strong>2/3 multiplicant per 2</strong> (prem el botó <strong>⚡ Amplifica ×2</strong> al tauler per veure com es transforma) i escriu la fracció resultant.",
         type: "alchemy_transform",
         defaultShape: "bar",
         baseNum: 2, baseDen: 3,
@@ -1008,8 +1009,8 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_1_2",
-        title: "Amplificació Triple (× 3)",
-        lore: "Multiplica per 3 les divisions de l'escut de quart.",
+        title: "Amplificació Triple al Formatge (× 3)",
+        lore: "Talla cada quart de formatge en 3 falques iguals.",
         instruction: "Transforma la fracció <strong>1/4 amplificant-la per 3 (× 3)</strong> al tauler i escriu la fracció equivalent obtinguda.",
         type: "alchemy_transform",
         defaultShape: "circle",
@@ -1025,9 +1026,9 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_1_3",
-        title: "Duplicant els Cinquens (× 2)",
-        lore: "Fes que els 3 cinquens es converteixin en desens.",
-        instruction: "Amplifica <strong>3/5 per 2 (× 2)</strong> utilitzant l'encanteri del tauler i escriu la fracció transformada.",
+        title: "Del Pack de 5 al Pack de 10 (× 2)",
+        lore: "Converteix els cinquens en desens duplicant les parts.",
+        instruction: "Amplifica <strong>3/5 per 2 (× 2)</strong> utilitzant el botó del tauler i escriu la fracció transformada.",
         type: "alchemy_transform",
         defaultShape: "grid",
         baseNum: 3, baseDen: 5,
@@ -1042,8 +1043,8 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_1_4",
-        title: "Amplificació per 4 (1/3 × 4)",
-        lore: "Converteix els terços en dotzens amb un sol encanteri.",
+        title: "Amplificació per 4 a la Rajola (1/3 × 4)",
+        lore: "Cada fila d'1/3 de xocolata té 4 quadradets petits.",
         instruction: "Transforma <strong>1/3 amplificant per 4 (× 4)</strong> i escriu la fracció obtinguda.",
         type: "alchemy_transform",
         defaultShape: "bar",
@@ -1059,8 +1060,8 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_1_5",
-        title: "De Quarts a Vuitens (3/4 × 2)",
-        lore: "Consolida el domini del Raig Multiplicador.",
+        title: "De Quarts a Vuitens de Pizza (3/4 × 2)",
+        lore: "Talla els quarts per la meitat perquè hi hagi talls per a tothom.",
         instruction: "Amplifica <strong>3/4 per 2 (× 2)</strong> al tauler i escriu la nova fracció.",
         type: "alchemy_transform",
         defaultShape: "circle",
@@ -1078,8 +1079,8 @@ const CHALLENGES_DATA = {
     2: [
       {
         id: "tr_2_1",
-        title: "L'Espasa Divisora: Simplifica 4/8",
-        lore: "Simplificar consisteix a agrupar parts dividint numerador i denominador pel mateix divisor fins a la fracció irreductible!",
+        title: "Simplifica 4/8 de Pizza",
+        lore: "Simplificar consisteix a dividir numerador i denominador pel mateix nombre fins a la fracció irreductible!",
         instruction: "Simplifica <strong>4/8</strong> fins a obtenir la seva <strong>fracció irreductible</strong> utilitzant els botons <strong>🗡️ Simplifica</strong> i escriu-la.",
         type: "alchemy_transform",
         defaultShape: "circle",
@@ -1089,14 +1090,14 @@ const CHALLENGES_DATA = {
         requireExactParts: true,
         hints: [
           "4 i 8 es poden dividir tots dos entre 4 (o dues vegades entre 2).",
-          "Prem '🗡️ Simplifica ÷4' (o '÷2' dues vegades) per agrupar els sectors.",
-          "4 ÷ 4 = 1 i 8 ÷ 4 = 2. La fracció irreductible és 1/2!"
+          "Prem '🗡️ Simplifica ÷4' (o '÷2' dues vegades) per agrupar els talls.",
+          "4 ÷ 4 = 1 i 8 ÷ 4 = 2. La fracció irreductible és 1/2 (mitja pizza)!"
         ]
       },
       {
         id: "tr_2_2",
         title: "Simplificació entre 3 (6/9)",
-        lore: "Redueix la runa de 6/9 a la seva forma més pura.",
+        lore: "Expressa 6/9 d'una barra de torró amb els números més senzills possibles.",
         instruction: "Simplifica <strong>6/9</strong> dividint numerador i denominador entre <strong>3 (÷ 3)</strong> fins a la fracció irreductible.",
         type: "alchemy_transform",
         defaultShape: "bar",
@@ -1112,7 +1113,7 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_2_3",
-        title: "Purificació dels Dotzens (8/12)",
+        title: "Simplificant la Dotzena d'Ous (8/12)",
         lore: "Busca el màxim divisor comú de 8 i 12 per trobar la fracció irreductible!",
         instruction: "Simplifica <strong>8/12</strong> completament fins a la seva <strong>fracció irreductible</strong>.",
         type: "alchemy_transform",
@@ -1129,8 +1130,8 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_2_4",
-        title: "Simplificació entre 5 (5/10)",
-        lore: "Agrupa les 10 parts del camí de 5 en 5.",
+        title: "500 Grams és Mig Quilo (5/10)",
+        lore: "500 g són 5/10 de quilo. Simplifica-ho!",
         instruction: "Simplifica la fracció <strong>5/10</strong> fins a la fracció irreductible.",
         type: "alchemy_transform",
         defaultShape: "line",
@@ -1146,8 +1147,8 @@ const CHALLENGES_DATA = {
       },
       {
         id: "tr_2_5",
-        title: "L'Escut Irreductible (9/12)",
-        lore: "Simplifica 9/12 per revelar els quarts ocults.",
+        title: "Simplifica 9/12 de Pastís",
+        lore: "Simplifica 9/12 per descobrir quants quarts de pastís són.",
         instruction: "Simplifica <strong>9/12</strong> fins a obtenir la seva <strong>fracció irreductible</strong>.",
         type: "alchemy_transform",
         defaultShape: "circle",
@@ -1165,8 +1166,8 @@ const CHALLENGES_DATA = {
     3: [
       {
         id: "tr_3_1",
-        title: "De Fracció Impròpia a Nombre Mixt (7/4)",
-        lore: "Converteix els 7 quarts en unitats senceres i la fracció restant!",
+        title: "De Fracció Impròpia a Nombre Mixt (7/4 de Pizza)",
+        lore: "Converteix els 7 quarts de pizza en pizzes senceres i la fracció sobrant!",
         instruction: "Al tauler tens representada la fracció impròpia <strong>7/4</strong>. Escriu a les caselles de sota a quin <strong>Nombre Mixt</strong> correspon (quantes unitats senceres i quina fracció pròpia sobra).",
         type: "mixed_conversion",
         defaultShape: "circle",
@@ -1177,16 +1178,16 @@ const CHALLENGES_DATA = {
         targetNum: 3,
         targetDen: 4,
         hints: [
-          "Observa els escuts de 4 parts: amb 7 quarts s'omple 1 escut sencer (4/4 = 1).",
-          "Quants quarts queden pintats al segon escut? 7 - 4 = 3 quarts.",
+          "Observa les pizzes de 4 talls: amb 7 quarts s'omple 1 pizza sencera (4/4 = 1).",
+          "Quants quarts queden seleccionats a la segona pizza? 7 - 4 = 3 quarts.",
           "Escriu 1 a la casella gran d'unitats senceres, i 3/4 a la fracció (1 i 3/4)."
         ]
       },
       {
         id: "tr_3_2",
-        title: "Transforma 8/3 en Nombre Mixt",
-        lore: "Quantes barres senceres de 3 terços podem omplir amb 8 terços?",
-        instruction: "Representa <strong>8/3</strong> (8 parts en unitats de 3 divisions) i escriu el seu <strong>Nombre Mixt</strong> (unitats senceres + fracció).",
+        title: "Transforma 8/3 de Xocolata en Nombre Mixt",
+        lore: "Quantes rajoles senceres de 3 terços podem formar amb 8 terços?",
+        instruction: "Observa <strong>8/3</strong> (8 parts en barres de 3 divisions) i escriu el seu <strong>Nombre Mixt</strong> (unitats senceres + fracció).",
         type: "mixed_conversion",
         defaultShape: "bar",
         initNum: 8, initDen: 3,
@@ -1196,16 +1197,16 @@ const CHALLENGES_DATA = {
         targetNum: 2,
         targetDen: 3,
         hints: [
-          "Cada unitat sencera té 3 terços. Amb 8 terços omplim 2 unitats senceres (6/3 = 2).",
-          " A la tercera barra queden 8 - 6 = 2 terços.",
+          "Cada barra sencera té 3 terços. Amb 8 terços omplim 2 barres senceres (6/3 = 2).",
+          "A la tercera barra queden 8 - 6 = 2 terços.",
           "Escriu 2 unitats senceres i 2/3."
         ]
       },
       {
         id: "tr_3_3",
         title: "De Nombre Mixt (2 i 1/4) a Fracció Impròpia",
-        lore: "Fes ara la transformació inversa: passa de nombre mixt a fracció impròpia!",
-        instruction: "Transforma el nombre mixt <strong>2 i 1/4</strong> en una sola <strong>fracció impròpia</strong>: activa les peces corresponents al tauler i escriu el numerador i denominador totals.",
+        lore: "Has comprat 2 formatges sencers i 1/4 de formatge més. Quants quarts tens en total?",
+        instruction: "Transforma el nombre mixt <strong>2 i 1/4</strong> en una sola <strong>fracció impròpia</strong>: selecciona les peces corresponents al tauler i escriu el numerador i denominador totals.",
         type: "build_and_write",
         defaultShape: "circle",
         initNum: 5, initDen: 4,
@@ -1214,15 +1215,15 @@ const CHALLENGES_DATA = {
         targetDen: 4,
         requireExactParts: true,
         hints: [
-          "2 unitats senceres dividides en quarts són 2 × 4 = 8 quarts.",
+          "2 formatges sencers dividits en quarts són 2 × 4 = 8 quarts.",
           "Si hi sumem el quart addicional (1/4), tenim 8 + 1 = 9 quarts.",
-          "Activa 9 sectors de quart al tauler i escriu 9/4."
+          "Selecciona 9 porcions de quart al tauler i escriu 9/4."
         ]
       },
       {
         id: "tr_3_4",
-        title: "Simplificació d'una Fracció Impròpia (6/4)",
-        lore: "Una fracció impròpia també es pot simplificar amb l'Espasa Divisora!",
+        title: "Simplificació d'una Fracció Impròpia (6/4 kg)",
+        lore: "Has comprat 6 paquets d'1/4 kg de cafè (6/4 kg). Simplifica aquesta fracció!",
         instruction: "Simplifica la fracció impròpia <strong>6/4 dividint entre 2 (÷ 2)</strong> fins a la seva fracció irreductible.",
         type: "alchemy_transform",
         defaultShape: "bar",
@@ -1234,13 +1235,13 @@ const CHALLENGES_DATA = {
         hints: [
           "Tant 6 com 4 són nombres parells (divisibles entre 2).",
           "Prem '🗡️ Simplifica ÷2': 6 ÷ 2 = 3 i 4 ÷ 2 = 2.",
-          "Escriu la fracció irreductible 3/2."
+          "Escriu la fracció irreductible 3/2 (1 quilo i mig)."
         ]
       },
       {
         id: "tr_3_5",
-        title: "Reducció a Comú Denominador (2/3 i 1/4 a dotzens)",
-        lore: "Per sumar o comparar terços i quarts, els Arximags els transformen al denominador comú 12!",
+        title: "Reducció a Denominador Comú (2/3 a dotzens)",
+        lore: "Per comparar una recepta que demana 2/3 de tassa i 1/4 de tassa, les passem a dotzens!",
         instruction: "Transforma la fracció <strong>2/3</strong> en una d'equivalent amb denominador <strong>12</strong> amplificant-la al tauler.",
         type: "alchemy_transform",
         defaultShape: "grid",
@@ -1258,15 +1259,15 @@ const CHALLENGES_DATA = {
   },
 
   /* ------------------------------------------------------------------------
-     MÒDUL 5: PROBLEMES ÈPICS DEL REGNE
+     MÒDUL 5: PROBLEMES AL SUPERMERCAT I SITUACIONS QUOTIDIANES
      ------------------------------------------------------------------------ */
   problemes: {
     1: [
       {
         id: "prob_1_1",
-        title: "El Banquet de la Taverna Daurada",
-        lore: "La companyia d'aventurers recupera forces després de travessar les muntanyes.",
-        instruction: "Un pastís èpic d'energia s'ha dividit en <strong>8 parts iguals</strong>. El guerrer Bruk se n'ha menjat <strong>3 parts</strong> i la maga Lyra se n'ha menjat <strong>2 parts</strong>. <strong>Quina fracció del pastís s'han menjat en total?</strong> Representa-la al tauler i escriu la fracció.",
+        title: "Sopar de Pizza a Casa",
+        lore: "Divendres a la nit compartiu una pizza familiar a casa.",
+        instruction: "Una pizza s'ha tallat en <strong>8 porcions iguals</strong>. El teu germà se n'ha menjat <strong>3 porcions</strong> i tu te n'has menjat <strong>2 porcions</strong>. <strong>Quina fracció de la pizza us heu menjat en total?</strong> Representa-la al tauler i escriu la fracció.",
         type: "problem_fraction",
         defaultShape: "circle",
         initNum: 0, initDen: 8,
@@ -1274,16 +1275,16 @@ const CHALLENGES_DATA = {
         targetNum: 5, targetDen: 8,
         requireExactParts: false,
         hints: [
-          "Dades: el pastís té 8 parts iguals (denominador = 8). En Bruk n'agafa 3/8 i na Lyra 2/8.",
-          "Representació: activa 3 sectors a l'escut de 8 parts i després activa'n 2 més.",
+          "Dades: la pizza té 8 parts iguals (denominador = 8). S'han menjat 3/8 i 2/8.",
+          "Representació: selecciona 3 porcions a la pizza de 8 talls i després selecciona'n 2 més.",
           "Operació: 3/8 + 2/8 = 5/8. Escriu 5 al numerador i 8 al denominador."
         ]
       },
       {
         id: "prob_1_2",
-        title: "La Poció de Mana Restant",
-        lore: "Abans del combat contra el Gòlem de Pedra, revises les teves reserves.",
-        instruction: "Tenies una ampolla de mana plena (<strong>6/6</strong>). Has utilitzat <strong>4/6</strong> per crear un escut protector. <strong>Quina fracció de l'ampolla et queda encara?</strong> Representa-la al tauler i escriu-la.",
+        title: "El Brik de Llet per Esmorzar",
+        lore: "Prepares l'esmorzar a la cuina abans d'anar a l'escola.",
+        instruction: "Tenies un brik de llet ple (<strong>6/6</strong>). N'has fet servir <strong>4/6</strong> per preparar batuts i cafè amb llet. <strong>Quina fracció del brik de llet queda encara a la nevera?</strong> Representa-la al tauler i escriu-la.",
         type: "problem_fraction",
         defaultShape: "bar",
         initNum: 6, initDen: 6,
@@ -1291,34 +1292,34 @@ const CHALLENGES_DATA = {
         targetNum: 2, targetDen: 6,
         requireExactParts: false,
         hints: [
-          "Dades: comences amb l'ampolla plena (6/6) i en gastes 4/6.",
-          "Representació: a la barra de 6 parts plenes, fes clic a 4 peces per desactivar les que has gastat.",
+          "Dades: comences amb el brik ple (6/6) i en gastes 4/6.",
+          "Representació: a la barra de 6 parts plenes, fes clic a 4 peces per treure les que has gastat.",
           "Operació: 6/6 - 4/6 = 2/6 (o la seva equivalent simplificada 1/3)."
         ]
       },
       {
         id: "prob_1_3",
-        title: "El Cofre de les 20 Monedes d'Or (Fracció d'una quantitat)",
-        lore: "El rei d'Equivalia recompensa el teu gremi per protegir la frontera.",
-        instruction: "En un cofre hi ha <strong>20 monedes d'or</strong>. Et corresponen les <strong>3/4 parts</strong> del cofre. <strong>Quantes monedes d'or rebràs?</strong> (Pots representar 3/4 al tauler per ajudar-te i escriure el nombre exacte de monedes).",
+        title: "Pagant al Supermercat (Fracció d'una quantitat)",
+        lore: "Vas al supermercat amb un bitllet de 20 euros.",
+        instruction: "Portes <strong>20 €</strong> a la cartera i et gastes les <strong>3/4 parts</strong> comprant fruita i verdura. <strong>Quants euros t'has gastat?</strong> (Pots ajudar-te amb el botó de repartir al tauler i escriure el nombre exacte d'euros).",
         type: "problem_number",
         defaultShape: "bar",
         initNum: 3, initDen: 4,
         totalQuantity: 20,
-        unitLabel: "monedes d'or",
+        unitLabel: "euros (€)",
         targetNumber: 15,
         suggestedNum: 3, suggestedDen: 4,
         hints: [
-          "Per calcular 3/4 de 20 monedes, primer dividim les 20 monedes en 4 parts iguals (denominador).",
-          "Cada quart (1/4) té 20 ÷ 4 = 5 monedes d'or.",
-          "Com que n'agafem 3 quarts (numerador = 3), multipliquem: 3 × 5 = 15 monedes d'or!"
+          "Per calcular 3/4 de 20 €, primer dividim els 20 € en 4 parts iguals (denominador).",
+          "Cada quart (1/4) són 20 ÷ 4 = 5 €.",
+          "Com que en gastem 3 quarts (numerador = 3), multipliquem: 3 × 5 = 15 €!"
         ]
       },
       {
         id: "prob_1_4",
-        title: "La Muralla dels Cristalls",
-        lore: "Els constructors reparen els blocs màgics de la muralla nord.",
-        instruction: "La muralla està formada per <strong>10 trams iguals</strong>. Al matí n'han reparat <strong>4/10</strong> i a la tarda <strong>3/10</strong> més. <strong>Quina fracció de la muralla falta encara per reparar?</strong>",
+        title: "La Safata de 10 Croissants del Forn",
+        lore: "Al forn del barri han preparat una safata de 10 croissants.",
+        instruction: "D'una safata de <strong>10 croissants iguals</strong>, a primera hora se n'han venut <strong>4/10</strong> i a mig matí se n'han venut <strong>3/10</strong> més. <strong>Quina fracció de la safata queda encara per vendre?</strong>",
         type: "problem_fraction",
         defaultShape: "grid",
         initNum: 0, initDen: 10,
@@ -1326,36 +1327,36 @@ const CHALLENGES_DATA = {
         targetNum: 3, targetDen: 10,
         requireExactParts: false,
         hints: [
-          "Atenció a la pregunta: demana quina fracció FALTA per reparar!",
-          "Ja s'han reparat 4/10 + 3/10 = 7/10 de la muralla.",
-          "Si el total és 10/10, falten per reparar 10/10 - 7/10 = 3/10."
+          "Atenció a la pregunta: demana quina fracció QUEDA per vendre!",
+          "Ja s'han venut 4/10 + 3/10 = 7/10 de la safata.",
+          "Si el total és 10/10, queden per vendre 10/10 - 7/10 = 3/10."
         ]
       },
       {
         id: "prob_1_5",
-        title: "Els Guerrers de l'Esquadró",
-        lore: "L'esquadró d'exploradors es prepara per entrar al Bosc de Cristall.",
-        instruction: "En un grup de <strong>15 aventurers</strong>, les <strong>2/5 parts</strong> són mags. <strong>Quants mags hi ha en el grup?</strong>",
+        title: "La Bossa de 15 Taronges",
+        lore: "Compres una malla de 15 taronges a la fruiteria.",
+        instruction: "D'una bossa de <strong>15 taronges</strong>, n'utilitzes les <strong>2/5 parts</strong> per fer suc natural. <strong>Quantes taronges has utilitzat per al suc?</strong>",
         type: "problem_number",
         defaultShape: "bar",
         initNum: 2, initDen: 5,
         totalQuantity: 15,
-        unitLabel: "mags",
+        unitLabel: "taronges",
         targetNumber: 6,
         suggestedNum: 2, suggestedDen: 5,
         hints: [
-          "Hem de calcular 2/5 de 15 aventurers. Divideix 15 en 5 grups iguals (denominador = 5).",
-          "15 ÷ 5 = 3 aventurers a cada cinquè (1/5).",
-          "Com que 2/5 són mags, 2 × 3 = 6 mags!"
+          "Hem de calcular 2/5 de 15 taronges. Divideix 15 en 5 grups iguals (denominador = 5).",
+          "15 ÷ 5 = 3 taronges a cada cinquè (1/5).",
+          "Com que n'usem 2/5 per al suc, 2 × 3 = 6 taronges!"
         ]
       }
     ],
     2: [
       {
         id: "prob_2_1",
-        title: "La Mescla de Pocions (Suma amb Equivalència)",
-        lore: "En un calder barreges dues pocions amb denominadors diferents!",
-        instruction: "En un calder hi poses <strong>1/2 litre</strong> d'aigua d'estrelles i <strong>1/4 de litre</strong> d'essència de bosc. <strong>Quina fracció de litre hi ha en total al calder?</strong> (Transforma 1/2 a quarts al tauler per sumar-los!).",
+        title: "La Bossa de la Fruiteria (Suma amb Equivalència)",
+        lore: "Peses dues bosses de fruita amb denominadors diferents!",
+        instruction: "Al supermercat compres <strong>1/2 quilo</strong> de pomes i <strong>1/4 de quilo</strong> de maduixes. <strong>Quina fracció de quilo pesa la fruita en total?</strong> (Transforma 1/2 a quarts al tauler per sumar-los!).",
         type: "problem_fraction",
         defaultShape: "bar",
         initNum: 1, initDen: 4,
@@ -1363,52 +1364,52 @@ const CHALLENGES_DATA = {
         targetNum: 3, targetDen: 4,
         requireExactParts: false,
         hints: [
-          "No podem sumar directament meitats (1/2) i quarts (1/4) sense tenir peces de la mateixa mida.",
-          "Recorda que 1/2 és equivalent a 2/4!",
-          "Si ajuntem 2/4 + 1/4 obtenim 3/4 de litre."
+          "No podem sumar directament meitats (1/2) i quarts (1/4) sense tenir parts de la mateixa mida.",
+          "Recorda que 1/2 kg és equivalent a 2/4 kg!",
+          "Si sumem 2/4 + 1/4 obtenim 3/4 de quilo en total."
         ]
       },
       {
         id: "prob_2_2",
-        title: "Les Pàgines del Grimori Antic",
-        lore: "Estàs estudiant els encanteris del llibre sagrat de la biblioteca.",
-        instruction: "El Grimori té <strong>24 pàgines</strong>. Ja n'has llegit les <strong>5/6 parts</strong>. <strong>Quantes pàgines has llegit ja?</strong>",
+        title: "La Capsa de 24 Retoladors a la Papereria",
+        lore: "Revises el material escolar a l'aula de 6è.",
+        instruction: "Una capsa té <strong>24 retoladors</strong>. Les <strong>5/6 parts</strong> dels retoladors pinten perfecte i la resta s'han assecat. <strong>Quants retoladors pinten perfecte?</strong>",
         type: "problem_number",
         defaultShape: "grid",
         initNum: 5, initDen: 6,
         totalQuantity: 24,
-        unitLabel: "pàgines llegides",
+        unitLabel: "retoladors",
         targetNumber: 20,
         suggestedNum: 5, suggestedDen: 6,
         hints: [
-          "Calcula 5/6 de 24 pàgines: divideix les 24 pàgines en 6 parts iguals.",
-          "Cada sisè (1/6) equival a 24 ÷ 6 = 4 pàgines.",
-          "5 sisens són 5 × 4 = 20 pàgines llegides."
+          "Calcula 5/6 de 24 retoladors: divideix els 24 retoladors en 6 grups iguals.",
+          "Cada sisè (1/6) equival a 24 ÷ 6 = 4 retoladors.",
+          "5 sisens són 5 × 4 = 20 retoladors."
         ]
       },
       {
         id: "prob_2_3",
-        title: "El Viatge cap a la Ciutadella (El que queda!)",
-        lore: "Llegeix molt bé la pregunta abans de llançar l'encanteri!",
-        instruction: "El camí fins a la Ciutadella fa <strong>30 quilòmetres</strong>. El teu cavall alà ja ha recorregut les <strong>3/5 parts</strong> del trajecte. <strong>Quants quilòmetres FALTEN encara per arribar?</strong>",
+        title: "Descompte a la Botiga d'Esports (El que falta pagar!)",
+        lore: "Llegeix molt bé la pregunta per saber si et demanen l'estalvi o el preu final!",
+        instruction: "Una motxilla val <strong>30 €</strong>. Per ser client del barri et fan una rebaixa i ja n'has pagat les <strong>3/5 parts</strong>. <strong>Quants euros FALTEN encara per acabar-la de pagar?</strong>",
         type: "problem_number",
         defaultShape: "line",
         initNum: 2, initDen: 5,
         totalQuantity: 30,
-        unitLabel: "km que falten",
+        unitLabel: "euros que falten",
         targetNumber: 12,
         suggestedNum: 2, suggestedDen: 5,
         hints: [
-          "Si ja has recorregut 3/5 del camí, vol dir que et FALTEN 2/5 del camí per arribar!",
-          "1/5 de 30 km són 30 ÷ 5 = 6 km.",
-          "Els 2/5 que falten són 2 × 6 = 12 km (o bé 30 - 18 = 12 km)."
+          "Si ja has pagat 3/5 del preu, vol dir que et FALTEN per pagar 2/5 del preu!",
+          "1/5 de 30 € són 30 ÷ 5 = 6 €.",
+          "Els 2/5 que falten són 2 × 6 = 12 € (o bé 30 € - 18 € = 12 €)."
         ]
       },
       {
         id: "prob_2_4",
-        title: "L'Aliança dels Dos Regnes",
-        lore: "El Regne del Nord i el Regne del Sud uneixen els seus cristalls.",
-        instruction: "El Regne del Nord aporta <strong>1/3</strong> de l'energia del portal i el Regne del Sud n'aporta <strong>2/6</strong>. <strong>Quina fracció total d'energia tenen entre tots dos?</strong> (Pots expressar-la en sisens o simplificada en terços).",
+        title: "Recepta de Batut de Fruites",
+        lore: "En una gerra barreges suc de taronja i suc de préssec.",
+        instruction: "En una gerra d'1 litre hi poses <strong>1/3 de litre</strong> de suc de taronja i <strong>2/6 de litre</strong> de suc de préssec. <strong>Quina fracció de la gerra has omplert en total?</strong> (Pots expressar-la en sisens o simplificada en terços).",
         type: "problem_fraction",
         defaultShape: "circle",
         initNum: 0, initDen: 6,
@@ -1417,35 +1418,35 @@ const CHALLENGES_DATA = {
         requireExactParts: false,
         hints: [
           "Transforma 1/3 a sisens: 1/3 és equivalent a 2/6.",
-          "Ara suma l'energia dels dos regnes: 2/6 + 2/6 = 4/6.",
-          "Pots escriure 4/6 o la seva fracció irreductible 2/3 (totes dues són vàlides!)."
+          "Ara suma els dos sucs: 2/6 + 2/6 = 4/6 de litre.",
+          "Pots escriure 4/6 o la seva fracció irreductible 2/3 (totes dues es donen per bones!)."
         ]
       },
       {
         id: "prob_2_5",
-        title: "Qui Té Més Cristalls?",
-        lore: "Compara dues fraccions d'una mateixa quantitat.",
-        instruction: "D'una mina de <strong>36 gemmes</strong>, la maga n'obté <strong>1/3</strong> i el ferrer n'obté <strong>1/4</strong>. <strong>Quantes gemmes obtenen en total entre la maga i el ferrer?</strong>",
+        title: "Les 36 Ampolles d'Aigua per a l'Excursió",
+        lore: "Les classes de 6è compren aigua al supermercat per a la sortida escolar.",
+        instruction: "D'un pack de <strong>36 ampolles d'aigua</strong>, la classe de 6è A n'agafa <strong>1/3</strong> i la classe de 6è B n'agafa <strong>1/4</strong>. <strong>Quantes ampolles han agafat en total entre totes dues classes?</strong>",
         type: "problem_number",
         defaultShape: "grid",
         initNum: 7, initDen: 12,
         totalQuantity: 36,
-        unitLabel: "gemmes en total",
+        unitLabel: "ampolles en total",
         targetNumber: 21,
         suggestedNum: 7, suggestedDen: 12,
         hints: [
-          "Calcula primer les gemmes de la maga: 1/3 de 36 = 36 ÷ 3 = 12 gemmes.",
-          "Calcula ara les gemmes del ferrer: 1/4 de 36 = 36 ÷ 4 = 9 gemmes.",
-          "Suma-les: 12 + 9 = 21 gemmes en total!"
+          "Calcula primer les ampolles de 6è A: 1/3 de 36 = 36 ÷ 3 = 12 ampolles.",
+          "Calcula ara les ampolles de 6è B: 1/4 de 36 = 36 ÷ 4 = 9 ampolles.",
+          "Suma-les: 12 + 9 = 21 ampolles en total!"
         ]
       }
     ],
     3: [
       {
         id: "prob_3_1",
-        title: "Les Reserves de l'Expedició (Més d'una unitat!)",
-        lore: "Tres grups d'exploradors necessiten racions de pa èlfic.",
-        instruction: "Cada grup d'exploradors necessita <strong>3/4 de barra</strong> de pa èlfic. Si hi ha <strong>3 grups</strong>, <strong>quina fracció impròpia de barres necessiten en total?</strong> Representa-la al tauler i escriu la fracció.",
+        title: "Entrepans per a l'Equip de Bàsquet (Més d'una unitat!)",
+        lore: "Prepareu el berenar per a 3 grups de jugadors del club esportiu.",
+        instruction: "Cada grup de jugadors es menja <strong>3/4 de barra de pa</strong>. Si hi ha <strong>3 grups</strong>, <strong>quina fracció impròpia de barres de pa necessiten en total?</strong> Representa-la al tauler i escriu la fracció.",
         type: "problem_fraction",
         defaultShape: "bar",
         initNum: 3, initDen: 4,
@@ -1453,34 +1454,34 @@ const CHALLENGES_DATA = {
         targetNum: 9, targetDen: 4,
         requireExactParts: false,
         hints: [
-          "Són 3 grups i cada grup consumeix 3/4: hem de sumar 3/4 + 3/4 + 3/4 (o fer 3 × 3/4).",
-          "Activa 9 quarts en total repartits en les 3 barres del tauler (2 barres senceres i 1/4).",
+          "Són 3 grups i cada grup menja 3/4: hem de sumar 3/4 + 3/4 + 3/4 (o fer 3 × 3/4).",
+          "Selecciona 9 quarts en total repartits en les 3 barres del tauler (2 barres senceres i 1/4).",
           "Escriu la fracció impròpia 9/4."
         ]
       },
       {
         id: "prob_3_2",
-        title: "El Tresor de les TresProves",
-        lore: "Un problema multipas digne d'un Gran Arximag!",
-        instruction: "Un tresor té <strong>60 monedes de platí</strong>. El primer guardià es queda <strong>1/3</strong> del tresor, i el segon guardià es queda <strong>2/5</strong> del mateix tresor de 60 monedes. <strong>Quantes monedes queden per al tercer guardià?</strong>",
+        title: "El Pressupost de 60 € al Supermercat",
+        lore: "Una família fa la compra setmanal amb un pressupost de 60 euros.",
+        instruction: "Tens <strong>60 €</strong> per fer la compra. Et gastes <strong>1/3</strong> dels 60 € en peix i carn, i <strong>2/5</strong> dels mateixos 60 € en fruita i verdura. <strong>Quants euros et sobren encara al moneder?</strong>",
         type: "problem_number",
         defaultShape: "grid",
         initNum: 4, initDen: 12,
         totalQuantity: 60,
-        unitLabel: "monedes restants",
+        unitLabel: "euros sobrants (€)",
         targetNumber: 16,
         suggestedNum: 4, suggestedDen: 12,
         hints: [
-          "1r guardià: 1/3 de 60 = 60 ÷ 3 = 20 monedes.",
-          "2n guardià: 2/5 de 60 = (60 ÷ 5) × 2 = 12 × 2 = 24 monedes.",
-          "Entre els dos primers s'emporten 20 + 24 = 44 monedes. Al tercer li queden 60 - 44 = 16 monedes!"
+          "Peix i carn: 1/3 de 60 € = 60 ÷ 3 = 20 €.",
+          "Fruita i verdura: 2/5 de 60 € = (60 ÷ 5) × 2 = 12 × 2 = 24 €.",
+          "En total has gastat 20 + 24 = 44 €. Et sobren 60 - 44 = 16 €!"
         ]
       },
       {
         id: "prob_3_3",
-        title: "L'Elixir dels Dotze Ingredients",
+        title: "Cistella de Fruita Variada (Denominador 12)",
         lore: "Suma fraccions amb diferent denominador transformant-les a dotzens.",
-        instruction: "Una recepta màgica porta <strong>1/3</strong> de pols d'or, <strong>1/4</strong> d'aigua lunar i la resta és nèctar de flors. <strong>Quina fracció de la recepta és nèctar de flors?</strong> (Transforma a denominador <strong>12</strong>!).",
+        instruction: "En una cistella del mercat, <strong>1/3</strong> del pes són pomes, <strong>1/4</strong> són peres i la resta són plàtans. <strong>Quina fracció de la cistella són plàtans?</strong> (Transforma a denominador <strong>12</strong>!).",
         type: "problem_fraction",
         defaultShape: "grid",
         initNum: 0, initDen: 12,
@@ -1488,46 +1489,46 @@ const CHALLENGES_DATA = {
         targetNum: 5, targetDen: 12,
         requireExactParts: false,
         hints: [
-          "Passa 1/3 i 1/4 a dotzens: 1/3 = 4/12 (pols d'or) i 1/4 = 3/12 (aigua lunar).",
-          "Entre tots dos ingredients sumen 4/12 + 3/12 = 7/12 de la recepta.",
-          "Fins a completar tota la recepta (12/12), el nèctar de flors és 12/12 - 7/12 = 5/12!"
+          "Passa 1/3 i 1/4 a dotzens: 1/3 = 4/12 (pomes) i 1/4 = 3/12 (peres).",
+          "Entre pomes i peres sumen 4/12 + 3/12 = 7/12 de la cistella.",
+          "Fins a completar tota la cistella (12/12), els plàtans són 12/12 - 7/12 = 5/12!"
         ]
       },
       {
         id: "prob_3_4",
-        title: "Les Ampolles de Curació del Drac",
-        lore: "Reparteix una fracció impròpia d'elixir.",
-        instruction: "Has preparat <strong>2 litres i mig (5/2 litres)</strong> d'elixir i els vols posar en ampolletes petites d'<strong>1/4 de litre</strong> cadascuna. <strong>Quantes ampolletes d'1/4 de litre podràs omplir?</strong> (Usa el tauler en quarts!).",
+        title: "Omplint Pots de Melmelada Casolana",
+        lore: "Reparteix una fracció impròpia en pots petits d'1/4 de quilo.",
+        instruction: "Has cuinat <strong>2 quilos i mig (5/2 kg)</strong> de melmelada de maduixa i la vols envasar en pots petits d'<strong>1/4 de quilo</strong> cadascun. <strong>Quants pots d'1/4 kg podràs omplir?</strong>",
         type: "problem_number",
         defaultShape: "bar",
         initNum: 10, initDen: 4,
         maxUnits: 3,
         totalQuantity: 10,
-        unitLabel: "ampolletes d'1/4 L",
+        unitLabel: "pots d'1/4 kg",
         targetNumber: 10,
         suggestedNum: 10, suggestedDen: 4,
         hints: [
-          "Cada litre sencer té 4 quarts (4 ampolletes d'1/4 L).",
-          "2 litres sencers són 2 × 4 = 8 quarts, i mig litre (1/2) són 2 quarts més.",
-          "En total, 5/2 equival a 10/4, així que ompliràs 10 ampolletes!"
+          "Cada quilo sencer té 4 quarts (4 pots d'1/4 kg).",
+          "2 quilos sencers són 2 × 4 = 8 pots, i mig quilo (1/2) són 2 pots més.",
+          "En total, 5/2 equival a 10/4, així que ompliràs 10 pots!"
         ]
       },
       {
         id: "prob_3_5",
-        title: "La Corona de l'Arximag",
-        lore: "L'última gran missió del Regne de Fractària!",
-        instruction: "Per forjar la Corona de l'Arximag calen <strong>48 cristalls estel·lars</strong>. Ja n'has encastat les <strong>3/8 parts</strong> al matí i <strong>1/4 part</strong> a la tarda. <strong>Quants cristalls estel·lars has encastat en total?</strong>",
+        title: "Les 48 Magdalenes de la Festa de l'Escola",
+        lore: "Últim gran repte de 6è de Primària a la fira gastronòmica de l'escola!",
+        instruction: "A la parada de 6è heu portat <strong>48 magdalenes</strong>. Al matí se n'han venut les <strong>3/8 parts</strong> i a la tarda se n'ha venut <strong>1/4 part</strong> més del total. <strong>Quantes magdalenes s'han venut en total en tot el dia?</strong>",
         type: "problem_number",
         defaultShape: "circle",
         initNum: 5, initDen: 8,
         totalQuantity: 48,
-        unitLabel: "cristalls encastats",
+        unitLabel: "magdalenes venudes",
         targetNumber: 30,
         suggestedNum: 5, suggestedDen: 8,
         hints: [
-          "Al matí: 3/8 de 48 = (48 ÷ 8) × 3 = 6 × 3 = 18 cristalls.",
-          "A la tarda: 1/4 de 48 = 48 ÷ 4 = 12 cristalls (o bé suma 3/8 + 2/8 = 5/8 de 48).",
-          "En total has encastat 18 + 12 = 30 cristalls estel·lars!"
+          "Al matí: 3/8 de 48 = (48 ÷ 8) × 3 = 6 × 3 = 18 magdalenes.",
+          "A la tarda: 1/4 de 48 = 48 ÷ 4 = 12 magdalenes (o bé suma 3/8 + 2/8 = 5/8 de 48).",
+          "En total s'han venut 18 + 12 = 30 magdalenes!"
         ]
       }
     ]
