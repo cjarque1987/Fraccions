@@ -256,88 +256,47 @@ body {
 /* ==========================================================================
    SELECTOR SUPERIOR DELS 2 GRANS APARTATS (FRACCIONS vs OPERACIONS)
    ========================================================================== */
-.main-area-bar {
-  background: var(--bg-parchment);
-  border-bottom: 2px solid var(--border-color);
-  padding: 0.65rem 1rem 0.5rem 1rem;
-}
-
 .main-area-inner {
-  max-width: 1380px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
-@media (max-width: 780px) {
-  .main-area-inner {
-    grid-template-columns: 1fr;
-  }
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(15, 23, 42, 0.35);
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .main-area-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.75rem 1.1rem;
-  border-radius: 14px;
-  border: 2px solid var(--border-color);
-  background: var(--bg-card);
-  color: var(--text-main);
+  gap: 0.45rem;
+  padding: 0.45rem 1.05rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.92rem;
+  font-weight: 800;
   cursor: pointer;
-  text-align: left;
-  transition: all 0.18s ease;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: all 0.16s ease;
 }
 
 .main-area-btn:hover {
-  border-color: var(--primary);
-  transform: translateY(-1px);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .main-area-btn.active {
-  background: linear-gradient(135deg, #4338CA 0%, #2563EB 100%);
-  color: #FFFFFF;
-  border-color: #312E81;
-  box-shadow: 0 5px 14px rgba(67, 56, 202, 0.28);
+  background: #FFFFFF;
+  color: #1E1B4B;
+  border-color: #FDE68A;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .main-area-btn.area-operacions-btn.active {
-  background: linear-gradient(135deg, #6D28D9 0%, #9333EA 55%, #C026D3 100%);
-  border-color: #4C1D95;
-  box-shadow: 0 5px 14px rgba(124, 58, 237, 0.3);
-}
-
-.main-area-btn .area-icon {
-  font-size: 1.9rem;
-  line-height: 1;
-  background: rgba(255, 255, 255, 0.18);
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.main-area-btn .area-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.12rem;
-}
-
-.main-area-btn .area-text strong {
-  font-size: 1.02rem;
-  font-weight: 900;
-  letter-spacing: 0.01em;
-}
-
-.main-area-btn .area-text span {
-  font-size: 0.8rem;
-  opacity: 0.88;
-  font-weight: 600;
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+  color: #1E1B4B;
+  border-color: #FEF3C7;
 }
 
 /* ==========================================================================

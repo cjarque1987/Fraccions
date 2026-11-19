@@ -8,44 +8,49 @@
 </head>
 <body>
 
-  <!-- CAPÇALERA GAMIFICADA I ACCESSIBILITAT DUA -->
+  <!-- CAPÇALERA COMPACTA I NETA -->
   <header class="top-header" role="banner">
     <div class="header-inner">
       <div class="brand">
         <div class="brand-emblem" aria-hidden="true">🛒</div>
         <div class="brand-title">
-          <h1>Fraccions al Dia a Dia · 6è</h1>
-          <span class="brand-badge">🥖 Supermercat, Cuina i Vida Quotidiana · Manipulatiu i DUA</span>
+          <h1>Matemàtiques 6è · Dia a Dia</h1>
         </div>
       </div>
 
+      <!-- SELECTOR DELS 2 GRANS APARTATS INTEGRAT I NET -->
+      <div class="main-area-inner" id="mainAreaSwitcher" role="navigation" aria-label="Blocs principals">
+        <button type="button" class="main-area-btn active" data-area="fraccions">
+          🍕 Apartat 1: Fraccions
+        </button>
+        <button type="button" class="main-area-btn area-operacions-btn" data-area="operacions">
+          🧠 Apartat 2: Resolució de Problemes
+        </button>
+      </div>
+
       <div class="header-actions">
-        <!-- Punts de Vida (Cors) -->
-        <div class="hud-pill lives-pill" id="livesPill" title="Tens 10 cors de vida. Cada 3 encerts seguits a la primera recuperes 1 cor!">
-          <span class="lives-hearts" id="livesHeartsDisplay" aria-hidden="true">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</span>
-          <span class="lives-text"><strong id="livesCountBadge">10</strong>/10 vides</span>
+        <!-- Punts de Vida i Estrelles compactes -->
+        <div class="hud-pill lives-pill" id="livesPill" title="Vides disponibles">
+          <span id="livesHeartsDisplay" style="display:none;"></span>
+          <span>❤️ <strong id="livesCountBadge">10</strong></span>
         </div>
 
-        <!-- Estrelles, Rang i Ratxa -->
-        <div class="hud-pill stars-pill" id="starsPill" title="Estrelles aconseguides, rang i ratxa d'encerts">
-          <span>⭐ <strong id="earnedStarsBadge">0</strong> estrelles</span>
-          <span class="rank-chip" id="playerRankBadge">🌱 Comprador/a Novell</span>
-          <span class="streak-chip" id="streakBadge" title="Ratxa d'encerts seguits a la primera">🔥 <span id="streakCountBadge">0</span></span>
+        <div class="hud-pill stars-pill" id="starsPill" title="Estrelles aconseguides">
+          <span>⭐ <strong id="earnedStarsBadge">0</strong></span>
+          <span id="playerRankBadge" style="display:none;"></span>
+          <span id="streakBadge" style="display:none;"><span id="streakCountBadge">0</span></span>
         </div>
 
-        <!-- Botó d'Insígnies del Mercat -->
-        <button type="button" class="hud-btn relics-btn" id="btnOpenRelicsModal" title="Mira les insígnies aconseguides">
-          🏅 Insígnies (<span id="relicsCountBadge">0/7</span>)
+        <button type="button" class="hud-btn relics-btn" id="btnOpenRelicsModal" title="Insígnies aconseguides">
+          🏅 <span id="relicsCountBadge">0/7</span>
         </button>
 
-        <!-- Botó per Imprimir Fitxa -->
-        <button type="button" class="hud-btn print-btn" id="btnOpenPrintModal" title="Imprimir fitxa d'exercicis en paper o PDF">
-          🖨️ Imprimir fitxa
+        <button type="button" class="hud-btn print-btn" id="btnOpenPrintModal" title="Imprimir fitxa en PDF o paper">
+          🖨️ Fitxa
         </button>
 
-        <!-- Botó DUA -->
-        <button type="button" class="hud-btn dua-btn" id="btnToggleDuaPanel" aria-expanded="false">
-          ♿ Opcions DUA
+        <button type="button" class="hud-btn dua-btn" id="btnToggleDuaPanel" aria-expanded="false" title="Opcions de lectura i accessibilitat">
+          ♿ DUA
         </button>
       </div>
     </div>
@@ -53,43 +58,22 @@
     <!-- PANELL D'ACCESSIBILITAT DUA DESPLEGABLE -->
     <section class="dua-toolbar-panel" id="duaToolbarPanel" aria-label="Opcions del Disseny Universal per a l'Aprenentatge">
       <button type="button" class="dua-toggle-btn" id="btnToggleEasyRead">
-        📖 Lletra Gran i Lectura Fàcil (Dislèxia)
+        📖 Lletra Gran
       </button>
       <button type="button" class="dua-toggle-btn" id="btnToggleDarkTheme">
-        🌙 Mode Fosc (Descans visual)
+        🌙 Mode Fosc
       </button>
       <button type="button" class="dua-toggle-btn" id="btnToggleColorblind">
-        🎨 Mode Daltònics (Trames i etiquetes)
+        🎨 Mode Daltònics
       </button>
       <button type="button" class="dua-toggle-btn active" id="btnToggleSound">
-        🔔 Sons d'Encert: Activats
+        🔔 Sons: Activats
       </button>
       <button type="button" class="dua-toggle-btn danger-toggle" id="btnResetProgress">
-        🔄 Reinicia les estrelles
+        🔄 Reinicia progrés
       </button>
     </section>
   </header>
-
-  <!-- SELECTOR SUPERIOR DELS DOS GRANS BLOCS: FRACCIONS vs RESOLUCIÓ DE PROBLEMES -->
-  <div class="main-area-bar" role="navigation" aria-label="Blocs principals de la web">
-    <div class="main-area-inner" id="mainAreaSwitcher">
-      <button type="button" class="main-area-btn active" data-area="fraccions">
-        <span class="area-icon">🍕</span>
-        <div class="area-text">
-          <strong>APARTAT 1: FRACCIONS</strong>
-          <span>Identificació, Comparació, Equivalències, Transformació i Problemes</span>
-        </div>
-      </button>
-
-      <button type="button" class="main-area-btn area-operacions-btn" data-area="operacions">
-        <span class="area-icon">🧠</span>
-        <div class="area-text">
-          <strong>APARTAT 2: RESOLUCIÓ DE PROBLEMES (OPERACIONS)</strong>
-          <span>Organitzador TOT-PART: Suma, Resta, Multiplicació, Divisió i 2 Operacions</span>
-        </div>
-      </button>
-    </div>
-  </div>
 
   <!-- NAVEGACIÓ SECUNDÀRIA DELS SUB-APARTATS -->
   <nav class="main-nav" aria-label="Subapartats del bloc actiu">
@@ -273,96 +257,75 @@
          ========================================================================= -->
     <div id="missionWorkspaceView">
 
-      <!-- BARRA SUPERIOR DE NIVELL D'ESTRELLES I PUNTETS DE PROGRESSIÓ -->
-      <section class="context-bar" id="levelBarSection" aria-label="Tria el nivell de dificultat">
+      <!-- BARRA COMPACTA DE NIVELL (1, 2, 3), EXERCICIS (1..5) I ANTERIOR/SEGÜENT -->
+      <section class="context-bar" id="levelBarSection" aria-label="Tria el nivell i l'exercici">
         <div class="level-selector">
-          <span class="level-selector-label">⭐ Nivell de dificultat:</span>
-          <button type="button" class="level-btn active" data-level="1">⭐ Principiant (Nivell 1)</button>
-          <button type="button" class="level-btn" data-level="2">⭐⭐ Mitjà (Nivell 2)</button>
-          <button type="button" class="level-btn" data-level="3">⭐⭐⭐ Expert (Nivell 3)</button>
+          <button type="button" class="level-btn active" data-level="1">⭐ Nivell 1</button>
+          <button type="button" class="level-btn" data-level="2">⭐⭐ Nivell 2</button>
+          <button type="button" class="level-btn" data-level="3">⭐⭐⭐ Nivell 3</button>
         </div>
 
-        <div class="quest-Attempt-dots" id="questProgressDots" aria-label="Llista d'exercicis d'aquest nivell">
-          <!-- Puntets 1..5 clicables per anar directament a cada repte -->
+        <div class="quest-Attempt-dots" id="questProgressDots" aria-label="Exercicis del nivell"></div>
+
+        <div class="challenge-nav-group">
+          <button type="button" class="tool-btn" id="btnPrevChallenge">⬅️ Anterior</button>
+          <button type="button" class="tool-btn" id="btnNextChallenge">Següent ➡️</button>
         </div>
       </section>
 
-      <!-- TARGETA DE L'EXERCICI / ENUNCIAT -->
+      <!-- TARGETA DE L'ENUNCIAT NETA I DIRECTA -->
       <section class="challenge-card" id="challengeCard" aria-live="polite">
         <div class="challenge-header">
           <div class="challenge-title-wrap">
-            <span class="challenge-badge" id="challengeBadge">⭐ Principiant · Repte 1/5</span>
-            <span class="attempts-badge" id="attemptsBadge" title="Tens 2 oportunitats abans de perdre un cor de vida">🎯 Oportunitats: 2/2</span>
+            <span class="challenge-badge" id="challengeBadge" style="display:none;"></span>
             <h2 class="challenge-title" id="challengeTitle">Títol del repte</h2>
+            <span class="attempts-badge" id="attemptsBadge" style="display:none;">🎯 2/2</span>
           </div>
 
-          <div class="challenge-nav-group">
-            <button type="button" class="tool-btn" id="btnPrevChallenge">⬅️ Anterior</button>
-            <button type="button" class="tool-btn" id="btnNextChallenge">Següent ➡️</button>
+          <!-- Botons discrets d'ajuda a la dreta del títol -->
+          <div class="challenge-help-row">
+            <button type="button" class="tts-btn" id="btnSpeakInstruction" title="Escolta l'enunciat">
+              🔊 Escolta
+            </button>
+            <div class="hint-buttons-group" aria-label="Pistes">
+              <button type="button" class="hint-btn" data-hint-step="0" id="btnHint1">💡 Pista 1</button>
+              <button type="button" class="hint-btn" data-hint-step="1" id="btnHint2">💡 Pista 2</button>
+              <button type="button" class="hint-btn" data-hint-step="2" id="btnHint3">💡 Pista 3</button>
+            </div>
+            <button type="button" class="tool-btn grimori-shortcut-btn" id="btnQuickGrimori" title="Obre la guia teòrica">
+              📖 Guia
+            </button>
           </div>
         </div>
 
         <div class="challenge-body">
-          <p class="challenge-lore" id="challengeLore"></p>
+          <p class="challenge-lore" id="challengeLore" style="display:none;"></p>
           <div class="challenge-instruction" id="challengeInstruction"></div>
-
-          <!-- Botons d'ajuda DUA: Lector de veu + 3 Pistes Graduades + Consulta ràpida a la Guia -->
-          <div class="challenge-help-row">
-            <button type="button" class="tts-btn" id="btnSpeakInstruction">
-              🔊 Escolta l'enunciat
-            </button>
-
-            <div class="hint-buttons-group" aria-label="Pistes graduades DUA">
-              <button type="button" class="hint-btn" data-hint-step="0" id="btnHint1">
-                💡 Pista 1: Comprensió
-              </button>
-              <button type="button" class="hint-btn" data-hint-step="1" id="btnHint2">
-                🧭 Pista 2: Manipulació
-              </button>
-              <button type="button" class="hint-btn" data-hint-step="2" id="btnHint3">
-                📝 Pista 3: Pas resolutiu
-              </button>
-            </div>
-
-            <button type="button" class="tool-btn grimori-shortcut-btn" id="btnQuickGrimori">
-              📖 Consulta la Guia
-            </button>
-          </div>
         </div>
 
-        <!-- Caixa on es mostra la pista seleccionada -->
+        <!-- Caixa on es mostra la pista seleccionada (només si es fa clic a una pista) -->
         <div class="hint-box" id="hintDisplayBox" style="display: none;">
           <div class="hint-box-content">
             <strong id="hintStepLabel">💡 Pista:</strong>
             <span id="hintTextContent"></span>
           </div>
-          <button type="button" class="tts-btn" id="btnSpeakHint">🔊 Escolta la pista</button>
+          <button type="button" class="tts-btn" id="btnSpeakHint">🔊</button>
         </div>
       </section>
 
-      <!-- TAULER MANIPULATIU DE FRACCIONS -->
-      <section class="manipulative-board-card" aria-label="Tauler manipulatiu de fraccions">
-        <!-- Barra d'eines del tauler: Selector de representació visual (DUA CPA) + Botons d'acció -->
+      <!-- TAULER DE RESOLUCIÓ -->
+      <section class="manipulative-board-card" aria-label="Tauler de resolució">
         <div class="board-toolbar">
           <div class="shape-selector-group" role="group" aria-label="Tria la forma visual de les fraccions">
-            <span class="toolbar-label">🎨 Model quotidià:</span>
-            <button type="button" class="shape-btn active" data-shape="circle" title="Pizza, pastís o formatge rodó">
-              🍕 Pizza / Pastís
-            </button>
-            <button type="button" class="shape-btn" data-shape="bar" title="Rajola de xocolata, barra de pa o envàs">
-              🍫 Barra / Envàs
-            </button>
-            <button type="button" class="shape-btn" data-shape="grid" title="Safata d'ous, capsa de fruita o pack del súper">
-              🥚 Safata / Pack
-            </button>
-            <button type="button" class="shape-btn" data-shape="line" title="Cinta mètrica, regle o bàscula lineal">
-              📏 Cinta Mètrica
-            </button>
+            <button type="button" class="shape-btn active" data-shape="circle">🍕 Cercle</button>
+            <button type="button" class="shape-btn" data-shape="bar">🍫 Barra</button>
+            <button type="button" class="shape-btn" data-shape="grid">🥚 Quadrícula</button>
+            <button type="button" class="shape-btn" data-shape="line">📏 Recta</button>
           </div>
 
           <div class="board-actions-right">
-            <button type="button" class="tool-btn" id="btnResetBoard" title="Torna el tauler a l'estat inicial de l'exercici">
-              🔄 Reinicia peces
+            <button type="button" class="tool-btn" id="btnResetBoard">
+              🔄 Reinicia
             </button>
             <button type="button" class="tool-btn primary-cta" id="btnVerifyChallenge">
               ✅ Comprova la resposta!
@@ -373,10 +336,10 @@
         <!-- BÀNER DE RETROALIMENTACIÓ FORMATIVA -->
         <div class="feedback-banner" id="feedbackBanner" role="status" aria-live="polite" style="display: none;">
           <div class="feedback-text" id="feedbackMessage"></div>
-          <button type="button" class="tts-btn" id="btnSpeakFeedback">🔊 Escolta</button>
+          <button type="button" class="tts-btn" id="btnSpeakFeedback">🔊</button>
         </div>
 
-        <!-- CONTENIDOR CENTRAL ON ES RENDERITZEN ELS PANELLS MANIPULATIUS -->
+        <!-- CONTENIDOR CENTRAL -->
         <div class="interactive-stage" id="interactiveStage"></div>
       </section>
     </div>

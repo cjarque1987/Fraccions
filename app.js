@@ -575,14 +575,14 @@
       controlsHTML = `
         <div class="manipulative-controls-row">
           <div class="control-pill-group">
-            <span class="control-pill-label">🔺 Peces (Numerador):</span>
+            <span class="control-pill-label">Numerador:</span>
             <button type="button" class="step-btn" data-action="num-minus" data-panel="${panelKey}" ${num <= 0 ? "disabled" : ""}>−</button>
             <span class="control-val-display">${num}</span>
             <button type="button" class="step-btn" data-action="num-plus" data-panel="${panelKey}" ${num >= den * 3 ? "disabled" : ""}>+</button>
           </div>
 
           <div class="control-pill-group">
-            <span class="control-pill-label">🔻 Parts/unitat (Denominador):</span>
+            <span class="control-pill-label">Denominador:</span>
             <button type="button" class="step-btn" data-action="den-minus" data-panel="${panelKey}" ${den <= 1 ? "disabled" : ""}>−</button>
             <span class="control-val-display">${den}</span>
             <button type="button" class="step-btn" data-action="den-plus" data-panel="${panelKey}" ${den >= 12 ? "disabled" : ""}>+</button>
@@ -590,7 +590,7 @@
 
           ${options.allowAddUnit ? `
             <div class="control-pill-group">
-              <span class="control-pill-label">📦 Unitats:</span>
+              <span class="control-pill-label">Unitats:</span>
               <button type="button" class="step-btn" data-action="unit-minus" data-panel="${panelKey}" ${clampedUnits <= 1 ? "disabled" : ""}>−</button>
               <span class="control-val-display">${clampedUnits}</span>
               <button type="button" class="step-btn" data-action="unit-plus" data-panel="${panelKey}" ${clampedUnits >= 3 ? "disabled" : ""}>+</button>
@@ -602,7 +602,7 @@
       controlsHTML = `
         <div class="manipulative-controls-row">
           <span style="font-size:0.86rem; font-weight:700; color:var(--text-muted);">
-            🔒 Figura de referència (${options.hideSymbolicOnLocked ? "Observa i compta les parts!" : `${num}/${den}`})
+            🔒 Figura de mostra (${options.hideSymbolicOnLocked ? "Compta les parts!" : `${num}/${den}`})
           </span>
         </div>
       `;
@@ -613,13 +613,13 @@
     if (options.showAlchemySpells && !locked) {
       alchemyHTML = `
         <div class="alchemy-spell-bar">
-          <button type="button" class="spell-chip-btn" data-spell="mult" data-factor="2" data-panel="${panelKey}">⚡ Amplifica ×2</button>
-          <button type="button" class="spell-chip-btn" data-spell="mult" data-factor="3" data-panel="${panelKey}">⚡ Amplifica ×3</button>
-          <button type="button" class="spell-chip-btn" data-spell="mult" data-factor="4" data-panel="${panelKey}">⚡ Amplifica ×4</button>
-          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="2" data-panel="${panelKey}">🗡️ Simplifica ÷2</button>
-          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="3" data-panel="${panelKey}">🗡️ Simplifica ÷3</button>
-          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="4" data-panel="${panelKey}">🗡️ Simplifica ÷4</button>
-          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="5" data-panel="${panelKey}">🗡️ Simplifica ÷5</button>
+          <button type="button" class="spell-chip-btn" data-spell="mult" data-factor="2" data-panel="${panelKey}">×2</button>
+          <button type="button" class="spell-chip-btn" data-spell="mult" data-factor="3" data-panel="${panelKey}">×3</button>
+          <button type="button" class="spell-chip-btn" data-spell="mult" data-factor="4" data-panel="${panelKey}">×4</button>
+          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="2" data-panel="${panelKey}">÷2</button>
+          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="3" data-panel="${panelKey}">÷3</button>
+          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="4" data-panel="${panelKey}">÷4</button>
+          <button type="button" class="spell-chip-btn" data-spell="div" data-factor="5" data-panel="${panelKey}">÷5</button>
         </div>
       `;
     }
@@ -646,16 +646,6 @@
 
         ${controlsHTML}
         ${alchemyHTML}
-
-        <div class="area-meter-wrap">
-          <div class="area-meter-header">
-            <span>📏 Proporció respecte a 1 unitat sencera:</span>
-            <strong>${percentage}% (${ (num / den).toFixed(2).replace(".", ",") } u.)</strong>
-          </div>
-          <div class="area-meter-track">
-            <div class="area-meter-fill" style="width: ${fillBarWidth}%; background: ${activeColor};"></div>
-          </div>
-        </div>
       </div>
     `;
   }
@@ -1103,7 +1093,7 @@
 
   function renderGeneralProblemStageHTML(ch, prevProbInput) {
     // Cas especial: PROBLEMES DE 2 OPERACIONS (Apartat 7: prob_barrejats)
-    // L'alumne ha de fer LES DUES REPRESENTACIONS als dos organitzadors TOT-PART i calcular ELL MATEIX les dues operacions!
+    // Interfície neta amb 2 targetes: Pas 1 (1r Organitzador + 1a Operació) i Pas 2 (2n Organitzador + 2a Operació)
     if (ch.isTwoStep && ch.org1Data && ch.step1Expected) {
       const activeModel1 = state.selectedOrg1Type || "suma";
       const activeModel2 = state.selectedOrganizerType || "suma";
@@ -1122,135 +1112,78 @@
         : [org2.totLabel, org2.partLabel, org2.braceLabel].filter(Boolean);
       const labelOptions2 = [...rawLabels2].sort((a, b) => a.localeCompare(b, "ca"));
 
-      const step1Nums = [ch.step1Expected.a, ch.step1Expected.b, "?"];
-      // Al Pas 2 no revelem el resultat del Pas 1 a les targetes! Mostrem l'altra dada del problema i "Resultat Pas 1"
-      const otherKnownNum2 = ch.num1 === ch.step1Expected.res ? ch.num2 : ch.num1;
-
-      const matches1 = activeModel1 === ch.org1Type;
-      const matches2 = activeModel2 === ch.organizerType;
-
       return `
         <div class="problem-solver-grid">
-          <!-- COLUMNA ESQUERRA: 1a REPRESENTACIÓ (ORGANITZADOR 1) + 1a OPERACIÓ I CÀLCUL -->
+          <!-- COLUMNA ESQUERRA: 1a REPRESENTACIÓ (ORGANITZADOR 1) + 1a OPERACIÓ -->
           <div class="solver-panel-card" style="border:2px solid #93C5FD;">
             <div class="panel-header-bar">
-              <span class="panel-title" style="color:#1E40AF;">1️⃣ PAS 1: Primera Representació i 1a Operació</span>
-              <button type="button" class="tool-btn" id="btnAutoFillOrg1" style="font-size:0.76rem; padding:0.25rem 0.55rem;" title="Ajuda DUA: omple el 1r organitzador">
-                🪄 Ajuda Pas 1
+              <span class="panel-title" style="color:#1E40AF;">1️⃣ 1a Representació i 1a Operació</span>
+              <button type="button" class="tool-btn" id="btnAutoFillOrg1" style="font-size:0.75rem; padding:0.2rem 0.5rem;">
+                🪄 Ajuda
               </button>
             </div>
 
-            <div style="font-size:0.82rem; font-weight:800; color:#334155;">
-              🧭 Tria l'esquema TOT-PART de la <strong>1a operació</strong>:
-            </div>
             <div class="organizer-selector-bar" role="group" aria-label="Model del primer organitzador">
-              <button type="button" class="organizer-type-btn ${activeModel1 === "suma" ? "active" : ""}" data-org1-model="suma">➕ SUMA</button>
-              <button type="button" class="organizer-type-btn ${activeModel1 === "resta" ? "active" : ""}" data-org1-model="resta">➖ RESTA</button>
-              <button type="button" class="organizer-type-btn ${activeModel1 === "multiplicacio" ? "active" : ""}" data-org1-model="multiplicacio">✖️ MULTIPLICACIÓ</button>
-              <button type="button" class="organizer-type-btn ${activeModel1 === "divisio_partitiva" ? "active" : ""}" data-org1-model="divisio_partitiva">➗ DIV. PARTITIVA</button>
-              <button type="button" class="organizer-type-btn ${activeModel1 === "divisio_quotativa" ? "active" : ""}" data-org1-model="divisio_quotativa">📦 DIV. QUOTATIVA</button>
-            </div>
-
-            <div style="padding:0.35rem 0.65rem; border-radius:8px; font-size:0.82rem; font-weight:800; text-align:center;
-                        background:${matches1 ? "var(--emerald-light)" : "var(--gold-light)"};
-                        color:${matches1 ? "var(--emerald)" : "#92400E"};
-                        border:1px solid ${matches1 ? "var(--emerald)" : "var(--gold)"};">
-              ${matches1
-                ? `✅ Esquema del Pas 1 correcte (${ORGANIZER_MODELS_INFO[activeModel1]?.title})!`
-                : "💡 Quin esquema TOT-PART correspon a la primera operació del problema?"}
-            </div>
-
-            <div class="organizer-cards-tray">
-              <span style="font-size:0.78rem; font-weight:900; color:#581C87;">🃏 Dades Pas 1:</span>
-              ${step1Nums.map(v => `
-                <span class="org-concept-card ${v === "?" ? "qmark-card" : "num-card"}">
-                  ${v === "?" ? "❓ Incògnita: ?" : `🔢 Quantitat: ${v}`}
-                </span>
-              `).join("")}
-              <span style="font-size:0.78rem; font-weight:900; color:#581C87; margin-left:0.25rem;">🏷️ Etiquetes:</span>
-              ${labelOptions1.map(lbl => `<span class="org-concept-card">🟣 ${lbl}</span>`).join("")}
+              <button type="button" class="organizer-type-btn ${activeModel1 === "suma" ? "active" : ""}" data-org1-model="suma">➕ Suma</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "resta" ? "active" : ""}" data-org1-model="resta">➖ Resta</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "multiplicacio" ? "active" : ""}" data-org1-model="multiplicacio">✖️ Multiplicació</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "divisio_partitiva" ? "active" : ""}" data-org1-model="divisio_partitiva">➗ Div. Partitiva</button>
+              <button type="button" class="organizer-type-btn ${activeModel1 === "divisio_quotativa" ? "active" : ""}" data-org1-model="divisio_quotativa">📦 Div. Quotativa</button>
             </div>
 
             ${renderSingleTotPartSheetHTML("org1", activeModel1, inp1, labelOptions1, "data-set-qmark1")}
 
-            <!-- 1a OPERACIÓ (L'ALUMNE FA EL CÀLCUL ELL MATEIX) -->
             <div class="tot-part-operation-card" style="background:#EFF6FF; border-color:#60A5FA;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.35rem;">
-                <strong style="font-size:0.9rem; color:#1E3A8A;">🧮 1a Operació i Càlcul (calcula tu el resultat!):</strong>
-              </div>
+              <strong style="font-size:0.88rem; color:#1E3A8A;">🧮 1a Operació:</strong>
               <div class="tot-part-op-equation">
-                <input type="number" id="step2A" class="step-calc-input" placeholder="Núm 1" value="${state.step2.a}" aria-label="Primer número de la 1a operació" />
+                <input type="number" id="step2A" class="step-calc-input" placeholder="Núm" value="${state.step2.a}" aria-label="Primer número de la 1a operació" />
                 <select id="step2Op" class="step-calc-select" aria-label="Símbol de la 1a operació">
                   <option value="+" ${state.step2.op === "+" ? "selected" : ""}>+</option>
                   <option value="-" ${state.step2.op === "-" ? "selected" : ""}>−</option>
                   <option value="*" ${state.step2.op === "*" ? "selected" : ""}>×</option>
                   <option value="/" ${state.step2.op === "/" ? "selected" : ""}>:</option>
                 </select>
-                <input type="number" id="step2B" class="step-calc-input" placeholder="Núm 2" value="${state.step2.b}" aria-label="Segon número de la 1a operació" />
+                <input type="number" id="step2B" class="step-calc-input" placeholder="Núm" value="${state.step2.b}" aria-label="Segon número de la 1a operació" />
                 <span style="font-weight:900;">=</span>
-                <input type="number" id="step2ResInput" class="whole-num-input" style="width:95px; border-color:#2563EB;" placeholder="?" value="${state.step2.res ?? ""}" aria-label="Resultat calculat de la 1a operació" />
-                <strong style="color:#1E40AF; font-size:0.92rem;">${ch.step1Expected.unitLabel || ""}</strong>
+                <input type="number" id="step2ResInput" class="whole-num-input" style="width:90px; border-color:#2563EB;" placeholder="?" value="${state.step2.res ?? ""}" aria-label="Resultat de la 1a operació" />
+                <strong style="color:#1E40AF; font-size:0.9rem;">${ch.step1Expected.unitLabel || ""}</strong>
               </div>
             </div>
           </div>
 
-          <!-- COLUMNA DRETA: 2a REPRESENTACIÓ (ORGANITZADOR 2) + 2a OPERACIÓ I RESULTAT FINAL -->
+          <!-- COLUMNA DRETA: 2a REPRESENTACIÓ (ORGANITZADOR 2) + 2a OPERACIÓ -->
           <div class="solver-panel-card" style="border:2px solid #C084FC;">
             <div class="panel-header-bar">
-              <span class="panel-title" style="color:#6B21A8;">2️⃣ PAS 2: Segona Representació i 2a Operació</span>
-              <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.76rem; padding:0.25rem 0.55rem;" title="Ajuda DUA: omple el 2n organitzador">
-                🪄 Ajuda Pas 2
+              <span class="panel-title" style="color:#6B21A8;">2️⃣ 2a Representació i 2a Operació</span>
+              <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.75rem; padding:0.2rem 0.5rem;">
+                🪄 Ajuda
               </button>
             </div>
 
-            <div style="font-size:0.82rem; font-weight:800; color:#334155;">
-              🧭 Tria l'esquema TOT-PART de la <strong>2a operació</strong>:
-            </div>
             <div class="organizer-selector-bar" role="group" aria-label="Model del segon organitzador">
-              <button type="button" class="organizer-type-btn ${activeModel2 === "suma" ? "active" : ""}" data-org-model="suma">➕ SUMA</button>
-              <button type="button" class="organizer-type-btn ${activeModel2 === "resta" ? "active" : ""}" data-org-model="resta">➖ RESTA</button>
-              <button type="button" class="organizer-type-btn ${activeModel2 === "multiplicacio" ? "active" : ""}" data-org-model="multiplicacio">✖️ MULTIPLICACIÓ</button>
-              <button type="button" class="organizer-type-btn ${activeModel2 === "divisio_partitiva" ? "active" : ""}" data-org-model="divisio_partitiva">➗ DIV. PARTITIVA</button>
-              <button type="button" class="organizer-type-btn ${activeModel2 === "divisio_quotativa" ? "active" : ""}" data-org-model="divisio_quotativa">📦 DIV. QUOTATIVA</button>
-            </div>
-
-            <div style="padding:0.35rem 0.65rem; border-radius:8px; font-size:0.82rem; font-weight:800; text-align:center;
-                        background:${matches2 ? "var(--emerald-light)" : "var(--gold-light)"};
-                        color:${matches2 ? "var(--emerald)" : "#92400E"};
-                        border:1px solid ${matches2 ? "var(--emerald)" : "var(--gold)"};">
-              ${matches2
-                ? `✅ Esquema del Pas 2 correcte (${ORGANIZER_MODELS_INFO[activeModel2]?.title})!`
-                : "💡 Quin esquema TOT-PART correspon a la segona operació del problema?"}
-            </div>
-
-            <div class="organizer-cards-tray">
-              <span style="font-size:0.78rem; font-weight:900; color:#581C87;">🃏 Dades Pas 2:</span>
-              <span class="org-concept-card num-card">🔢 Resultat del Pas 1</span>
-              <span class="org-concept-card num-card">🔢 Quantitat: ${otherKnownNum2}</span>
-              <span class="org-concept-card qmark-card">❓ Incògnita: ?</span>
-              <span style="font-size:0.78rem; font-weight:900; color:#581C87; margin-left:0.25rem;">🏷️ Etiquetes:</span>
-              ${labelOptions2.map(lbl => `<span class="org-concept-card">🟣 ${lbl}</span>`).join("")}
+              <button type="button" class="organizer-type-btn ${activeModel2 === "suma" ? "active" : ""}" data-org-model="suma">➕ Suma</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "resta" ? "active" : ""}" data-org-model="resta">➖ Resta</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "multiplicacio" ? "active" : ""}" data-org-model="multiplicacio">✖️ Multiplicació</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "divisio_partitiva" ? "active" : ""}" data-org-model="divisio_partitiva">➗ Div. Partitiva</button>
+              <button type="button" class="organizer-type-btn ${activeModel2 === "divisio_quotativa" ? "active" : ""}" data-org-model="divisio_quotativa">📦 Div. Quotativa</button>
             </div>
 
             ${renderSingleTotPartSheetHTML("org", activeModel2, inp2, labelOptions2, "data-set-qmark")}
 
-            <!-- 2a OPERACIÓ (L'ALUMNE FA EL CÀLCUL FINAL ELL MATEIX) -->
             <div class="tot-part-operation-card">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.35rem;">
-                <strong style="font-size:0.9rem; color:#0F172A;">🧮 2a Operació i Resultat Final (calcula tu el resultat!):</strong>
-              </div>
+              <strong style="font-size:0.88rem; color:#0F172A;">🧮 2a Operació i Resultat Final:</strong>
               <div class="tot-part-op-equation">
-                <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" aria-label="Primer número de la 2a operació" />
+                <input type="number" id="step1A" class="step-calc-input" placeholder="Núm" value="${state.step1.a}" aria-label="Primer número de la 2a operació" />
                 <select id="step1Op" class="step-calc-select" aria-label="Símbol de la 2a operació">
                   <option value="+" ${state.step1.op === "+" ? "selected" : ""}>+</option>
                   <option value="-" ${state.step1.op === "-" ? "selected" : ""}>−</option>
                   <option value="*" ${state.step1.op === "*" ? "selected" : ""}>×</option>
                   <option value="/" ${state.step1.op === "/" ? "selected" : ""}>:</option>
                 </select>
-                <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" aria-label="Segon número de la 2a operació" />
+                <input type="number" id="step1B" class="step-calc-input" placeholder="Núm" value="${state.step1.b}" aria-label="Segon número de la 2a operació" />
                 <span style="font-weight:900;">=</span>
-                <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:100px; border-color:#EA580C;" placeholder="?" value="${prevProbInput}" aria-label="Resultat final del problema" />
-                <strong style="color:#7E22CE; font-size:1rem;">${ch.unitLabel || ""}</strong>
+                <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:95px; border-color:#EA580C;" placeholder="?" value="${prevProbInput}" aria-label="Resultat final del problema" />
+                <strong style="color:#7E22CE; font-size:0.95rem;">${ch.unitLabel || ""}</strong>
               </div>
             </div>
           </div>
@@ -1258,106 +1191,47 @@
       `;
     }
 
-    // Cas estàndard: PROBLEMES D'1 OPERACIÓ (Suma, Resta, Multiplicació, Divisió Partitiva, Divisió Quotativa)
+    // Cas estàndard: PROBLEMES D'1 OPERACIÓ (1 sola targeta centrada, neta i directa!)
     const activeModel = state.selectedOrganizerType || ch.organizerType || "suma";
     const org = ch.organizerData || {};
-    const matchesProblemModel = activeModel === ch.organizerType;
     const inp = state.orgInputs || {};
 
-    // Llista d'opcions de conceptes (què representa cada part/tot) ordenada alfabèticament perquè no surti sempre en el mateix ordre
     const rawConceptLabels = (ch.organizerType === "suma" || ch.organizerType === "resta")
       ? [org.totLabel, org.part1Label, org.part2Label].filter(Boolean)
       : [org.totLabel, org.partLabel, org.braceLabel].filter(Boolean);
     const labelOptions = [...rawConceptLabels].sort((a, b) => a.localeCompare(b, "ca"));
 
-    // Targetes de dades i conceptes del problema (per ajudar l'alumne a identificar què ha de col·locar)
-    const problemNumbers = [ch.num1, ch.num2, "?"];
-    const cardsTrayHTML = `
-      <div class="organizer-cards-tray">
-        <span style="font-size:0.8rem; font-weight:900; color:#581C87;">🃏 Dades per col·locar:</span>
-        ${problemNumbers.map(v => `
-          <span class="org-concept-card ${v === "?" ? "qmark-card" : "num-card"}">
-            ${v === "?" ? "❓ Incògnita: ?" : `🔢 Quantitat: ${v}`}
-          </span>
-        `).join("")}
-        <span style="font-size:0.8rem; font-weight:900; color:#581C87; margin-left:0.35rem;">🏷️ Què representa:</span>
-        ${labelOptions.map(lbl => `
-          <span class="org-concept-card">🟣 ${lbl}</span>
-        `).join("")}
-      </div>
-    `;
-
     return `
-      <div class="problem-solver-grid">
-        <!-- COLUMNA ESQUERRA: 1. SELECCIÓ DE L'ESQUEMA TEÒRIC TOT - PART DEL PDF -->
+      <div style="max-width: 720px; margin: 0 auto;">
         <div class="solver-panel-card">
           <div class="panel-header-bar">
-            <span class="panel-title">🧭 Pas 1: Tria l'Esquema de l'Organitzador (TOT - PART)</span>
+            <span class="panel-title">✍️ Completa l'Organitzador TOT - PART i l'Operació</span>
+            <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.76rem; padding:0.22rem 0.55rem;">
+              🪄 Ajuda
+            </button>
           </div>
 
           <div class="organizer-selector-bar" role="group" aria-label="Models d'organitzador de problemes">
-            <button type="button" class="organizer-type-btn ${activeModel === "suma" ? "active" : ""}" data-org-model="suma">
-              ➕ SUMA
-            </button>
-            <button type="button" class="organizer-type-btn ${activeModel === "resta" ? "active" : ""}" data-org-model="resta">
-              ➖ RESTA
-            </button>
-            <button type="button" class="organizer-type-btn ${activeModel === "multiplicacio" ? "active" : ""}" data-org-model="multiplicacio">
-              ✖️ MULTIPLICACIÓ
-            </button>
-            <button type="button" class="organizer-type-btn ${activeModel === "divisio_partitiva" ? "active" : ""}" data-org-model="divisio_partitiva">
-              ➗ DIV. PARTITIVA
-            </button>
-            <button type="button" class="organizer-type-btn ${activeModel === "divisio_quotativa" ? "active" : ""}" data-org-model="divisio_quotativa">
-              📦 DIV. QUOTATIVA
-            </button>
+            <button type="button" class="organizer-type-btn ${activeModel === "suma" ? "active" : ""}" data-org-model="suma">➕ Suma</button>
+            <button type="button" class="organizer-type-btn ${activeModel === "resta" ? "active" : ""}" data-org-model="resta">➖ Resta</button>
+            <button type="button" class="organizer-type-btn ${activeModel === "multiplicacio" ? "active" : ""}" data-org-model="multiplicacio">✖️ Multiplicació</button>
+            <button type="button" class="organizer-type-btn ${activeModel === "divisio_partitiva" ? "active" : ""}" data-org-model="divisio_partitiva">➗ Div. Partitiva</button>
+            <button type="button" class="organizer-type-btn ${activeModel === "divisio_quotativa" ? "active" : ""}" data-org-model="divisio_quotativa">📦 Div. Quotativa</button>
           </div>
-
-          <div style="padding:0.45rem 0.75rem; border-radius:8px; font-size:0.86rem; font-weight:800; text-align:center;
-                      background:${matchesProblemModel ? "var(--emerald-light)" : "var(--gold-light)"};
-                      color:${matchesProblemModel ? "var(--emerald)" : "#92400E"};
-                      border:1px solid ${matchesProblemModel ? "var(--emerald)" : "var(--gold)"};">
-            ${matchesProblemModel
-              ? "✅ Aquest és exactament l'esquema TOT - PART d'aquest problema!"
-              : "💡 Observa quines dades coneixem (✓) i quina ens demanen (?) per triar l'esquema adequat."}
-          </div>
-
-          ${renderTotPartReferenceDiagramHTML(activeModel)}
-        </div>
-
-        <!-- COLUMNA DRETA: 2. ORGANITZADOR INTERACTIU AMB DESPLEGABLES I QUANTITATS + OPERACIÓ -->
-        <div class="solver-panel-card">
-          <div class="panel-header-bar">
-            <span class="panel-title">✍️ Pas 2: Omple els Cercles (Quantitat o ?) i Tria Què Representen</span>
-            <button type="button" class="tool-btn" id="btnAutoFillOrganizer" style="font-size:0.78rem; padding:0.28rem 0.6rem;" title="Ajuda DUA: omple l'organitzador per veure'n l'exemple">
-              🪄 Ajuda: omple l'organitzador
-            </button>
-          </div>
-
-          ${cardsTrayHTML}
 
           ${renderSingleTotPartSheetHTML("org", activeModel, inp, labelOptions, "data-set-qmark")}
 
-          <!-- CAIXA D'OPERACIÓ (L'ALUMNE ESCRIU L'OPERACIÓ I EL RESULTAT) -->
           <div class="tot-part-operation-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem;">
-              <strong style="font-size:0.95rem; color:#0F172A;">
-                🧮 Pas 3: Escriu l'Operació i Calcula el Resultat:
-              </strong>
-              <span class="tot-part-result-pill">
-                🧡 El resultat descobreix el valor de <strong>?</strong>
-              </span>
-            </div>
-
+            <strong style="font-size:0.92rem; color:#0F172A;">🧮 Operació i Resultat:</strong>
             <div class="tot-part-op-equation">
-              <input type="number" id="step1A" class="step-calc-input" placeholder="Núm 1" value="${state.step1.a}" aria-label="Primer número de l'operació" />
+              <input type="number" id="step1A" class="step-calc-input" placeholder="Núm" value="${state.step1.a}" aria-label="Primer número de l'operació" />
               <select id="step1Op" class="step-calc-select" aria-label="Símbol de l'operació">
                 <option value="+" ${state.step1.op === "+" ? "selected" : ""}>+</option>
                 <option value="-" ${state.step1.op === "-" ? "selected" : ""}>−</option>
                 <option value="*" ${state.step1.op === "*" ? "selected" : ""}>×</option>
                 <option value="/" ${state.step1.op === "/" ? "selected" : ""}>:</option>
               </select>
-              <input type="number" id="step1B" class="step-calc-input" placeholder="Núm 2" value="${state.step1.b}" aria-label="Segon número de l'operació" />
+              <input type="number" id="step1B" class="step-calc-input" placeholder="Núm" value="${state.step1.b}" aria-label="Segon número de l'operació" />
               <span style="font-weight:900;">=</span>
               <input type="number" id="ansProblemNumInput" class="whole-num-input" style="width:105px; border-color:#EA580C;" placeholder="?" value="${prevProbInput}" aria-label="Resultat final del problema" />
               <strong style="color:#7E22CE; font-size:1.05rem;">${ch.unitLabel || ""}</strong>
