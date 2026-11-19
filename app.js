@@ -9,8 +9,8 @@
 
   // Estat global de l'aplicació
   const state = {
-    currentMainArea: "fraccions",   // "fraccions" | "operacions"
-    currentModule: "identificacio", // grimori | identificacio | comparacio | equivalencia | transformacio | problemes | forja | guia_operacions | prob_suma | prob_resta | prob_multiplicacio | prob_div_partitiva | prob_div_quotativa | prob_barrejats
+    currentMainArea: "operacions",  // "operacions" | "fraccions"
+    currentModule: "prob_suma",     // guia_operacions | prob_suma | prob_resta | prob_multiplicacio | prob_div_partitiva | prob_div_quotativa | prob_barrejats | grimori | identificacio | comparacio | equivalencia | transformacio | problemes | forja
     currentLevel: 1,                // 1, 2, 3
     currentIndex: 0,                // 0..4
     currentShape: "circle",         // circle | bar | grid | line

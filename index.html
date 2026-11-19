@@ -20,11 +20,11 @@
 
       <!-- SELECTOR DELS 2 GRANS APARTATS INTEGRAT I NET -->
       <div class="main-area-inner" id="mainAreaSwitcher" role="navigation" aria-label="Blocs principals">
-        <button type="button" class="main-area-btn active" data-area="fraccions">
-          🍕 Apartat 1: Fraccions
+        <button type="button" class="main-area-btn area-operacions-btn active" data-area="operacions">
+          🧠 Apartat 1: Resolució de Problemes
         </button>
-        <button type="button" class="main-area-btn area-operacions-btn" data-area="operacions">
-          🧠 Apartat 2: Resolució de Problemes
+        <button type="button" class="main-area-btn" data-area="fraccions">
+          🍕 Apartat 2: Fraccions
         </button>
       </div>
 
@@ -77,54 +77,15 @@
 
   <!-- NAVEGACIÓ SECUNDÀRIA DELS SUB-APARTATS -->
   <nav class="main-nav" aria-label="Subapartats del bloc actiu">
-    <!-- SUB-APARTATS DE FRACCIONS -->
-    <ul class="nav-tabs" id="moduleTabsFraccions">
-      <li>
-        <button type="button" class="nav-tab" data-module="grimori">
-          📖 Guia i Conceptes
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab active" data-module="identificacio">
-          🍕 1. Identificació i Representació <span class="tab-progress" id="prog-identificacio">0/15</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab" data-module="comparacio">
-          ⚖️ 2. Comparació <span class="tab-progress" id="prog-comparacio">0/15</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab" data-module="equivalencia">
-          🍫 3. Equivalències <span class="tab-progress" id="prog-equivalencia">0/15</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab" data-module="transformacio">
-          🔄 4. Transformació <span class="tab-progress" id="prog-transformacio">0/15</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab" data-module="problemes">
-          🛒 5. Problemes de Fraccions <span class="tab-progress" id="prog-problemes">0/15</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="nav-tab" data-module="forja">
-          🧪 Laboratori Lliure
-        </button>
-      </li>
-    </ul>
-
-    <!-- SUB-APARTATS DE RESOLUCIÓ DE PROBLEMES (OPERACIONS) -->
-    <ul class="nav-tabs" id="moduleTabsOperacions" style="display: none;">
+    <!-- SUB-APARTATS DE RESOLUCIÓ DE PROBLEMES (OPERACIONS) - OBERT PER DEFECTE COM APARTAT 1 -->
+    <ul class="nav-tabs" id="moduleTabsOperacions">
       <li>
         <button type="button" class="nav-tab" data-module="guia_operacions">
           📖 1. Guia i Conceptes
         </button>
       </li>
       <li>
-        <button type="button" class="nav-tab" data-module="prob_suma">
+        <button type="button" class="nav-tab active" data-module="prob_suma">
           ➕ 2. Problemes Suma <span class="tab-progress" id="prog-prob_suma">0/15</span>
         </button>
       </li>
@@ -151,6 +112,45 @@
       <li>
         <button type="button" class="nav-tab special-problem-tab" data-module="prob_barrejats">
           🔀 7. Problemes (Barrejats i 2 Operacions) <span class="tab-progress" id="prog-prob_barrejats">0/15</span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- SUB-APARTATS DE FRACCIONS (APARTAT 2) -->
+    <ul class="nav-tabs" id="moduleTabsFraccions" style="display: none;">
+      <li>
+        <button type="button" class="nav-tab" data-module="grimori">
+          📖 Guia i Conceptes
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="identificacio">
+          🍕 1. Identificació i Representació <span class="tab-progress" id="prog-identificacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="comparacio">
+          ⚖️ 2. Comparació <span class="tab-progress" id="prog-comparacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="equivalencia">
+          🍫 3. Equivalències <span class="tab-progress" id="prog-equivalencia">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="transformacio">
+          🔄 4. Transformació <span class="tab-progress" id="prog-transformacio">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="problemes">
+          🛒 5. Problemes de Fraccions <span class="tab-progress" id="prog-problemes">0/15</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="nav-tab" data-module="forja">
+          🧪 Laboratori Lliure
         </button>
       </li>
     </ul>
@@ -412,20 +412,20 @@
         <label for="printModuleSelect">📚 Apartat d'exercicis:</label>
         <select id="printModuleSelect" class="print-select">
           <option value="current">Apartat actual obert</option>
-          <optgroup label="🍕 Apartat 1: Fraccions">
-            <option value="identificacio">🍕 1. Identificació i Representació</option>
-            <option value="comparacio">⚖️ 2. Comparació de Fraccions</option>
-            <option value="equivalencia">🍫 3. Equivalències</option>
-            <option value="transformacio">🔄 4. Transformació</option>
-            <option value="problemes">🛒 5. Problemes de Fraccions</option>
-          </optgroup>
-          <optgroup label="🧠 Apartat 2: Resolució de Problemes (Operacions)">
+          <optgroup label="🧠 Apartat 1: Resolució de Problemes (Operacions)">
             <option value="prob_suma">➕ 2. Problemes Suma</option>
             <option value="prob_resta">➖ 3. Problemes Resta</option>
             <option value="prob_multiplicacio">✖️ 4. Problemes Multiplicació</option>
             <option value="prob_div_partitiva">➗ 5. Problemes Divisió Partitiva</option>
             <option value="prob_div_quotativa">📦 6. Problemes Divisió Quotativa</option>
             <option value="prob_barrejats">🔀 7. Problemes (Barrejats i 2 Operacions)</option>
+          </optgroup>
+          <optgroup label="🍕 Apartat 2: Fraccions">
+            <option value="identificacio">🍕 1. Identificació i Representació</option>
+            <option value="comparacio">⚖️ 2. Comparació de Fraccions</option>
+            <option value="equivalencia">🍫 3. Equivalències</option>
+            <option value="transformacio">🔄 4. Transformació</option>
+            <option value="problemes">🛒 5. Problemes de Fraccions</option>
           </optgroup>
           <option value="all">🌟 Tots els apartats complets</option>
         </select>
